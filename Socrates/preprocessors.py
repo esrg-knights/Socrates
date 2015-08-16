@@ -1,6 +1,6 @@
 def basic_stats(request):
     setups = {
-        "Page names" : "KOTKT",
+        "pre_page_name" : "KOTKT",
     }
 
     return setups
