@@ -1,0 +1,16 @@
+{
+  "name": "Socrates",
+  "version": "0.0.0",
+  "authors": [
+    "requinard <david.diks@student.fontys.nl>"
+  ],
+  "description": "Manage student societies",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
