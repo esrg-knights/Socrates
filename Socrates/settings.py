@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os.path import expanduser
 
 from django.contrib import messages
 
@@ -124,3 +125,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
+
+execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))

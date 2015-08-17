@@ -65,3 +65,27 @@ class LoginTests(SimpleTestCase):
         self.assertEqual(messages.level, 40, "Login message did nto have the correct level")
 
         inactive.delete()
+
+
+class RegistrationTest(SimpleTestCase):
+    def test_can_register(self):
+        response = self.client.post("/account/register/",
+                                    {'email': "test@test.com", 'username': 'test2', 'password': 'test',
+                                     'password_repeat': 'test', 'first_name': 'test', 'last_name': 'test'})
+
+        self.assertEqual(response.status_code, 302)
+
+        new_user = User.objects.get(username="test2")
+        self.assertIsNotNone(new_user, "No new user was created")
+        self.assertFalse(new_user.is_active, "New user is active while it should not be")
+
+        new_user.delete()
+
+    def test_passwords_do_not_match(self):
+        response = self.client.post("/account/register/",
+                                    {'email': "test@test.com", 'username': 'test2', 'password': 'not-test',
+                                     'password_repeat': 'test', 'first_name': 'test', 'last_name': 'test'})
+
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIsNotNone(User.objects.filter(username='test2'))

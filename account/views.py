@@ -6,7 +6,7 @@ from django.views.generic import View
 from django.contrib import messages
 
 # Create your views here
-from account.forms import LoginForm
+from account.forms import LoginForm, RegisterForm
 
 
 class IndexView(View):
@@ -62,4 +62,42 @@ class LoginView(View):
                 messages.warning(request, "Gebruikersnaam of wachtwoord klopt niet")
 
         self.context['form'] = form
+        return render(request, self.template, self.context)
+
+
+class RegisterView(View):
+    context = {}
+    template = "account/register.html"
+
+    def send_registation_email(self, user):
+        subject = "Registratie afmaken"
+        url = "http://localhost:8000/account/activate/{0}".format(hash(user.id))
+        body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
+            url)
+
+        user.email_user(subject, body, "watson@kotkt.nl")
+
+    def get(self, request):
+        form = RegisterForm()
+
+        self.context['form'] = form
+        return render(request, self.template, self.context)
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            if form.cleaned_data['password_repeat'] == form.cleaned_data['password']:
+                user = form.save(commit=False)
+                user.is_active = False
+                user.set_password(form.cleaned_data['password'])
+                user.save()
+                self.send_registation_email(user)
+
+                return redirect("account:login")
+
+            messages.error(request, "De wachtwoorden kwamen niet overeen!")
+
+        self.context['form'] = form
+
         return render(request, self.template, self.context)
