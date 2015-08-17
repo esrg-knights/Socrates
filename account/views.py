@@ -1,5 +1,7 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib import messages
 
@@ -8,10 +10,24 @@ from account.forms import LoginForm
 
 
 class IndexView(View):
+    @method_decorator(login_required)
     def get(self, request):
         context = {}
-        messages.info(request, "test")
-        return render(request, 'base.html', context)
+        return render(request, 'account/index.html', context)
+
+
+class LogoutView(View):
+    def get(self, request):
+        if request.user.is_active:
+            logout(request)
+
+            messages.success(request, "Uitloggen gelukt!")
+
+            return redirect("account:login")
+
+        messages.info(request, "Je bent nog niet eens ingelogd!")
+
+        return redirect("account:login")
 
 
 class LoginView(View):
@@ -19,6 +35,10 @@ class LoginView(View):
     template = "account/login.html"
 
     def get(self, request):
+        if request.user.is_active:
+            messages.info(request, "Je bent al ingelod!")
+            return redirect("account:index")
+
         form = LoginForm()
         self.context['form'] = form
         return render(request, self.template, self.context)
@@ -33,6 +53,8 @@ class LoginView(View):
                 if user.is_active:
                     login(request, user)
                     messages.success(request, "Inloggen gelukt!")
+                    if len(request.GET) > 0:
+                        return redirect(request.GET['next'])
                     return redirect("account:index")
                 else:
                     messages.error(request, "Deze account is niet geactiveerd")
@@ -40,4 +62,4 @@ class LoginView(View):
                 messages.warning(request, "Gebruikersnaam of wachtwoord klopt niet")
 
         self.context['form'] = form
-        return render(request, "base.html", self.context)
+        return render(request, self.template, self.context)
