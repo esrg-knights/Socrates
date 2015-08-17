@@ -10,6 +10,7 @@ from account.forms import LoginForm
 class IndexView(View):
     def get(self, request):
         context = {}
+        messages.info(request, "test")
         return render(request, 'base.html', context)
 
 
