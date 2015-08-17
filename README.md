@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/esrg-knights/Socrates.svg)](https://travis-ci.org/esrg-knights/Socrates)
