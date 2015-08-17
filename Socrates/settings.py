@@ -129,5 +129,7 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
-
-execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
+try:
+    execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
+except:
+    pass
