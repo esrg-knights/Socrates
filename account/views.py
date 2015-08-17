@@ -1,12 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib import messages
 
 # Create your views here
-from account.forms import LoginForm, RegisterForm
+from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm
 
 
 class IndexView(View):
@@ -31,7 +33,7 @@ class LogoutView(View):
 
 
 class LoginView(View):
-    context  = {}
+    context = {}
     template = "account/login.html"
 
     def get(self, request):
@@ -97,6 +99,47 @@ class RegisterView(View):
                 return redirect("account:login")
 
             messages.error(request, "De wachtwoorden kwamen niet overeen!")
+
+        self.context['form'] = form
+
+        return render(request, self.template, self.context)
+
+
+class ActivationView(View):
+    context = {}
+    template = "account/activate.html"
+
+    def get(self, request, user_hash):
+        self.get_user(user_hash)
+
+        form = CompleteRegistrationForm()
+
+        self.context['form'] = form
+        return render(request, self.template, self.context)
+
+    def get_user(self, user_hash):
+        try:
+            user = [x for x in User.objects.all() if str(abs(hash(x.username))) == user_hash][0]
+
+            self.context['user'] = user
+        except:
+            raise Http404
+
+    def post(self, request, user_hash):
+        self.get_user(user_hash)
+
+        form = CompleteRegistrationForm(request.POST)
+
+        if form.is_valid():
+            details = form.save(commit=False)
+
+            details.related_user = self.context['user']
+            details.related_user.is_active = True
+            details.related_user.save()
+            details.save()
+
+            messages.success(request, "Je account is geactiveerd!")
+            return redirect("account:login")
 
         self.context['form'] = form
 

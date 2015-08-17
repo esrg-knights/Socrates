@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 class="page-header">Maak je registratie af</h1>
+    <p>Dit is de registratie voor {{ user.get_full_name }} </p>
+    {% crispy form %}
+{% endblock %}

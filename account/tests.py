@@ -89,3 +89,22 @@ class RegistrationTest(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertIsNotNone(User.objects.filter(username='test2'))
+
+
+class ActivationTest(SimpleTestCase):
+    def setUp(self):
+        response = self.client.post("/account/register/",
+                                    {'email': "test@test.com", 'username': 'test', 'password': 'test',
+                                     'password_repeat': 'test', 'first_name': 'test', 'last_name': 'test'})
+
+        self.user = User.objects.get(username='test')
+
+        self.activation_url = "/account/activate/{0}/".format(hash(self.user.username))
+
+    def tearDown(self):
+        self.user.delete()
+
+    def test_activation(self):
+        response = self.client.get(self.activation_url, {})
+
+        self.assertEqual(response.status_code, 200, "Correct page not found")
