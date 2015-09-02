@@ -35,7 +35,7 @@ class DiningStatsTest(SimpleTestCase):
         self.assertEqual(stats.get_percentage(), 100, "Less then 5 times helping will not work")
 
     def test_new_participation(self):
-        dlist = DiningList(started_by=self.testUser, owner=self.testUser)
+        dlist = DiningList(owner=self.testUser)
 
         dlist.save()
 
