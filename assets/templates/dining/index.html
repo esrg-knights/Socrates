@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header"> Eetlijst voor {{ dinnerlist.relevant_date }}</h1>
+
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-8 col-sm-12">
+                        {% if participants %}
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Naam</th>
+                                    <th>Boodschappen</th>
+                                    <th>Koken</th>
+                                    <th>Afwas</th>
+                                    <th>Betaald</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for participant in participants %}
+                                    <tr>
+                                        <td>{{ participant.user }}</td>
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <label>
+                                                    <input type="checkbox" {% if participant.work_groceries %}
+                                                           checked {% endif %} name="{{ participant.id }}:groceries">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <label>
+                                                    <input type="checkbox" {% if participant.work_cook %}
+                                                           checked {% endif %} name="{{ participant.id }}:cooking">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <label>
+                                                    <input type="checkbox" {% if participant.work_dishes %}
+                                                           checked {% endif %} name="{{ participant.id }}:dishes">
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="checkbox checkbox-primary">
+                                                <label>
+                                                    <input type="checkbox" {% if participant.paid %}
+                                                           checked {% endif %} name="{{ participant.id }}:paid">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        {% if dinnerlist.owner %}
+                            <a href="#" class="btn btn-succes">Deze eetlijst is geclaimd door {{ dinnerlist.owner }}</a>
+                        {% else %}
+                            <a href="#" class="btn btn-primary">Deze eetlijst is nog niet geclaimd! Als je voor eten
+                                zorgt klik
+                                hier</a>
+                        {% endif %}
+
+                        {% if user == dinnerlist.owner %}
+                            <button class="btn btn-info">Update deze informate</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+            <a href="{% url 'dining:register' %}">Schrijf je in voor deze eetlijst</a>
+        </div>
+    </div>
+{% endblock %}

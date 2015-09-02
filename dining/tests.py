@@ -72,3 +72,25 @@ class DiningStatsTest(SimpleTestCase):
 
         self.assertEqual(dstats.total_helped, 1)
         self.assertEqual(dstats.total_participated, 1)
+
+
+class DiningListTest(SimpleTestCase):
+    def setUp(self):
+        self.testUser = User.objects.create_user("test", "test", "test@test.com")
+        self.testUser.save()
+
+    def tearDown(self):
+        self.testUser.delete()
+
+    def test_get_registered_user(self):
+        dlist = DiningList(started_by=self.testUser)
+
+        dlist.save()
+
+        dpart = DiningParticipation(user=self.testUser, dining_list=dlist)
+
+        dpart.save()
+
+        # Tests
+
+        self.assertEqual(len(dlist.get_participants()), 1)

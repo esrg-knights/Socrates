@@ -34,6 +34,9 @@
             <a class="navbar-brand" href="#">{{ pre_page_name }}</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'dining:index' %}">Eetlijst</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                     <li class="dropdown">

@@ -7,8 +7,10 @@ from django.db.models.signals import pre_save, post_save
 
 class DiningList(models.Model):
     relevant_date = models.DateField(auto_now=True, auto_created=True)
-    started_by = models.ForeignKey(User, related_name="started_by")
-    owner = models.ForeignKey(User, related_name="owned_by")
+    owner = models.ForeignKey(User, related_name="owned_by", null=True, blank=True)
+
+    def get_participants(self):
+        return DiningParticipation.objects.filter(dining_list=self)
 
 
 class DiningParticipation(models.Model):
@@ -18,6 +20,8 @@ class DiningParticipation(models.Model):
     work_dishes = models.BooleanField(default=False)
     work_cook = models.BooleanField(default=False)
     work_groceries = models.BooleanField(default=False)
+
+    paid = models.BooleanField(default=False)
 
 
 class DiningStats(models.Model):
