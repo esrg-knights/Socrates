@@ -28,7 +28,6 @@ class LogoutTests(SimpleTestCase):
         self.assertEqual(response.status_code, 302)
 
 class LoginTests(SimpleTestCase):
-    @classmethod
     def setUp(self):
         self.client = Client()
         create_test_user()

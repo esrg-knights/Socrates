@@ -45,7 +45,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'account'
+    'account',
+    'dining',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -129,7 +130,8 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger'
 }
+
 try:
     execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
 except:
-    pass
+    assert True == False
