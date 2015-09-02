@@ -135,4 +135,4 @@ MESSAGE_TAGS = {
 try:
     execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
 except:
-    assert True == False
+    pass

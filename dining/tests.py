@@ -83,7 +83,7 @@ class DiningListTest(SimpleTestCase):
         self.testUser.delete()
 
     def test_get_registered_user(self):
-        dlist = DiningList(started_by=self.testUser)
+        dlist = DiningList()
 
         dlist.save()
 
