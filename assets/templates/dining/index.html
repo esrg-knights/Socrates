@@ -67,7 +67,8 @@
                         {% if dinnerlist.owner %}
                             <a href="#" class="btn btn-succes">Deze eetlijst is geclaimd door {{ dinnerlist.owner }}</a>
                         {% else %}
-                            <a href="#" class="btn btn-primary">Deze eetlijst is nog niet geclaimd! Als je voor eten
+                            <a href="{% url 'dining:claim' %}" class="btn btn-primary">Deze eetlijst is nog niet
+                                geclaimd! Als je voor eten
                                 zorgt klik
                                 hier</a>
                         {% endif %}

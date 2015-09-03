@@ -16,7 +16,10 @@ class IndexView(View):
 
     @method_decorator(login_required)
     def get(self, request, day=None, month=None, year=None):
-        self.context['dinnerlist'] = DiningList.get_latest()
+        if day is not None:
+            self.context['dinnerlist'] = DiningList.get_specific_date(day, month, year)
+        else:
+            self.context['dinnerlist'] = DiningList.get_latest()
 
         self.context['participants'] = self.context['dinnerlist'].get_participants()
 

@@ -3,10 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save
+from django.utils.datetime_safe import datetime
 
 
 class DiningList(models.Model):
-    relevant_date = models.DateField(auto_now=True, auto_created=True)
+    relevant_date = models.DateField()
     owner = models.ForeignKey(User, related_name="owned_by", null=True, blank=True)
 
     def get_participants(self):
@@ -14,7 +15,17 @@ class DiningList(models.Model):
 
     @staticmethod
     def get_latest():
-        return DiningList.objects.get_or_create()[0]
+        return DiningList.objects.get_or_create(relevant_date=datetime.now().date())[0]
+
+    @staticmethod
+    def get_specific_date(day, month, year):
+        date = datetime(int(year), int(month), int(day))
+
+        if date.date() > datetime.now().date():
+            return DiningList.get_latest()
+
+        return DiningList.objects.get_or_create(relevant_date=date)[0]
+
 
 
 class DiningParticipation(models.Model):

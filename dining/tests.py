@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import SimpleTestCase
-from django.utils.datetime_safe import datetime
+from django.utils.timezone import datetime
 
 from dining.models import DiningStats, DiningList, DiningParticipation
 
@@ -37,7 +37,8 @@ class DiningStatsTest(SimpleTestCase):
         self.assertEqual(stats.get_percentage(), 100, "Less then 5 times helping will not work")
 
     def test_new_participation(self):
-        dlist = DiningList(owner=self.testUser)
+        dlist = DiningList.get_latest()
+        dlist.owner = self.testUser
 
         dlist.save()
 
@@ -85,7 +86,7 @@ class DiningListTest(SimpleTestCase):
         self.testUser.delete()
 
     def test_get_registered_user(self):
-        dlist = DiningList()
+        dlist = DiningList().get_latest()
 
         dlist.save()
 
@@ -105,6 +106,19 @@ class DiningListTest(SimpleTestCase):
 
         self.assertEqual(dlist.relevant_date, datetime.now().date())
 
+    def test_get_specific_date(self):
+        date_user = datetime(2012, 11, 1)
+        dlist = DiningList.get_specific_date(date_user.day, date_user.month, date_user.year)
+
+        self.assertEqual(dlist.relevant_date, date_user)
+
+        # Test that we cannot get dates from the future
+
+        date_user = datetime(2050, 11, 1)
+        dlist = DiningList.get_specific_date(date_user.day, date_user.month, date_user.year)
+
+        self.assertEqual(dlist.relevant_date, datetime.now().date())
+
 
 class ClaimViewTest(SimpleTestCase):
     view_url = reverse("dining:claim")
@@ -121,7 +135,7 @@ class ClaimViewTest(SimpleTestCase):
         self.testUser2.delete()
 
     def test_claim(self):
-        dlist = DiningList()
+        dlist = DiningList.get_latest()
         dlist.save()
 
         self.client.login(username="test", password="test")
