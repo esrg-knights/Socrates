@@ -27,7 +27,8 @@ class DiningList(models.Model):
         return DiningList.objects.get_or_create(relevant_date=date)[0]
 
 
-
+    def __str__(self):
+        return str(self.relevant_date)
 class DiningParticipation(models.Model):
     dining_list = models.ForeignKey(DiningList)
     user = models.ForeignKey(User)
@@ -53,7 +54,7 @@ class DiningStats(models.Model):
         if self.total_participated <= 5:
             return 100
 
-        return abs(self.total_helped / self.total_participated * 100)
+        return round(float(self.total_helped) / self.total_participated * 100, 0)
 
     @receiver(pre_save, sender=DiningParticipation)
     def remove_old_scores(sender, instance=None, created=False, **kwargs):

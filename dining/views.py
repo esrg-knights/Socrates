@@ -112,7 +112,7 @@ class StatView(View):
     template = "dining/stats.html"
     context = {}
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    @method_decorator(user_passes_test(lambda u: u.is_superuser,"/dining/"))
     def get(self, request):
         self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
         return render(request, self.template, self.context)
