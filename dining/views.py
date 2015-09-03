@@ -2,12 +2,12 @@
 import re
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from dining.models import DiningList, DiningParticipation
+from dining.models import DiningList, DiningParticipation, DiningStats
 
 
 class IndexView(View):
@@ -106,3 +106,13 @@ class ClaimView(View):
                 messages.warning(request, "Je bent nog niet ingeschreven voor deze eetlijst! Doe dit eerst")
 
         return redirect("dining:index")
+
+
+class StatView(View):
+    template = "dining/stats.html"
+    context = {}
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def get(self, request):
+        self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
+        return render(request, self.template, self.context)

@@ -188,3 +188,28 @@ class ClaimViewTest(SimpleTestCase):
         r = self.client.get(self.view_url)
 
         self.assertEqual(r.status_code, 302)
+
+
+class StatsViewTest(SimpleTestCase):
+    def setUp(self):
+        self.testUser = User.objects.create_user("test", "test@test.com", "test")
+        self.testUser.save()
+        self.view_url = reverse("dining:stats")
+
+    def tearDown(self):
+        self.testUser.delete
+
+    def test_login_only_superuser(self):
+        self.client.login(username="test", password="test")
+
+        r = self.client.get(self.view_url)
+
+        self.assertEqual(r.status_code, 302)
+
+        self.testUser.is_superuser = True
+
+        self.testUser.save()
+
+        r = self.client.get(self.view_url)
+
+        self.assertEqual(r.status_code, 200)

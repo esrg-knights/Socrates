@@ -18,6 +18,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
 
+    {% block header_custom %}
+
+    {% endblock %}
+
 </head>
 <body>
 
@@ -97,5 +101,9 @@
 <script>
     $.material.init();
 </script>
+
+{% block footer %}
+
+{% endblock %}
 </body>
 </html>
