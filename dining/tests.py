@@ -1,6 +1,8 @@
 # Create your tests here.
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.test import SimpleTestCase
+from django.utils.datetime_safe import datetime
 
 from dining.models import DiningStats, DiningList, DiningParticipation
 
@@ -76,7 +78,7 @@ class DiningStatsTest(SimpleTestCase):
 
 class DiningListTest(SimpleTestCase):
     def setUp(self):
-        self.testUser = User.objects.create_user("test", "test", "test@test.com")
+        self.testUser = User.objects.create_user("test", "test@test.com", "test")
         self.testUser.save()
 
     def tearDown(self):
@@ -94,3 +96,81 @@ class DiningListTest(SimpleTestCase):
         # Tests
 
         self.assertEqual(len(dlist.get_participants()), 1)
+
+        dpart.delete()
+        dlist.delete()
+
+    def test_get_latest(self):
+        dlist = DiningList.get_latest()
+
+        self.assertEqual(dlist.relevant_date, datetime.now().date())
+
+
+class ClaimViewTest(SimpleTestCase):
+    view_url = reverse("dining:claim")
+
+    def setUp(self):
+        self.testUser = User.objects.create_user("test", "test@test.com", "test")
+        self.testUser.save()
+
+        self.testUser2 = User.objects.create_user("test2", "test@test.com", "test")
+        self.testUser2.save()
+
+    def tearDown(self):
+        self.testUser.delete()
+        self.testUser2.delete()
+
+    def test_claim(self):
+        dlist = DiningList()
+        dlist.save()
+
+        self.client.login(username="test", password="test")
+
+        # We test claiming the dining list without participation
+
+        r = self.client.get(self.view_url)
+
+        dlist = DiningList.get_latest()
+
+        self.assertIsNone(dlist.owner)
+
+        # We test claiming the dining list with a participation
+
+        dpart = DiningParticipation(user=self.testUser, dining_list=dlist)
+        dpart.save()
+
+        self.assertIsNone(dlist.owner)
+
+        r = self.client.get(self.view_url)
+
+        self.assertEqual(r.status_code, 302)
+
+        dlist = DiningList.get_latest()
+
+        self.assertIsNotNone(dlist.owner)
+        self.assertEqual(dlist.owner, self.testUser)
+
+        # Test that you cannot claim a dining list over someone else
+
+        dpart = DiningParticipation(user=self.testUser2, dining_list=dlist)
+
+        dpart.save()
+
+        self.client.login(username=self.testUser2.username, password="test")
+
+        r = self.client.get(self.view_url)
+
+        self.assertEqual(r.status_code, 302)
+
+        dlist = DiningList.get_latest()
+
+        self.assertNotEqual(dlist.owner, self.testUser2)
+        self.assertEqual(dlist.owner, self.testUser)
+
+        dpart.delete()
+        dlist.delete()
+
+    def test_cant_access_logged_out(self):
+        r = self.client.get(self.view_url)
+
+        self.assertEqual(r.status_code, 302)

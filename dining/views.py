@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.utils.timezone import datetime
 
 from dining.models import DiningList, DiningParticipation
 
@@ -17,7 +16,7 @@ class IndexView(View):
 
     @method_decorator(login_required)
     def get(self, request, day=None, month=None, year=None):
-        self.context['dinnerlist'] = DiningList.objects.get_or_create()[0]
+        self.context['dinnerlist'] = DiningList.get_latest()
 
         self.context['participants'] = self.context['dinnerlist'].get_participants()
 
@@ -32,7 +31,7 @@ class IndexView(View):
 
         # first we'll clear all current statusses
 
-        dinnerlist = DiningList.objects.get(relevant_date=datetime.now().date())
+        dinnerlist = DiningList.get_latest()
 
         participants = dinnerlist.get_participants()
 
@@ -71,7 +70,7 @@ class IndexView(View):
 class RegisterView(View):
     @method_decorator(login_required)
     def get(self, request):
-        dinnerlist = DiningList.objects.get_or_create(relevant_date=datetime.now().date())[0]
+        dinnerlist = DiningList.get_latest()
 
         # See if the user is already registered
         obj, ret = DiningParticipation.objects.get_or_create(user=request.user, dining_list=dinnerlist)
@@ -80,5 +79,27 @@ class RegisterView(View):
             messages.success(request, "Je bent succesvol ingeschreven voor deze eetlijst")
         else:
             messages.info(request, "Je was al ingeschreven voor deze lijst")
+
+        return redirect("dining:index")
+
+
+class ClaimView(View):
+    template = "base.html"
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        dining_list = DiningList.get_latest()
+
+        if dining_list.owner is not None:
+            messages.error(request, "Deze eetlijst is al geclaimd door {0}".format(dining_list.owner.get_full_name()))
+        else:
+            # check participation
+            if DiningParticipation.objects.filter(user=request.user, dining_list=dining_list).count() > 0:
+                messages.success(request, "Je bent nu eigenaar van deze eetlijst!")
+                dining_list.owner = request.user
+                dining_list.save()
+            else:
+                messages.warning(request, "Je bent nog niet ingeschreven voor deze eetlijst! Doe dit eerst")
 
         return redirect("dining:index")

@@ -12,6 +12,10 @@ class DiningList(models.Model):
     def get_participants(self):
         return DiningParticipation.objects.filter(dining_list=self)
 
+    @staticmethod
+    def get_latest():
+        return DiningList.objects.get_or_create()[0]
+
 
 class DiningParticipation(models.Model):
     dining_list = models.ForeignKey(DiningList)
