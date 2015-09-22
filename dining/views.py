@@ -3,9 +3,11 @@ import re
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+
 
 from dining.models import DiningList, DiningParticipation, DiningStats
 
@@ -21,7 +23,7 @@ class IndexView(View):
         else:
             self.context['dinnerlist'] = DiningList.get_latest()
 
-        self.context['participants'] = self.context['dinnerlist'].get_participants()
+        self.context['participants'] = self.context['dinnerlist'].get_participants().prefetch_related()
 
         return render(request, self.template, self.context)
 
@@ -36,14 +38,12 @@ class IndexView(View):
 
         dinnerlist = DiningList.get_latest()
 
-        participants = dinnerlist.get_participants()
+        participants = dinnerlist.get_participants().select_related()
 
         for part in participants:
             part.work_groceries = False
             part.work_cook = False
             part.work_dishes = False
-
-            part.save()
 
         for key in post.keys():
             m = re.match(regex_filter, key)
@@ -59,8 +59,6 @@ class IndexView(View):
                     part.work_dishes = True
                 if m.group(2) == "paid":
                     part.paid = True
-
-                messages.info(request, "{0} is opgeslagen als {1}".format(part.user.get_full_name(), m.group(2)))
 
         for part in participants:
             part.save()

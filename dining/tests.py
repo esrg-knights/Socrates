@@ -1,6 +1,7 @@
 # Create your tests here.
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseNotAllowed
 from django.test import SimpleTestCase
 from django.utils.timezone import datetime
 
@@ -204,7 +205,7 @@ class StatsViewTest(SimpleTestCase):
         self.view_url = reverse("dining:stats")
 
     def tearDown(self):
-        self.testUser.delete
+        self.testUser.delete()
 
     def test_login_only_superuser(self):
         self.client.login(username="test", password="test")
@@ -220,3 +221,8 @@ class StatsViewTest(SimpleTestCase):
         r = self.client.get(self.view_url)
 
         self.assertEqual(r.status_code, 200)
+
+    def test_cannot_use_post_method(self):
+        self.client.post(self.view_url)
+        self.assertTrue(self.client.post(self.view_url) > 400, "Managed to post on a page without post")
+

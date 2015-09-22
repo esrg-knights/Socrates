@@ -50,6 +50,8 @@
                             {% if user.is_superuser %}
                                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                                 <li class="divider"></li>
+                                <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a> </li>
+                                <li class="divider"></li>
                             {% endif %}
                             <li><a href="{% url 'account:logout' %}">Logout</a></li>
                         </ul>
