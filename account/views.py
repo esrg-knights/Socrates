@@ -91,10 +91,10 @@ class RegisterView(View):
         if form.is_valid():
             if form.cleaned_data['password_repeat'] == form.cleaned_data['password']:
                 user = form.save(commit=False)
-                user.is_active = False
+                user.is_active = True
                 user.set_password(form.cleaned_data['password'])
                 user.save()
-                self.send_registation_email(user)
+                #self.send_registation_email(user)
 
                 return redirect("account:login")
 

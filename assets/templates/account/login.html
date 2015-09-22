@@ -4,5 +4,13 @@
 
 {% block content %}
     <h1 class="page-header">Welkom bij de login</h1>
-    {% crispy form %}
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            {% crispy form %}
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <h3 class="text-center">Nog geen account?</h3>
+            <a class="btn btn-block btn-success" href="{% url 'account:register' %}">Registreer nu!</a>
+        </div>
+    </div>
 {% endblock %}
