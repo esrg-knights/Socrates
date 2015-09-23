@@ -98,7 +98,7 @@ class ActivationTest(SimpleTestCase):
 
         self.user = User.objects.get(username='test')
 
-        self.activation_url = "/account/activate/{0}/".format(hash(self.user.username))
+        self.activation_url = "/account/activate/{0}/".format(self.user.id)
 
     def tearDown(self):
         self.user.delete()

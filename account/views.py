@@ -73,7 +73,7 @@ class RegisterView(View):
 
     def send_registation_email(self, user):
         subject = "Registratie afmaken"
-        url = "http://localhost:8000/account/activate/{0}".format(hash(user.id))
+        url = "http://app.kotkt.nl/account/activate/{0}".format(user.id)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
             url)
 
@@ -91,10 +91,10 @@ class RegisterView(View):
         if form.is_valid():
             if form.cleaned_data['password_repeat'] == form.cleaned_data['password']:
                 user = form.save(commit=False)
-                user.is_active = True
+                user.is_active = False
                 user.set_password(form.cleaned_data['password'])
                 user.save()
-                #self.send_registation_email(user)
+                self.send_registation_email(user)
 
                 return redirect("account:login")
 
@@ -117,11 +117,9 @@ class ActivationView(View):
         self.context['form'] = form
         return render(request, self.template, self.context)
 
-    def get_user(self, user_hash):
+    def get_user(self, user_id):
         try:
-            user = [x for x in User.objects.all() if str(abs(hash(x.username))) == user_hash][0]
-
-            self.context['user'] = user
+            return User.objects.get(id=user_id)
         except:
             raise Http404
 
@@ -134,7 +132,7 @@ class ActivationView(View):
             details = form.save(commit=False)
 
             details.related_user = self.context['user']
-            details.related_user.is_active = True
+            details.related_user.is_active = False
             details.related_user.save()
             details.save()
 
