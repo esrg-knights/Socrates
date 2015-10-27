@@ -9,6 +9,7 @@ from django.contrib import messages
 
 # Create your views here
 from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm
+from account.models import DetailsModel
 
 
 class IndexView(View):
@@ -73,7 +74,7 @@ class RegisterView(View):
 
     def send_registation_email(self, user):
         subject = "Registratie afmaken"
-        url = "http://app.kotkt.nl/account/activate/{0}".format(user.id)
+        url = "http://app.kotkt.nl/account/activate/{0}".format(user.details.uid)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
             url)
 
@@ -94,7 +95,13 @@ class RegisterView(View):
                 user.is_active = False
                 user.set_password(form.cleaned_data['password'])
                 user.save()
+
+                details = DetailsModel()
+                details.related_user = user
+                details.save()
+
                 self.send_registation_email(user)
+
 
                 return redirect("account:login")
 
@@ -110,8 +117,9 @@ class ActivationView(View):
     template = "account/activate.html"
 
     def get(self, request, user_hash):
-        self.get_user(user_hash)
+        user = self.get_user(user_hash)
 
+        self.context['new_user'] = user
         form = CompleteRegistrationForm()
 
         self.context['form'] = form
@@ -124,14 +132,14 @@ class ActivationView(View):
             raise Http404
 
     def post(self, request, user_hash):
-        self.get_user(user_hash)
+        user = self.get_user(user_hash)
 
         form = CompleteRegistrationForm(request.POST)
 
         if form.is_valid():
             details = form.save(commit=False)
 
-            details.related_user = self.context['user']
+            details.related_user = user
             details.related_user.is_active = False
             details.related_user.save()
             details.save()
