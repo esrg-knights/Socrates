@@ -7,10 +7,10 @@ from django.http import HttpResponseNotAllowed
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
+from datetime import datetime
 
 
 from dining.models import DiningList, DiningParticipation, DiningStats
-
 
 class IndexView(View):
     context = {}
@@ -73,13 +73,18 @@ class RegisterView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
-        # See if the user is already registered
-        obj, ret = DiningParticipation.objects.get_or_create(user=request.user, dining_list=dinnerlist)
-
-        if ret:
-            messages.success(request, "Je bent succesvol ingeschreven voor deze eetlijst")
+        #14:00 vanwege tijdzones
+        latest_time = datetime.now().replace(hour=14, minute=0, second=0)
+        if datetime.now().time() > latest_time.time():
+            messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
         else:
-            messages.info(request, "Je was al ingeschreven voor deze lijst")
+            # See if the user is already registered
+            obj, ret = DiningParticipation.objects.get_or_create(user=request.user, dining_list=dinnerlist)
+
+            if ret:
+                messages.success(request, "Je bent succesvol ingeschreven voor deze eetlijst")
+            else:
+                messages.info(request, "Je was al ingeschreven voor deze lijst")
 
         return redirect("dining:index")
 
@@ -105,6 +110,21 @@ class ClaimView(View):
 
         return redirect("dining:index")
 
+
+class RemoveView(View):
+    context = {}
+
+    @method_decorator(login_required())
+    def get(self, request):
+        dining_list = DiningList.get_latest()
+
+        if dining_list.user_in_list(request.user):
+            dining_list.remove_user(request.user)
+            messages.success(request, "Je bent uitgeschreven van deze eetlijst")
+        else:
+            messages.error(request, "Je staat nog niet op deze eetlijst")
+
+        return redirect("dining:index")
 
 class StatView(View):
     template = "dining/stats.html"

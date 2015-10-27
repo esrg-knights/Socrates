@@ -26,7 +26,16 @@ class DiningList(models.Model):
 
         return DiningList.objects.get_or_create(relevant_date=date)[0]
 
+    def user_in_list(self, user):
+        return len(DiningParticipation.objects.filter(dining_list=self, user=user)) > 0
 
+    def remove_user(self, user):
+        DiningParticipation.objects.get(user=user, dining_list=self).delete()
+
+        if user == self.owner:
+            self.owner = None
+
+        self.save()
     def __str__(self):
         return str(self.relevant_date)
 class DiningParticipation(models.Model):
