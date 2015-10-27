@@ -128,6 +128,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
 
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+
 try:
     execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
 except:

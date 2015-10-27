@@ -78,7 +78,7 @@ class RegisterView(View):
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
             url)
 
-        user.email_user(subject, body, "watson@kotkt.nl")
+        user.email_user(subject, body, from_email="watson@kotkt.nl")
 
     def get(self, request):
         form = RegisterForm()
@@ -127,7 +127,7 @@ class ActivationView(View):
 
     def get_user(self, user_id):
         try:
-            return User.objects.get(id=user_id)
+            return User.objects.get(detailsmodel__uid=user_id)
         except:
             raise Http404
 
