@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-4 col-sm-12">
                         {% if dinnerlist.owner %}
-                            <p><a href="#" class="btn btn-success btn-block">Eetlijst van {{ dinnerlist.owner.get_full_name }}</a></p>
+                            <p><a href="#" class="btn btn-success btn-block" disabled="true">Eetlijst van {{ dinnerlist.owner.get_full_name }}</a></p>
                         {% else %}
                             <a href="{% url 'dining:claim' %}" class="btn btn-danger btn-block">Claim deze eetlijst</a>
                         {% endif %}
