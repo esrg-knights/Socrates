@@ -3,6 +3,8 @@ from crispy_forms.layout import Submit, Layout, Field
 from django import forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+import re
 
 from account.models import DetailsModel
 
@@ -56,13 +58,7 @@ class CompleteRegistrationForm(forms.ModelForm):
         model = DetailsModel
         exclude = ('related_user',)
 
-class RegisterForm(forms.ModelForm):
-    password_repeat = forms.CharField(
-        widget=forms.PasswordInput,
-        required=True,
-        label="Wachtwoord (herhaald)"
-    )
-
+class RegisterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -72,10 +68,90 @@ class RegisterForm(forms.ModelForm):
         self.helper.label_class = 'col-lg-3'
         self.helper.field_class = 'col-lg-8'
 
-        self.helper.add_input(Submit('submit', 'Account aanmaken', css_class="btn-block"))
+        # You can dynamically adjust your layout
+        self.helper.add_input(Submit('submit', 'Register', css_class="btn-block"))
 
-    class Meta:
-        model = User
-        exclude = (
-        "id", "last_login", "is_superuser", "groups", "user_permissions", "is_staff", "is_active", "date_joined")
-        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+    username = forms.CharField(
+        label="Gebruikersnaam",
+        widget=forms.TextInput(attrs={
+            'id': 'username'}
+        ),
+        help_text="/[0-z-+.]+/",
+        error_messages={
+            'characters': "You used characters that were not allowed. The following are allowed: 0-9 A-z . + -.",
+            'taken' : "Your username has already been taken. Please try another one!"
+        }
+    )
+    password = forms.CharField(
+        label="Wachtwoord",
+        widget=forms.PasswordInput(attrs=
+        {
+            'id': 'password'
+        }),
+        error_messages=
+        {
+            'mismatch': "Your password did not match the repeated password!",
+            'length': "Your password needs to be at least 8 characters long",
+            'digit': "Your password needs to contain at least 1 digit",
+            'character': "Your password needs at least 1 letter",
+        }
+    )
+    password_repeat = forms.CharField(
+        label="Wachtwoord (Herhaald)",
+        widget=forms.PasswordInput()
+    )
+    email = forms.CharField(
+        label="Email",
+        widget=forms.EmailInput(),
+        error_messages=
+        {
+            'repeat': 'Your repeated email address did not match. Please make sure they are the same'
+        }
+    )
+    email_repeat = forms.CharField(
+        label="Email (Herhaald)",
+        widget=forms.EmailInput()
+    )
+    first_name = forms.CharField(
+        label="Voornaam"
+    )
+    last_name = forms.CharField(
+        label="Achternaam"
+    )
+
+    def clean(self):
+        if self.cleaned_data['password'] != self.cleaned_data['password_repeat']:
+            raise ValidationError(self.fields['password'].error_messages['mismatch'])
+        if self.cleaned_data['email'] != self.cleaned_data['email_repeat']:
+            raise ValidationError(self.fields['email'].error_messages['repeat'])
+        if len(self.cleaned_data['password']) < 8:
+            raise ValidationError(self.fields['password'].error_messages['length'])
+        if not any(char.isdigit() for char in self.cleaned_data['password']):
+            raise ValidationError(self.fields['password'].error_messages['digit'])
+        if not any(char.isalpha() for char in self.cleaned_data['password']):
+            raise ValidationError(self.fields['password'].error_messages['character'])
+
+
+    def clean_username(self):
+        if re.findall("[0-z-+.]+", self.cleaned_data['username'])[0] != self.cleaned_data['username']:
+            raise ValidationError(self.fields['username'].error_messages['characters'])
+
+        if len(User.objects.filter(username=self.cleaned_data['username'])) > 0:
+            raise ValidationError(self.fields['username'].error_messages['taken'])
+
+        return self.cleaned_data['username']
+
+    def save(self):
+        user = User.objects.create_user(
+            username=self.cleaned_data['username'],
+            password=self.cleaned_data['password'],
+            email=self.cleaned_data['email'],
+            first_name=self.cleaned_data['first_name'],
+            last_name=self.cleaned_data['last_name'],
+        )
+
+        user.is_active = False
+
+        user.save()
+
+        return user

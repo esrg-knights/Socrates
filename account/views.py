@@ -91,10 +91,7 @@ class RegisterView(View):
 
         if form.is_valid():
             if form.cleaned_data['password_repeat'] == form.cleaned_data['password']:
-                user = form.save(commit=False)
-                user.is_active = False
-                user.set_password(form.cleaned_data['password'])
-                user.save()
+                user = form.save()
 
                 details = DetailsModel()
                 details.related_user = user
