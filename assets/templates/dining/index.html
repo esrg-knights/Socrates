@@ -10,7 +10,6 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
-                        {% if participants %}
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -21,10 +20,11 @@
                                     <th>Betaald</th>
                                 </tr>
                                 </thead>
+                                {% if participants %}
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr>
-                                        <td>{{ participant.user }}</td>
+                                        <td>{{ participant.user.get_full_name }}</td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
@@ -60,26 +60,31 @@
                                     </tr>
                                 {% endfor %}
                                 </tbody>
+                                {% else %}
+                                    <tbody>
+                                    <tr>
+                                        <td>Er is nog niemand ingeschreven</td>
+                                    </tr>
+                                    </tbody>
+                                {% endif %}
                             </table>
-                        {% endif %}
                     </div>
                     <div class="col-md-4 col-sm-12">
                         {% if dinnerlist.owner %}
-                            <a href="#" class="btn btn-succes">Deze eetlijst is geclaimd door {{ dinnerlist.owner }}</a>
+                            <p><a href="#" class="btn btn-success btn-block">Eetlijst van {{ dinnerlist.owner.get_full_name }}</a></p>
                         {% else %}
-                            <a href="{% url 'dining:claim' %}" class="btn btn-primary">Deze eetlijst is nog niet
-                                geclaimd! Als je voor eten
-                                zorgt klik
-                                hier</a>
+                            <a href="{% url 'dining:claim' %}" class="btn btn-danger btn-block">Claim deze eetlijst</a>
                         {% endif %}
 
                         {% if user == dinnerlist.owner %}
-                            <button class="btn btn-info">Update deze informate</button>
+                            <button class="btn btn-info btn-block">Update</button>
                         {% endif %}
+
+                        <p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in voor deze eetlijst</a></p>
+
                     </div>
                 </div>
             </form>
-            <a href="{% url 'dining:register' %}">Schrijf je in voor deze eetlijst</a>
         </div>
     </div>
 {% endblock %}

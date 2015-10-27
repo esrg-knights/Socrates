@@ -26,7 +26,7 @@ class LogoutView(View):
 
             messages.success(request, "Uitloggen gelukt!")
 
-            return redirect("account:login")
+            return redirect("dining:index")
 
         messages.info(request, "Je bent nog niet eens ingelogd!")
 
@@ -58,7 +58,7 @@ class LoginView(View):
                     messages.success(request, "Inloggen gelukt!")
                     if len(request.GET) > 0:
                         return redirect(request.GET['next'])
-                    return redirect("account:index")
+                    return redirect("dining:index")
                 else:
                     messages.error(request, "Deze account is niet geactiveerd")
             else:

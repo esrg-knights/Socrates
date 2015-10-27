@@ -84,7 +84,7 @@ class RegistrationTest(SimpleTestCase):
         response = self.client.post("/account/register/",
                                     {'email': "test@test.com", 'username': 'test2', 'password': 'not-test',
                                      'password_repeat': 'test', 'first_name': 'test', 'last_name': 'test'})
-3
+
         self.assertEqual(response.status_code, 200)
 
         self.assertIsNotNone(User.objects.filter(username='test2'))
