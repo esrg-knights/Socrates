@@ -74,7 +74,7 @@ class RegisterView(View):
 
     def send_registation_email(self, user):
         subject = "Registratie afmaken"
-        url = "http://app.kotkt.nl/account/activate/{0}".format(user.details.uid)
+        url = "http://app.kotkt.nl/account/activate/{0}".format(user.detailsmodel.uid)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
             url)
 
@@ -120,7 +120,7 @@ class ActivationView(View):
         user = self.get_user(user_hash)
 
         self.context['new_user'] = user
-        form = CompleteRegistrationForm()
+        form = CompleteRegistrationForm(instance=user.detailsmodel)
 
         self.context['form'] = form
         return render(request, self.template, self.context)
@@ -134,7 +134,7 @@ class ActivationView(View):
     def post(self, request, user_hash):
         user = self.get_user(user_hash)
 
-        form = CompleteRegistrationForm(request.POST)
+        form = CompleteRegistrationForm(request.POST, instance=user.detailsmodel)
 
         if form.is_valid():
             details = form.save(commit=False)
@@ -143,6 +143,9 @@ class ActivationView(View):
             details.related_user.is_active = False
             details.related_user.save()
             details.save()
+
+            user.is_active = True
+            user.save()
 
             messages.success(request, "Je account is geactiveerd!")
             return redirect("account:login")
