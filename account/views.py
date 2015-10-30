@@ -99,6 +99,9 @@ class RegisterView(View):
 
                 self.send_registation_email(user)
 
+                messages.success(request,
+                                 "Er is een verificatie email gestuurd naar je emailadres. Kijk hier eerst naar")
+
 
                 return redirect("account:login")
 
