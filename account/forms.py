@@ -1,10 +1,11 @@
+import re
+
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import Submit, Layout, Field
 from django import forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-import re
 
 from account.models import DetailsModel
 
@@ -120,6 +121,14 @@ class RegisterForm(forms.Form):
     )
 
     def clean(self):
+        try:
+            assert self.cleaned_data['password'] is not None
+            assert self.cleaned_data['password_repeat'] is not None
+            assert self.cleaned_data['email'] is not None
+            assert self.cleaned_data['email_repeat'] is not None
+        except:
+            raise ValidationError("Some fields were not filled in"
+                                  "")
         if self.cleaned_data['password'] != self.cleaned_data['password_repeat']:
             raise ValidationError(self.fields['password'].error_messages['mismatch'])
         if self.cleaned_data['email'] != self.cleaned_data['email_repeat']:
