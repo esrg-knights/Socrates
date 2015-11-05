@@ -1,14 +1,13 @@
 # Create your views here.
 import re
+from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponseNotAllowed
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from datetime import datetime
-
 
 from dining.models import DiningList, DiningParticipation, DiningStats
 
@@ -80,7 +79,13 @@ class RegisterView(View):
         else:
             # See if the user is already registered
             obj, ret = DiningParticipation.objects.get_or_create(user=request.user, dining_list=dinnerlist)
+            print len(DiningParticipation.objects.filter(dining_list=dinnerlist))
 
+            if len(DiningParticipation.objects.filter(dining_list=dinnerlist)) == 1:
+                send_mail("Er zijn inschrijvingen op de digitale eetlijst",
+                          "Op het moment is dit {0}".format(obj.user.get_full_name()),
+                          "watson@kotkt.nl",
+                          ["dinner@kotkt.nl", ])
             if ret:
                 messages.success(request, "Je bent succesvol ingeschreven voor deze eetlijst")
             else:
