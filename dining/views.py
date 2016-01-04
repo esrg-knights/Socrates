@@ -27,6 +27,8 @@ class IndexView(View):
         self.context['participants'] = self.context['dinnerlist'].get_participants().prefetch_related()
         self.context['thirds'] = self.context['dinnerlist'].get_thirds()
 
+        self.context['total'] = self.context['thirds'].count() + self.context['participants'].count()
+
         return render(request, self.template, self.context)
 
     @method_decorator(login_required)
