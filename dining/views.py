@@ -1,11 +1,11 @@
 # Create your views here.
 import re
-from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
+from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
@@ -73,8 +73,8 @@ class RegisterView(View):
         dinnerlist = DiningList.get_latest()
 
         #14:00 vanwege tijdzones
-        latest_time = datetime.now().replace(hour=14, minute=0, second=0)
-        if datetime.now().time() > latest_time.time():
+
+        if datetime.now().time() > dinnerlist.closing_time:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
         else:
             # See if the user is already registered

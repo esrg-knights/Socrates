@@ -48,7 +48,6 @@ INSTALLED_APPS = (
     'crispy_forms',
     'account',
     'dining',
-    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (

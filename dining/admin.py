@@ -11,7 +11,7 @@ class DiningListAdmin(admin.ModelAdmin):
             'fields': ('owner',)
         }),
         ("Datum", {
-            'fields': ('relevant_date',)
+            'fields': ('relevant_date', 'closing_time')
         }),
     )
 
@@ -41,6 +41,7 @@ class DiningStatsAdmin(admin.ModelAdmin):
             'fields' : ('total_participated', 'total_helped')
         })
     )
+
 admin.site.register(DiningList, DiningListAdmin)
 admin.site.register(DiningParticipation, DiningParticipationAdmin)
 admin.site.register(DiningStats, DiningStatsAdmin)

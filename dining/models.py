@@ -1,14 +1,15 @@
 # Create your models here.
 from django.contrib.auth.models import User
 from django.db import models
-from django.dispatch import receiver
 from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 from django.utils.datetime_safe import datetime
 
 
 class DiningList(models.Model):
     relevant_date = models.DateField()
     owner = models.ForeignKey(User, related_name="owned_by", null=True, blank=True)
+    closing_time = models.TimeField(default="15:00")
 
     def get_participants(self):
         return DiningParticipation.objects.filter(dining_list=self)
@@ -36,8 +37,11 @@ class DiningList(models.Model):
             self.owner = None
 
         self.save()
+
     def __str__(self):
         return str(self.relevant_date)
+
+
 class DiningParticipation(models.Model):
     dining_list = models.ForeignKey(DiningList)
     user = models.ForeignKey(User)
