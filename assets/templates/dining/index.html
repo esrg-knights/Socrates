@@ -84,12 +84,16 @@
                         <p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in voor
                             deze eetlijst</a></p>
                         <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a></p>
-                        <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a> </p>
+                        <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a></p>
 
                         <h3>Niet leden:</h3>
-                        {% for third in thirds %}
-                            <p><b>{{ third.name}}</b> (door {{ third.added_by.get_full_name }})</p>
-                        {% endfor %}
+                        {% if third %}
+                            {% for third in thirds %}
+                                <p><b>{{ third.name }}</b> (door {{ third.added_by.get_full_name }})</p>
+                            {% endfor %}
+                        {% else %}
+                            <p>Geen niet-leden!</p>
+                        {% endif %}
                     </div>
                 </div>
             </form>
