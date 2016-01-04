@@ -45,3 +45,4 @@ class DiningStatsAdmin(admin.ModelAdmin):
 admin.site.register(DiningList, DiningListAdmin)
 admin.site.register(DiningParticipation, DiningParticipationAdmin)
 admin.site.register(DiningStats, DiningStatsAdmin)
+admin.site.register(DiningParticipationThird)

@@ -9,7 +9,9 @@ from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
+from dining.forms import DiningThirdForm
 from dining.models import DiningList, DiningParticipation, DiningStats
+
 
 class IndexView(View):
     context = {}
@@ -23,6 +25,7 @@ class IndexView(View):
             self.context['dinnerlist'] = DiningList.get_latest()
 
         self.context['participants'] = self.context['dinnerlist'].get_participants().prefetch_related()
+        self.context['thirds'] = self.context['dinnerlist'].get_thirds()
 
         return render(request, self.template, self.context)
 
@@ -72,7 +75,7 @@ class RegisterView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
-        #14:00 vanwege tijdzones
+        # 14:00 vanwege tijdzones
 
         if datetime.now().time() > dinnerlist.closing_time:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
@@ -131,11 +134,41 @@ class RemoveView(View):
 
         return redirect("dining:index")
 
+
 class StatView(View):
     template = "dining/stats.html"
     context = {}
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser,"/dining/"))
+    @method_decorator(user_passes_test(lambda u: u.is_superuser, "/dining/"))
     def get(self, request):
         self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
+        return render(request, self.template, self.context)
+
+
+class AddThirdView(View):
+    template = "dining/third.html"
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        self.context['form'] = DiningThirdForm()
+
+        return render(request, self.template, self.context)
+
+    @method_decorator(login_required)
+    def post(self, request):
+        form = DiningThirdForm(request.POST)
+
+        if form.is_valid():
+            model = form.save(commit=False)
+
+            model.added_by = request.user
+            model.dining_list = DiningList.get_latest()
+
+            model.save()
+
+            return redirect("dining:index")
+
+        self.context['form'] = form
+
         return render(request, self.template, self.context)

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+<div class="col-lg-12">
+    <h1 class="page-header">Derde toeveogen</h1>
+    <p>Voeg een niet-knights lid toe. Jij wordt hiervoor verantwoordelijk gehouden!</p>
+    {% crispy form %}
+</div>
+</div>
+{% endblock %}
