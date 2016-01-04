@@ -87,7 +87,7 @@
                         <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a></p>
 
                         <h3>Niet leden:</h3>
-                        {% if third %}
+                        {% if thirds %}
                             {% for third in thirds %}
                                 <p><b>{{ third.name }}</b> (door {{ third.added_by.get_full_name }})</p>
                             {% endfor %}
