@@ -39,7 +39,7 @@ class LoginView(View):
 
     def get(self, request):
         if request.user.is_active:
-            messages.info(request, "Je bent al ingelod!")
+            messages.info(request, "Je bent al ingelogd!")
             return redirect("account:index")
 
         form = LoginForm()
