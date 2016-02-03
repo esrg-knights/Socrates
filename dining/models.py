@@ -42,7 +42,7 @@ class DiningList(models.Model):
         self.save()
 
     def get_allergies(self):
-        return [x.get_allergy() for x in self.get_participants()]
+        return [x.get_allergy() for x in self.get_participants() if x.get_allergy is not ""]
 
     def __str__(self):
         return str(self.relevant_date)
