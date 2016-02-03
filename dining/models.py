@@ -59,7 +59,10 @@ class DiningParticipation(models.Model):
     paid = models.BooleanField(default=False)
 
     def get_allergy(self):
-        return "{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
+        if self.user.detailsmodel.allergies is not "":
+            return "{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
+        else:
+            return ""
 
     class Meta:
         ordering = ("user__first_name",)
