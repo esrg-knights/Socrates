@@ -60,7 +60,7 @@ class DiningParticipation(models.Model):
 
     def get_allergy(self):
         if self.user.detailsmodel.allergies is not "":
-            return "{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
+            return "{}: {}".format(self.user.get_full_name(), str(self.user.detailsmodel.allergies))
         else:
             return ""
 
