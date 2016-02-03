@@ -13,7 +13,7 @@ class DetailsModel(models.Model):
     postcode = models.CharField(max_length=10, null=True)
 
     telefoonnummer = models.CharField(max_length=20, null=True)
-    geboortedatum = models.DateField(null=True, help_text="Formaat is MM/DD/YYYY. Klachten over het formaat kunnen naar nietzeuren@kotkt.nl")
+    geboortedatum = models.DateField(null=True, help_text="Formaat is DD-MM-YYYY")
 
     instituut = models.CharField(max_length=5, choices=(
         ('TUE', "Technische Universiteit Eindhoven"),
