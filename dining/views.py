@@ -84,7 +84,7 @@ class RegisterView(View):
         else:
             # See if the user is already registered
             obj, ret = DiningParticipation.objects.get_or_create(user=request.user, dining_list=dinnerlist)
-            print len(DiningParticipation.objects.filter(dining_list=dinnerlist))
+            print(len(DiningParticipation.objects.filter(dining_list=dinnerlist)))
 
             if len(DiningParticipation.objects.filter(dining_list=dinnerlist)) == 1:
                 send_mail("Er zijn inschrijvingen op de digitale eetlijst",

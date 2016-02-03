@@ -130,7 +130,7 @@ MESSAGE_TAGS = {
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 
 try:
-    execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
+    exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
 except:
     copyfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.sample.py")), expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
-    execfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
+    exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
