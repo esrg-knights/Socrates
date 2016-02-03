@@ -55,11 +55,16 @@ class DiningParticipation(models.Model):
 
     paid = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ("user__first_name",)
+
+
 class DiningParticipationThird(models.Model):
     dining_list = models.ForeignKey(DiningList)
     added_by = models.ForeignKey(User)
     name = models.CharField(max_length=30)
     paid = models.BooleanField(default=False)
+
 
 class DiningStats(models.Model):
     user = models.ForeignKey(User)
@@ -100,4 +105,3 @@ class DiningStats(models.Model):
         stats.total_participated += 1
 
         stats.save()
-

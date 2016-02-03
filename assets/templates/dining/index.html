@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load staticfiles %}
+
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
@@ -99,4 +101,17 @@
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="application/javascript" src="{% static 'datatables/js/jquery.dataTables.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables/js/dataTables.bootstrap.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('nope').DataTable({
+                "paging": false,
+                "searching": false
+            });
+        });
+    </script>
 {% endblock %}
