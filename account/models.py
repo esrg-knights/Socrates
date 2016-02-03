@@ -23,3 +23,5 @@ class DetailsModel(models.Model):
     ), default='TUE')
 
     kaartnummer = models.CharField(max_length=20, blank=True, null=True)
+
+    allergies = models.TextField(null=True, blank=True)

@@ -41,6 +41,9 @@ class DiningList(models.Model):
 
         self.save()
 
+    def get_allergies(self):
+        return [x.get_allergy() for x in self.get_participants()]
+
     def __str__(self):
         return str(self.relevant_date)
 
@@ -54,6 +57,9 @@ class DiningParticipation(models.Model):
     work_groceries = models.BooleanField(default=False)
 
     paid = models.BooleanField(default=False)
+
+    def get_allergy(self):
+        return "{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
 
     class Meta:
         ordering = ("user__first_name",)

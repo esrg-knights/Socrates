@@ -88,14 +88,10 @@
                         <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a></p>
                         <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a></p>
 
-                        <h3>Niet leden:</h3>
-                        {% if thirds %}
-                            {% for third in thirds %}
-                                <p><b>{{ third.name }}</b> (door {{ third.added_by.get_full_name }})</p>
-                            {% endfor %}
-                        {% else %}
-                            <p>Geen niet-leden!</p>
-                        {% endif %}
+                        <h3>Allergien:</h3>
+                        {% for allergy in dinnerlist.get_allergies %}
+                            <p>{{ allergy }}</p>
+                        {% endfor %}
                     </div>
                 </div>
             </form>
