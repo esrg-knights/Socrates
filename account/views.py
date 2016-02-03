@@ -8,7 +8,7 @@ from django.views.generic import View
 from django.contrib import messages
 
 # Create your views here
-from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm
+from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm
 from account.models import DetailsModel
 
 
@@ -76,7 +76,7 @@ class RegisterView(View):
         subject = "Registratie afmaken"
         url = "http://app.kotkt.nl/account/activate/{0}".format(user.detailsmodel.uid)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
-            url)
+                url)
 
         user.email_user(subject, body, from_email="watson@kotkt.nl")
 
@@ -102,7 +102,6 @@ class RegisterView(View):
                 messages.success(request,
                                  "Er is een verificatie email gestuurd naar je emailadres. Kijk hier eerst naar")
 
-
                 return redirect("account:login")
 
             messages.error(request, "De wachtwoorden kwamen niet overeen!")
@@ -119,6 +118,10 @@ class ActivationView(View):
     def get(self, request, user_hash):
         user = self.get_user(user_hash)
 
+        if user.is_active:
+            messages.error(request, "Account is al geactiveerd")
+            return redirect("dining:index")
+
         self.context['new_user'] = user
         form = CompleteRegistrationForm(instance=user.detailsmodel)
 
@@ -133,6 +136,10 @@ class ActivationView(View):
 
     def post(self, request, user_hash):
         user = self.get_user(user_hash)
+
+        if user.is_active:
+            messages.error(request, "Account is al geactiveerd")
+            return redirect("dining:index")
 
         form = CompleteRegistrationForm(request.POST, instance=user.detailsmodel)
 
@@ -153,3 +160,26 @@ class ActivationView(View):
         self.context['form'] = form
 
         return render(request, self.template, self.context)
+
+
+class DetailsView(View):
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        print(request.user)
+        self.context['form'] = DetailsForm(instance=request.user.detailsmodel)
+
+        return render(request, "account/details.html", self.context)
+
+    @method_decorator(login_required)
+    def post(self, request):
+        form = DetailsForm(request.POST, instance=request.user.detailsmodel)
+
+        if form.is_valid():
+            form.save()
+            return self.get(request)
+
+        self.context['form'] = form
+
+        return render(request, "account/details.html", self.context)
