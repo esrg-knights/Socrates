@@ -70,6 +70,14 @@
                                 </tbody>
                             {% endif %}
                         </table>
+                        <h3>Niet leden</h3>
+                        {% if thirds %}
+                            {% for third in thirds %}
+                                {{ third }}
+                            {% endfor %}
+                        {% else %}
+                            <p>Geen niet leden ingeschreven</p>
+                        {% endif %}
                     </div>
                     <div class="col-md-4 col-sm-12">
                         {% if dinnerlist.owner %}
