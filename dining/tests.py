@@ -2,13 +2,13 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseNotAllowed
-from django.test import SimpleTestCase
+from django.test import TransactionTestCase, TransactionTestCase, TestCase
 from django.utils.timezone import datetime
 
 from dining.models import DiningStats, DiningList, DiningParticipation
 
 
-class DiningStatsTest(SimpleTestCase):
+class DiningStatsTest(TransactionTestCase):
     def setUp(self):
         self.testUser = User.objects.create_user("test", "test", "test@test.com")
         self.testUser.save()
@@ -85,7 +85,7 @@ class DiningStatsTest(SimpleTestCase):
         self.assertEqual(dstats.total_participated, 1)
 
 
-class DiningListTest(SimpleTestCase):
+class DiningListTest(TransactionTestCase):
     def setUp(self):
         self.testUser = User.objects.create_user("test", "test@test.com", "test")
         self.testUser.save()
@@ -128,7 +128,7 @@ class DiningListTest(SimpleTestCase):
         self.assertEqual(dlist.relevant_date, datetime.now().date())
 
 
-class ClaimViewTest(SimpleTestCase):
+class ClaimViewTest(TransactionTestCase):
     view_url = reverse("dining:claim")
 
     def setUp(self):
@@ -198,7 +198,7 @@ class ClaimViewTest(SimpleTestCase):
         self.assertEqual(r.status_code, 302)
 
 
-class StatsViewTest(SimpleTestCase):
+class StatsViewTest(TestCase):
     def setUp(self):
         self.testUser = User.objects.create_user("test", "test@test.com", "test")
         self.testUser.save()
@@ -224,5 +224,5 @@ class StatsViewTest(SimpleTestCase):
 
     def test_cannot_use_post_method(self):
         self.client.post(self.view_url)
-        self.assertTrue(self.client.post(self.view_url) > 400, "Managed to post on a page without post")
+        self.assertTrue(self.client.post(self.view_url).status_code > 400, "Managed to post on a page without post")
 
