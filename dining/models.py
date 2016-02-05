@@ -9,7 +9,7 @@ from django.utils.datetime_safe import datetime
 class DiningList(models.Model):
     relevant_date = models.DateField()
     owner = models.ForeignKey(User, related_name="owned_by", null=True, blank=True)
-    closing_time = models.TimeField(default="15:00")
+    closing_time = models.TimeField(default="14:00")
 
     def get_participants(self):
         return DiningParticipation.objects.filter(dining_list=self).prefetch_related()
