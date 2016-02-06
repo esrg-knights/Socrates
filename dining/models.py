@@ -60,7 +60,7 @@ class DiningParticipation(models.Model):
     paid = models.BooleanField(default=False)
 
     def get_allergy(self):
-        if self.user.detailsmodel.allergies is not "":
+        if self.user.detailsmodel.allergies is not u"":
             return "{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
         else:
             return ""
