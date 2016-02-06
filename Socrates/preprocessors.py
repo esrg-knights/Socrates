@@ -9,6 +9,6 @@ def basic_stats(request):
 
 def random_factor(request):
     val = random.randint(0, 100)
-    ret = True if val == 0 else False
+    ret = True if val == 1 else False
 
     return {"easter_egg_factor": ret}

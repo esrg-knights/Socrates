@@ -26,7 +26,7 @@
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr>
-                                        <td>{{ participant.user.get_full_name }}</td>
+                                        <td>{{ participant.user.get_full_name }} ({{ participant.user.detailsmodel.nickname }})</td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
