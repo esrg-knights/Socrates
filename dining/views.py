@@ -9,7 +9,7 @@ from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from dining.forms import DiningThirdForm
+from dining.forms import DiningThirdForm, DiningThirdNewForm
 from dining.models import DiningList, DiningParticipation, DiningStats
 
 
@@ -147,23 +147,22 @@ class AddThirdView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        self.context['form'] = DiningThirdForm()
+        dinnerlist = DiningList.get_latest()
+
+        if datetime.now().time() > dinnerlist.closing_time:
+            messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
+            return redirect("dining:index")
+
+        self.context['form'] = DiningThirdNewForm()
 
         return render(request, self.template, self.context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = DiningThirdForm(request.POST)
+        form = DiningThirdNewForm(request.POST)
 
         if form.is_valid():
-            model = form.save(commit=False)
-
-            model.added_by = request.user
-            model.dining_list = DiningList.get_latest()
-
-            model.save()
-
-            return redirect("dining:index")
+            form.save(request)
 
         self.context['form'] = form
 

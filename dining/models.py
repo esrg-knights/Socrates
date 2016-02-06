@@ -51,6 +51,7 @@ class DiningList(models.Model):
 class DiningParticipation(models.Model):
     dining_list = models.ForeignKey(DiningList)
     user = models.ForeignKey(User)
+    added_by = models.ForeignKey(User, null=True, blank=True, related_name="addedby")
 
     work_dishes = models.BooleanField(default=False)
     work_cook = models.BooleanField(default=False)
