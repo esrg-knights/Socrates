@@ -98,7 +98,7 @@
 
                         <h3>Allergien:</h3>
                         {% for allergy in dinnerlist.get_allergies %}
-                            <p>{{ allergy }}</p>
+                            <p>{{ allergy|safe }}</p>
                         {% endfor %}
                     </div>
                 </div>
