@@ -47,7 +47,7 @@ class DiningThirdNewForm(forms.Form):
         """
         dinnerlist = DiningList.get_latest()
 
-        if self.data['user'] is not "":
+        if self.data['user'] is not u"":
             obj, ret = DiningParticipation.objects.get_or_create(dining_list=dinnerlist, user=User.objects.get(id=self.data['user']))
 
             if ret:
