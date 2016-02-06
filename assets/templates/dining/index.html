@@ -26,7 +26,7 @@
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr>
-                                        <td>{{ participant.user.get_full_name }} ({{ participant.user.detailsmodel.nickname }})</td>
+                                        <td>{{ participant.user.get_full_name }} {% if participant.user.detailsmodel.nickname %}({{ participant.user.detailsmodel.nickname }}) {% endif %}</td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
