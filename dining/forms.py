@@ -25,6 +25,11 @@ class DiningThirdForm(forms.ModelForm):
         exclude = ("added_by", "dining_list", "paid")
 
 
+class UserChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.get_full_name()
+
+
 class DiningThirdNewForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(DiningThirdNewForm, self).__init__(*args, **kwargs)
@@ -35,7 +40,7 @@ class DiningThirdNewForm(forms.Form):
         self.helper.field_class = 'col-lg-8'
         self.helper.add_input(Submit('submit', 'Registreren', css_class="btn-block"))
 
-    user = forms.ModelChoiceField(queryset=User.objects.all(), required=False,
+    user = UserChoiceField(queryset=User.objects.all(), required=False,
                                   help_text="Gebruiker die bij de eetlijst wil")
 
     third = forms.CharField(required=False, help_text="Niet lid die bij de eetlijst wil.")
