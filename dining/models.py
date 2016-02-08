@@ -2,7 +2,7 @@
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import models
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.utils.datetime_safe import datetime
 
@@ -59,6 +59,9 @@ class DiningParticipation(models.Model):
     work_groceries = models.BooleanField(default=False)
 
     paid = models.BooleanField(default=False)
+
+    def has_contributed(self):
+        return self.work_cook is True or self.work_dishes is True
 
     def get_allergy(self):
         if self.user.detailsmodel.allergies is not u"":
@@ -123,3 +126,15 @@ class DiningStats(models.Model):
         stats.total_participated += 1
 
         stats.save()
+
+    @receiver(post_delete, sender=DiningParticipation)
+    def remove_old_participation(sender, instance=None, **kwargs):
+        stats = DiningStats.objects.get_or_create(user=instance.user)[0]
+
+        if instance.has_contributed():
+            stats.total_helped -= 1
+
+        stats.total_participated -= 1
+
+        stats.save()
+
