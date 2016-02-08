@@ -4,8 +4,12 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Hallo {{ user.first_name }}</h1>
-
-            <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>Eetlijst: {{ dining_stats.get_percentage }}%</h3>
+            {% if dining_stats.total_participated > 5 %}
+                <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>
+                    Eetlijst: {{ dining_stats.get_percentage }}%</h3>
+            {% else %}
+                <h3>Je moet meer als 5 keer mee-eten om statistieken te krijgen. Je hebt nu {{ dining_stats.total_participated }} keer mee-gegeten.</h3>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
