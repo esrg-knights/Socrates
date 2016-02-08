@@ -10,12 +10,16 @@ from django.contrib import messages
 # Create your views here
 from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm
 from account.models import DetailsModel
+from dining.models import DiningStats
 
 
 class IndexView(View):
     @method_decorator(login_required)
     def get(self, request):
         context = {}
+
+        context['dining_stats'] = DiningStats.objects.get(user=request.user)
+
         return render(request, 'account/index.html', context)
 
 
