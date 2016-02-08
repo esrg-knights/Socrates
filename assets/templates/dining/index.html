@@ -26,7 +26,9 @@
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr>
-                                        <td>{{ participant.user.get_full_name }} {% if participant.user.detailsmodel.nickname %}({{ participant.user.detailsmodel.nickname }}) {% endif %}</td>
+                                        <td>{{ participant.user.get_full_name }}
+                                            {% if participant.user.detailsmodel.nickname %}(
+                                                {{ participant.user.detailsmodel.nickname }}) {% endif %}</td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
@@ -80,24 +82,32 @@
                         {% endif %}
                     </div>
                     <div class="col-md-4 col-sm-12">
-                        {% if dinnerlist.owner %}
-                            <p><a href="#" class="btn btn-success btn-block" disabled="true">Eetlijst
-                                van {{ dinnerlist.owner.get_full_name }}</a></p>
+
+
+                        {% if my_participation %}
+                            {% if dinnerlist.owner %}
+                                <p><a href="#" class="btn btn-success btn-block" disabled="true">Eetlijst
+                                    van {{ dinnerlist.owner.get_full_name }}</a></p>
+                            {% else %}
+                                <a href="{% url 'dining:claim' %}" class="btn btn-danger btn-block">Claim deze
+                                    eetlijst</a>
+                            {% endif %}
+
+                            {% if user == dinnerlist.owner %}
+                                <button class="btn btn-info btn-block">Update</button>
+                            {% endif %}
+                            <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a>
+                            </p>
                         {% else %}
-                            <a href="{% url 'dining:claim' %}" class="btn btn-danger btn-block">Claim deze eetlijst</a>
+                            <p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in
+                                voor
+                                deze eetlijst</a></p>
                         {% endif %}
-
-                        {% if user == dinnerlist.owner %}
-                            <button class="btn btn-info btn-block">Update</button>
-                        {% endif %}
-
-                        <p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in voor
-                            deze eetlijst</a></p>
-                        <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a></p>
                         <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a></p>
-                    {% if user.is_superuser %}
-                        <p><a href="{% url 'dining:cancel' %}">Zeg deze eetlijst af</a> </p>
-                    {% endif %}
+                        {% if user.is_superuser %}
+                            <p><a href="{% url 'dining:cancel' %}" class="btn btn-block btn-danger">Zeg deze eetlijst
+                                af</a></p>
+                        {% endif %}
 
                         <h3>Allergien:</h3>
                         {% for allergy in dinnerlist.get_allergies %}

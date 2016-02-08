@@ -24,6 +24,9 @@ class IndexView(View):
         else:
             self.context['dinnerlist'] = DiningList.get_latest()
 
+        self.context['my_participation'] = True if DiningParticipation.objects.filter(user=request.user,
+                                                                                     dining_list=self.context[
+                                                                                         'dinnerlist']).count() == 1 else False
         self.context['participants'] = self.context['dinnerlist'].get_participants().prefetch_related()
         self.context['thirds'] = self.context['dinnerlist'].get_thirds()
 
@@ -175,7 +178,8 @@ class CancelView(View):
         if not request.user.is_superuser:
             messages.error("Je hebt hier geen privileges voor!")
             return redirect("dining:index")
-        send_mail("Eetlijst is afgezegd", "{} heeft deze afgezegd".format(request.user.get_full_name()), "watson@kotkt.nl", ("bestuur@kotkt.nl",))
+        send_mail("Eetlijst is afgezegd", "{} heeft deze afgezegd".format(request.user.get_full_name()),
+                  "watson@kotkt.nl", ("bestuur@kotkt.nl",))
         [part.cancel() for part in DiningList.get_latest().get_participants()]
 
         messages.success(request, "Eetlijst is afgezegd")
