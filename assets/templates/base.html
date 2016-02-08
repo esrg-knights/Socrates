@@ -42,6 +42,7 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'dining:index' %}">Eetlijst</a></li>
+                <li><a href="{% url 'news:index' %}">Nieuws</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -52,10 +53,10 @@
                             {% if user.is_superuser %}
                                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a> </li>
+                                <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a></li>
                                 <li class="divider"></li>
                             {% endif %}
-                            <li><a href="{% url 'account:settings' %}">Instellingen</a> </li>
+                            <li><a href="{% url 'account:settings' %}">Instellingen</a></li>
                             <li><a href="{% url 'account:logout' %}">Logout</a></li>
                         </ul>
                     </li>
@@ -75,6 +76,12 @@
         </div>
     {% endfor %}
 {% endif %}
+{% if latest_post %}
+    <div class="alert alert-default alert-dismissible" role="alert" style="margin-top: -20px">
+
+        <p><a href="{% url 'news:index' %}">{{ latest_post.title }}</a></p>
+    </div>
+{% endif %}
 
 <div class="container" style="margin-top: -20px">
     <div class="row">
@@ -88,11 +95,13 @@
             </div>
         </div>
     </div>
-<div class="row">
-    <div class="col-lg-12">
-        <p style='font-size: 36px; {% if easter_egg_factor %}font-family: comicsans {% endif %}' class="text-center">Bij problemen, bereik me via <a href="http://telegram.me/requinard">Telegram</a> of <a href="mailto:daviddiks.kotkt@gmail.com">Email</a></p>
+    <div class="row">
+        <div class="col-lg-12">
+            <p style='font-size: 36px; {% if easter_egg_factor %}font-family: comicsans {% endif %}'
+               class="text-center">Bij problemen, bereik me via <a href="http://telegram.me/requinard">Telegram</a> of
+                <a href="mailto:daviddiks.kotkt@gmail.com">Email</a></p>
+        </div>
     </div>
-</div>
 </div>
 <!-- JS -->
 <!-- JQUERY -->

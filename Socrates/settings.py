@@ -48,7 +48,9 @@ INSTALLED_APPS = (
     'crispy_forms',
     'account',
     'dining',
-    'debug_toolbar'
+    'debug_toolbar',
+    'news',
+    'markdown_deux'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,7 +78,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'Socrates.preprocessors.basic_stats',
-                'Socrates.preprocessors.random_factor'
+                'Socrates.preprocessors.random_factor',
+                'Socrates.preprocessors.get_latest_news',
             ],
         },
     },
