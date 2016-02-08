@@ -9,13 +9,16 @@ class Post(models.Model):
     title = models.CharField(max_length=300)
     title_slug = models.CharField(max_length=300, null=True, blank=True)
 
-    date_posted = models.DateTimeField(auto_created=True)
+    date_posted = models.DateTimeField(null=True, blank=True)
     date_last_edited = models.DateTimeField(null=True, blank=True)
 
     body = models.TextField(help_text="Markdown is enabled")
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        if self.date_posted is None:
+            self.date_posted = datetime.now()
+
         self.title_slug = slugify(self.title)
         self.date_last_edited = datetime.now()
 

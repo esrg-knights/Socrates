@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+{% load humanize %}
+
 <!doctype html>
 <html lang="nl">
 <head>
@@ -79,7 +81,7 @@
 {% if latest_post %}
     <div class="alert alert-default alert-dismissible" role="alert" style="margin-top: -20px">
 
-        <p><a href="{% url 'news:index' %}">{{ latest_post.title }}</a></p>
+        <p><a href="{% url 'news:index' %}">{{ latest_post.title }} - {{ latest_post.date_posted|naturalday }}</a></p>
     </div>
 {% endif %}
 
