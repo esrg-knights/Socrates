@@ -1,5 +1,6 @@
 # Create your models here.
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
@@ -64,6 +65,10 @@ class DiningParticipation(models.Model):
             return u"{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
         else:
             return ""
+
+    def cancel(self):
+        send_mail("De eetlijst van {} is afgezegd".format(self.dining_list.relevant_date), "Er is niemand gevonden die wil koken. Wil je dit toch doen? Stuur dan een berichtje naar het bestuur", "watson@kotkt.nl", (self.user.email,))
+        self.delete()
 
     class Meta:
         ordering = ("user__first_name",)

@@ -10,5 +10,6 @@ urlpatterns = patterns(
     url(r'^stats/$', StatView.as_view(), name="stats"),
     url(r'^remove/$', RemoveView.as_view(), name="remove"),
     url(r'^extra/$', AddThirdView.as_view(), name="extra"),
+    url(r'^cancel/$', CancelView.as_view(), name="cancel"),
     url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', IndexView.as_view(), name="index_specific"),
 )

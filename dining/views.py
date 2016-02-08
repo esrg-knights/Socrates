@@ -167,3 +167,17 @@ class AddThirdView(View):
         self.context['form'] = form
 
         return render(request, self.template, self.context)
+
+
+class CancelView(View):
+    @method_decorator(login_required())
+    def get(self, request):
+        if not request.user.is_superuser:
+            messages.error("Je hebt hier geen privileges voor!")
+            return redirect("dining:index")
+        send_mail("Eetlijst is afgezegd", "{} heeft deze afgezegd".format(request.user.get_full_name()), "watson@kotkt.nl", ("bestuur@kotkt.nl",))
+        [part.cancel() for part in DiningList.get_latest().get_participants()]
+
+        messages.success(request, "Eetlijst is afgezegd")
+
+        return redirect("dining:index")

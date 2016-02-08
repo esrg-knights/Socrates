@@ -95,6 +95,9 @@
                             deze eetlijst</a></p>
                         <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a></p>
                         <p><a href="{% url 'dining:extra' %}">Niet-leden inschrijven</a></p>
+                    {% if user.is_superuser %}
+                        <p><a href="{% url 'dining:cancel' %}">Zeg deze eetlijst af</a> </p>
+                    {% endif %}
 
                         <h3>Allergien:</h3>
                         {% for allergy in dinnerlist.get_allergies %}
