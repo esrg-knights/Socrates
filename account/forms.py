@@ -180,3 +180,41 @@ class DetailsForm(forms.ModelForm):
     class Meta:
         model = DetailsModel
         exclude = ("related_user",)
+
+
+class PasswordChangeRequestForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(PasswordChangeRequestForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.add_input(Submit('submit', 'Opslaan', css_class="btn-block"))
+
+    email = forms.EmailField(
+            label="Email adres"
+    )
+
+
+class PasswordChangeForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(PasswordChangeForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        self.helper.add_input(Submit('submit', 'Opslaan', css_class="btn-block"))
+
+    password = forms.CharField(widget=forms.PasswordInput)
+    password_repeat = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        super(PasswordChangeForm, self).clean()
+        if self.cleaned_data['password'] != self.cleaned_data['password_repeat']:
+            raise ValidationError("Passwords did not match")

@@ -2,14 +2,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django.contrib import messages
 
 # Create your views here
-from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm
-from account.models import DetailsModel
+from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm, \
+    PasswordChangeRequestForm, PasswordChangeForm
+from account.models import DetailsModel, PasswordChangeRequestModel
 from dining.models import DiningStats
 
 
@@ -187,3 +188,49 @@ class DetailsView(View):
         self.context['form'] = form
 
         return render(request, "account/details.html", self.context)
+
+
+class PasswordChangeView(View):
+    context = {}
+    template_name = "account/password_change.html"
+
+    def get(self, request, token=None):
+        if token is None:
+            self.context['form'] = PasswordChangeRequestForm()
+        else:
+            self.context['form'] = PasswordChangeForm()
+
+        return render(request, self.template_name, self.context)
+
+    def post(self, request, token=None):
+        if token is None:
+            form = PasswordChangeRequestForm(request.POST)
+
+            if form.is_valid():
+                user = get_object_or_404(User, email=form.cleaned_data['email'])
+                obj, ret = PasswordChangeRequestModel.objects.get_or_create(user=user)
+                messages.success(request, "Successfully created a password change request")
+                obj.send_change_mail()
+
+                return redirect("account:index")
+            else:
+                self.contex['form'] = form
+        else:
+            form = PasswordChangeForm(request.POST)
+
+            if form.is_valid():
+                request_form = get_object_or_404(PasswordChangeRequestModel, token=token)
+
+                request_form.user.set_password(form.cleaned_data['password'])
+
+                request_form.user.save()
+
+                messages.success(request, "Succesfully changed your password")
+
+                request_form.delete()
+
+                return redirect("account:index")
+            else:
+                self.context['form'] = form
+
+        return render(request, self.template_name, self.context)
