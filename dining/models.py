@@ -46,7 +46,7 @@ class DiningList(models.Model):
         return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not u""]
 
     def get_rather_nots(self):
-        return [x.get_rather_not() for x in self.get_participants() if x.get_rather_not is not u""]
+        return [x.get_rather_not() for x in self.get_participants() if x.get_rather_not() is not u""]
 
     def __str__(self):
         return str(self.relevant_date)
