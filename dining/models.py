@@ -43,7 +43,10 @@ class DiningList(models.Model):
         self.save()
 
     def get_allergies(self):
-        return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not   ""]
+        return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not ""]
+
+    def get_rather_nots(self):
+        return [x.get_rather_not() for x in self.get_participants() if x.get_rather_not is not u""]
 
     def __str__(self):
         return str(self.relevant_date)
@@ -69,8 +72,16 @@ class DiningParticipation(models.Model):
         else:
             return ""
 
+    def get_rather_not(self):
+        if self.user.detailsmodel.rather_nots is not u"":
+            return u"{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.rather_nots)
+        else:
+            return u""
+
     def cancel(self):
-        send_mail("De eetlijst van {} is afgezegd".format(self.dining_list.relevant_date), "Er is niemand gevonden die wil koken. Wil je dit toch doen? Stuur dan een berichtje naar het bestuur", "watson@kotkt.nl", (self.user.email,))
+        send_mail("De eetlijst van {} is afgezegd".format(self.dining_list.relevant_date),
+                  "Er is niemand gevonden die wil koken. Wil je dit toch doen? Stuur dan een berichtje naar het bestuur",
+                  "watson@kotkt.nl", (self.user.email,))
         self.delete()
 
     class Meta:
@@ -137,4 +148,3 @@ class DiningStats(models.Model):
         stats.total_participated -= 1
 
         stats.save()
-

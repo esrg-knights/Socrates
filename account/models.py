@@ -24,5 +24,6 @@ class DetailsModel(models.Model):
 
     kaartnummer = models.CharField(max_length=20, blank=True, null=True)
 
-    allergies = models.TextField(null=True, blank=True)
-    nickname = models.TextField(help_text="this is stupid. max 50 characters", max_length=50, null=True, blank=True)
+    allergies = models.TextField(help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True, blank=True)
+    rather_nots = models.TextField(help_text="Dingen die je liever niet wil eten.", null=True, blank=True)
+    nickname = models.CharField(help_text="this is stupid. max 50 characters.", max_length=50, null=True, blank=True)
