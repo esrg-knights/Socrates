@@ -43,7 +43,7 @@ class DiningList(models.Model):
         self.save()
 
     def get_allergies(self):
-        return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not ""]
+        return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not u""]
 
     def get_rather_nots(self):
         return [x.get_rather_not() for x in self.get_participants() if x.get_rather_not is not u""]
@@ -70,7 +70,7 @@ class DiningParticipation(models.Model):
         if self.user.detailsmodel.allergies is not u"":
             return u"{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
         else:
-            return ""
+            return u""
 
     def get_rather_not(self):
         if self.user.detailsmodel.rather_nots is not u"":

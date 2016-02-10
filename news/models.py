@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.core.mail import send_mass_mail, send_mail
 from django.db import models
 
 # Create your models here.
@@ -23,6 +25,15 @@ class Post(models.Model):
         self.date_last_edited = datetime.now()
 
         super(Post, self).save(force_insert, force_update, using, update_fields)
+
+    def publish(self):
+        send_mail(
+                self.title,
+                 self.body,
+                 "watson@kotkt.nl",
+                 [x.email for x in User.objects.all() if x.email != u""],
+                fail_silently=False
+        )
 
     class Meta():
         ordering = ("-date_posted", "-date_last_edited")
