@@ -27,13 +27,14 @@ class Post(models.Model):
         super(Post, self).save(force_insert, force_update, using, update_fields)
 
     def publish(self):
-        send_mail(
-                self.title,
-                 self.body,
-                 "watson@kotkt.nl",
-                 [x.email for x in User.objects.all() if x.email != u""],
-                fail_silently=False
-        )
+        for user in User.objects.all():
+            send_mail(
+                    self.title,
+                    self.body,
+                    "watson@kotkt.nl",
+                    [user.email],
+                    fail_silently=False
+            )
 
     class Meta():
         ordering = ("-date_posted", "-date_last_edited")
