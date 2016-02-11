@@ -27,8 +27,13 @@
                                 {% for participant in participants %}
                                     <tr {% if participant.user == dinnerlist.owner %} class="success" {% endif %}>
                                         <td>{{ participant.user.get_full_name }}
-                                            {% if participant.user.detailsmodel.nickname %}(
-                                                {{ participant.user.detailsmodel.nickname }}) {% endif %}</td>
+                                            {% if participant.user.detailsmodel.nickname %}
+                                                {% if participant.user.detailsmodel.nickname_is_image %}
+                                                    <img src="{{ participant.user.detailsmodel.nickname }}"
+                                                         height="100px" width="auto">
+                                                {% else %}(
+                                                    {{ participant.user.detailsmodel.nickname }})
+                                                {% endif %} {% endif %}</td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
@@ -116,7 +121,8 @@
                             <p>{{ allergy|safe }}</p>
                         {% endfor %}
                         <h3>Liever Nietjes</h3>
-                        <p><i>Hier hoef je geen rekening mee te houden. Leden willen in dat geval wel een bericht.</i></p>
+                        <p><i>Hier hoef je geen rekening mee te houden. Leden willen in dat geval wel een bericht.</i>
+                        </p>
                         {% for rather_not in dinnerlist.get_rather_nots %}
                             <p>{{ rather_not|safe }}</p>
                         {% endfor %}
