@@ -26,14 +26,22 @@
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr {% if participant.user == dinnerlist.owner %} class="success" {% endif %}>
-                                        <td>{{ participant.user.get_full_name }}
+                                        <td>{{ participant.user.first_name }}
+                                            {% if participant.user.detailsmodel.nickname %}
+                                                {% if participant.user.detailsmodel.nickname_is_image %}
+                                                {% else %}
+                                                    "{{ participant.user.detailsmodel.nickname }}"
+                                                {% endif %}
+                                            {% endif %}
+                                            {{ participant.user.last_name }}
+
                                             {% if participant.user.detailsmodel.nickname %}
                                                 {% if participant.user.detailsmodel.nickname_is_image %}
                                                     <img src="{{ participant.user.detailsmodel.nickname }}"
                                                          height="100px" width="auto">
-                                                {% else %}(
-                                                    {{ participant.user.detailsmodel.nickname }})
-                                                {% endif %} {% endif %}</td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
                                                 <label>
