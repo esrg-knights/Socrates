@@ -152,7 +152,7 @@ class AddThirdView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
-        if datetime.now().time() > dinnerlist.closing_time:
+        if datetime.now().time() > dinnerlist.closing_time and request.user is not dinnerlist.owner:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
             return redirect("dining:index")
 
