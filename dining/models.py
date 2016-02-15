@@ -31,6 +31,10 @@ class DiningList(models.Model):
 
         return DiningList.objects.get_or_create(relevant_date=date)[0]
 
+    def get_comments(self):
+        print(DiningComment.objects.filter(dining_list=self))
+        return DiningComment.objects.filter(dining_list=self)
+
     def user_in_list(self, user):
         return len(DiningParticipation.objects.filter(dining_list=self, user=user)) > 0
 
@@ -148,3 +152,10 @@ class DiningStats(models.Model):
         stats.total_participated -= 1
 
         stats.save()
+
+
+class DiningComment(models.Model):
+    user = models.ForeignKey(User)
+    body = models.TextField()
+    date_posted = models.DateTimeField(auto_now=True)
+    dining_list = models.ForeignKey(DiningList)

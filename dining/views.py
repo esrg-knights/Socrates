@@ -9,7 +9,7 @@ from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from dining.forms import DiningThirdForm, DiningThirdNewForm
+from dining.forms import DiningThirdForm, DiningThirdNewForm, CommentForm
 from dining.models import DiningList, DiningParticipation, DiningStats
 
 
@@ -24,9 +24,10 @@ class IndexView(View):
         else:
             self.context['dinnerlist'] = DiningList.get_latest()
 
+        self.context['comments'] = self.context['dinnerlist'].get_comments()
         self.context['my_participation'] = True if DiningParticipation.objects.filter(user=request.user,
-                                                                                     dining_list=self.context[
-                                                                                         'dinnerlist']).count() == 1 else False
+                                                                                      dining_list=self.context[
+                                                                                          'dinnerlist']).count() == 1 else False
         self.context['participants'] = self.context['dinnerlist'].get_participants().prefetch_related()
         self.context['thirds'] = self.context['dinnerlist'].get_thirds()
 
@@ -185,3 +186,32 @@ class CancelView(View):
         messages.success(request, "Eetlijst is afgezegd")
 
         return redirect("dining:index")
+
+class CommentView(View):
+    context = {}
+
+    template_name = "dining/comment.html"
+    @method_decorator(login_required)
+    def get(self, request):
+        self.context['form'] = CommentForm()
+
+        return render(request, self.template_name, self.context)
+
+    @method_decorator(login_required())
+    def post(self, request):
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.dining_list = DiningList.get_latest()
+
+            obj.save()
+
+            messages.success(request, "Comment posted")
+
+            return redirect("dining:index")
+
+        self.context['form'] = form
+
+        return render(request, self.template_name, self.context)

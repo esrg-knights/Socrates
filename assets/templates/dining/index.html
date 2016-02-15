@@ -93,6 +93,10 @@
                         {% else %}
                             <p>Geen niet leden ingeschreven</p>
                         {% endif %}
+                        <h3>Comments</h3>
+                        {% for comment in comments %}
+                            <p>{{ comment.user.get_full_name }}: {{ comment.body }}</p>
+                        {% endfor %}
                     </div>
                     <div class="col-md-4 col-sm-12">
 
@@ -122,6 +126,7 @@
                             <p><a href="{% url 'dining:cancel' %}" class="btn btn-block btn-danger">Zeg deze eetlijst
                                 af</a></p>
                         {% endif %}
+                        <p><a href="{% url 'dining:comment' %}" class="btn btn-default btn-block">Comment achterlaten</a> </p>
 
                         <h3>Allergien:</h3>
                         <p><i>Hier moet je rekening mee houden</i></p>

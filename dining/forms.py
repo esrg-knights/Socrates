@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from .models import DiningParticipationThird, DiningParticipation, DiningList
+from .models import DiningParticipationThird, DiningParticipation, DiningList, DiningComment
 
 
 class DiningThirdForm(forms.ModelForm):
@@ -41,7 +41,7 @@ class DiningThirdNewForm(forms.Form):
         self.helper.add_input(Submit('submit', 'Registreren', css_class="btn-block"))
 
     user = UserChoiceField(queryset=User.objects.all(), required=False,
-                                  help_text="Gebruiker die bij de eetlijst wil")
+                           help_text="Gebruiker die bij de eetlijst wil")
 
     third = forms.CharField(required=False, help_text="Niet lid die bij de eetlijst wil.")
 
@@ -53,7 +53,8 @@ class DiningThirdNewForm(forms.Form):
         dinnerlist = DiningList.get_latest()
 
         if self.data['user'] is not u"":
-            obj, ret = DiningParticipation.objects.get_or_create(dining_list=dinnerlist, user=User.objects.get(id=self.data['user']))
+            obj, ret = DiningParticipation.objects.get_or_create(dining_list=dinnerlist,
+                                                                 user=User.objects.get(id=self.data['user']))
 
             if ret:
                 obj.added_by = request.user
@@ -69,3 +70,18 @@ class DiningThirdNewForm(forms.Form):
                 messages.success(request, "{} is toegevoegd aan de eetlijst".format(self.data['third']))
             else:
                 messages.warning(request, "je hebt deze persoon al toegevoegd")
+
+
+class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+        self.helper.add_input(Submit('submit', 'Commenten', css_class="btn-block"))
+
+    class Meta:
+        model = DiningComment
+        fields = ('body',)
