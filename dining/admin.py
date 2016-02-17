@@ -16,6 +16,21 @@ class DiningListAdmin(admin.ModelAdmin):
         }),
     )
 
+    actions = ["assign_dishes", "assign_dishes_weighted"]
+
+    def assign_dishes(modeladmin, request, queryset):
+        for item in queryset:
+            print(item)
+            item.assign_dishes(randomChoices=True)
+
+    def assign_dishes_weighted(modeladmin, request, queryset):
+        for item in queryset:
+            print(item)
+            item.assign_dishes(randomChoices=False)
+
+    assign_dishes_weighted.short_description = "Assign dishes based on statistics"
+    assign_dishes.short_description = "Randomly assign dishes"
+
 
 class DiningParticipationAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'dining_list', "work_groceries", "work_cook", "work_dishes", "paid")

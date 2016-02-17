@@ -5,6 +5,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.utils.datetime_safe import datetime
+import random
 
 
 class DiningList(models.Model):
@@ -37,6 +38,40 @@ class DiningList(models.Model):
 
     def user_in_list(self, user):
         return len(DiningParticipation.objects.filter(dining_list=self, user=user)) > 0
+
+    def assign_dishes(self, randomChoices=True):
+        """
+        Assign new disheswashers
+        :param randomChoices:
+        :return:
+        """
+        dishes_already = DiningParticipation.objects.filter(dining_list=self, work_dishes=True).count()
+        participations = DiningParticipation.objects.filter(dining_list=self, work_dishes=False, work_cook=False,
+                                                            work_groceries=False)
+
+        print(dishes_already)
+        print(participations)
+        new_dishes = []
+        if randomChoices:
+            while dishes_already != 3:
+                # randomly pick someone
+                try:
+                    part = random.choice(participations)
+                    new_dishes.append(part)
+
+                    dishes_already += 1
+                except:
+                    break
+        else:
+            participations.order_by("-user_diningstats_get_percentage")
+
+            print(", ".join([x.user.get_full_name() for x in participations]))
+            new_dishes = participations[:3 - dishes_already]
+
+        print(new_dishes)
+        for disher in new_dishes:
+            disher.work_dishes = True
+            disher.save()
 
     def remove_user(self, user):
         DiningParticipation.objects.get(user=user, dining_list=self).delete()
