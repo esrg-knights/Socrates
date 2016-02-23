@@ -159,7 +159,10 @@ class DiningStats(models.Model):
             instance = DiningParticipation.objects.get(id=instance.id)
             stats = DiningStats.objects.get_or_create(user=instance.user)[0]
 
-            if instance.work_cook or instance.work_dishes:
+            if instance.work_cook:
+                stats.total_helped -= 1
+
+            if instance.work_dishes:
                 stats.total_helped -= 1
 
             stats.total_participated -= 1
@@ -170,7 +173,10 @@ class DiningStats(models.Model):
     def add_new_scores(sender, instance=None, created=False, **kwargs):
         stats = DiningStats.objects.get_or_create(user=instance.user)[0]
 
-        if instance.work_cook or instance.work_dishes:
+        if instance.work_cook:
+            stats.total_helped += 1
+
+        if instance.work_dishes:
             stats.total_helped += 1
 
         stats.total_participated += 1
