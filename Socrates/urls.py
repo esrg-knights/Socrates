@@ -19,9 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+                  url(r'^achievements/', include('achievements.urls', namespace="achievements")),
     url(r'^account/', include('account.urls', namespace="account")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^dining/', include('dining.urls', namespace="dining")),
     url(r'^news/', include('news.urls', namespace="news")),
-    url(r'^', include('account.urls')),
+    url(r'^$', include('account.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]) 

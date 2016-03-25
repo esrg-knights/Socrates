@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header text-center">Achievements!</h1>
+            <p>Heb je een achievement gehaald en wil je op de lijst komen? Vraag een lid van de ZG of stuur hun een <a
+                    href="mailto:zg@kotkt.nl">email</a>.</p>
+        </div>
+        {% for achievement in achievements %}
+            <div class="col-lg-3 col-md-6 col-sm-12">
+                <h2>{{ achievement.name }}</h2>
+
+                <ol>
+                    {% if achievement.get %}
+                        {% for get in achievement.get %}
+                            <li>{{ get.user.get_full_name }} - {{ get.score }}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>Nog niemand heeft deze achievements gehaald!</li>
+                    {% endif %}
+                </ol>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

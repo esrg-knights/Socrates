@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'account',
     'dining',
+    'achievements',
     'debug_toolbar',
     'news',
     'markdown_deux'
