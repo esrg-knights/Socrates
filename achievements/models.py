@@ -43,6 +43,8 @@ class Achievement(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering = ("-date_created")
 
 class AchievementGet(models.Model):
     user = models.ForeignKey(User, related_name="user", help_text="Gebruiker die een Achievement heeft gehaald")
