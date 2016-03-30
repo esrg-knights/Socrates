@@ -44,9 +44,7 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'dining:index' %}">Eetlijst</a></li>
-                {% if user.is_staff %}
                     <li><a href="{% url 'achievements:index' %}">Achievements</a></li>
-                {% endif %}
                 <li><a href="{% url 'news:index' %}">Nieuws</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
