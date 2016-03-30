@@ -6,7 +6,13 @@ from slugify import slugify
 
 # Create your models here.
 class Game(models.Model):
-    name = models.CharField(100)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name.__str__()
+
+    def __unicode__(self):
+        return self.name
 
 
 class Achievement(models.Model):
