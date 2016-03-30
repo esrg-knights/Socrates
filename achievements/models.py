@@ -44,7 +44,7 @@ class Achievement(models.Model):
         return self.name
 
     class Meta:
-        ordering = ("-date_created")
+        ordering = ("-date_created",)
 
 class AchievementGet(models.Model):
     user = models.ForeignKey(User, related_name="user", help_text="Gebruiker die een Achievement heeft gehaald")
