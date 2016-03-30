@@ -9,7 +9,6 @@ class Achievement(models.Model):
     name = models.CharField(max_length=50)
     name_slug = models.CharField(max_length=50, null=True, blank=True)
 
-    related_image = models.FileField(upload_to="media/%y/%m/%d")
 
     description = models.CharField(max_length=256)
 
