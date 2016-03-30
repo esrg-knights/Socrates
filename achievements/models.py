@@ -38,7 +38,7 @@ class Achievement(models.Model):
         super(Achievement, self).save(*args, **kwargs)
 
     def get(self):
-        return AchievementGet.objects.filter(achievement=self)
+        return AchievementGet.objects.filter(achievement=self)[:10]
 
     def __str__(self):
         return self.name.__str__()
