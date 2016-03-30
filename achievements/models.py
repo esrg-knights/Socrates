@@ -26,8 +26,11 @@ class Achievement(models.Model):
 
     description = models.TextField(help_text="Beschrijving van de achievements")
 
+    priority = models.IntegerField(default=1)
+
     date_created = models.DateTimeField(auto_now=True, help_text="datum aangemaakt")
-    date_last_accessed = models.DateTimeField(help_text="Datum waarop de achievement voor het laatst verander was", blank=True, null=True)
+    date_last_accessed = models.DateTimeField(help_text="Datum waarop de achievement voor het laatst verander was",
+                                              blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.date_last_accessed = timezone.now()
@@ -44,7 +47,8 @@ class Achievement(models.Model):
         return self.name
 
     class Meta:
-        ordering = ("-date_created",)
+        ordering = ("-priority", "-date_created",)
+
 
 class AchievementGet(models.Model):
     user = models.ForeignKey(User, related_name="user", help_text="Gebruiker die een Achievement heeft gehaald")
