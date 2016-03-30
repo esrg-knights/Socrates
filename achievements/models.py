@@ -24,7 +24,7 @@ class Achievement(models.Model):
     description = models.TextField(help_text="Beschrijving van de achievements")
 
     date_created = models.DateTimeField(auto_now=True, help_text="datum aangemaakt")
-    date_last_accessed = models.DateTimeField(help_text="Datum waarop de achievement voor het laatst verander was")
+    date_last_accessed = models.DateTimeField(help_text="Datum waarop de achievement voor het laatst verander was", blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.date_last_accessed = timezone.now()
@@ -49,7 +49,7 @@ class AchievementGet(models.Model):
 
     date_achieved = models.DateTimeField(auto_now=True, help_text="datum aangemaakt")
 
-    score = models.IntegerField(help_text="Score die is gehaald voor de achievement")
+    score = models.IntegerField(help_text="Score die is gehaald voor de achievement", default=-1, null=True, blank=True)
 
     class Meta:
         ordering = ("-score",)

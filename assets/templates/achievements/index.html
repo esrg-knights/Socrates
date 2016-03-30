@@ -8,13 +8,13 @@
                     href="mailto:zg@kotkt.nl">email</a>.</p>
         </div>
         {% for achievement in achievements %}
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <h2><img src="{{ achievement.related_image.url }}" class="img-responsive img-circle" height="30px"/>{{ achievement.name }}</h2>
 
                 <ol>
                     {% if achievement.get %}
                         {% for get in achievement.get %}
-                            <li>{{ get.user.get_full_name }} - {{ get.score }}</li>
+                            <li>{{ get.user.get_full_name }} {% if get.score != -1 %} - {{ get.score }}{% endif %}</li>
                         {% endfor %}
                     {% else %}
                         <li>Nog niemand heeft deze achievements gehaald!</li>
