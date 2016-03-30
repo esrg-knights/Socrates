@@ -14,6 +14,9 @@ class Game(models.Model):
     def __unicode__(self):
         return self.name
 
+    class Meta:
+        ordering = ("name",)
+
 
 class Achievement(models.Model):
     name = models.CharField(max_length=50, help_text="Naam van de achievement")
