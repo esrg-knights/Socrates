@@ -9,18 +9,21 @@
         </div>
         {% for achievement in achievements %}
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <h2><img src="{{ achievement.related_image.url }}" class="img-responsive img-circle" height="30px"/>{{ achievement.name }}</h2>
+                <h2><img src="{{ achievement.related_image.url }}" class="img-responsive img-circle"
+                         height="30px"/>{{ achievement.name }}</h2>
 
                 <p>{{ achievement.description|safe }}</p>
-                <ol>
-                    {% if achievement.get %}
+                {% if achievement.get %}
+                    <ol>
+
                         {% for get in achievement.get %}
                             <li>{{ get.user.get_full_name }} {% if get.score != -1 %} - {{ get.score }}{% endif %}</li>
                         {% endfor %}
-                    {% else %}
-                        <li>Nog niemand heeft deze achievements gehaald!</li>
-                    {% endif %}
-                </ol>
+                    </ol>
+                {% else %}
+                    <p><b>Nog niemand heeft deze achievements gehaald!</b></p>
+                {% endif %}
+
             </div>
         {% endfor %}
     </div>
