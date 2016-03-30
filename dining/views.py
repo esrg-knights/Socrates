@@ -126,6 +126,10 @@ class RemoveView(View):
     def get(self, request):
         dining_list = DiningList.get_latest()
 
+        if dining_list.owner is not None and datetime.now().time() > dining_list.closing_time:
+            messages.error(request, "De eetlijst is al geclaimed. Vraag aan de kok/bestuur of je er nog af mag.")
+            return redirect("dining:index")
+
         if dining_list.user_in_list(request.user):
             dining_list.remove_user(request.user)
             messages.success(request, "Je bent uitgeschreven van deze eetlijst")
