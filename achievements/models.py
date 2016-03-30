@@ -61,4 +61,4 @@ class AchievementGet(models.Model):
     score = models.IntegerField(help_text="Score die is gehaald voor de achievement", default=-1, null=True, blank=True)
 
     class Meta:
-        ordering = ("-score",)
+        ordering = ("-score", "-date_achieved")
