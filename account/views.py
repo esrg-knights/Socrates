@@ -11,6 +11,7 @@ from django.contrib import messages
 from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm, \
     PasswordChangeRequestForm, PasswordChangeForm
 from account.models import DetailsModel, PasswordChangeRequestModel
+from achievements.models import AchievementGet
 from dining.models import DiningStats
 
 
@@ -20,7 +21,7 @@ class IndexView(View):
         context = {}
 
         context['dining_stats'] = DiningStats.objects.get(user=request.user)
-
+        context['achievements'] = AchievementGet.objects.filter(user=request.user)
         return render(request, 'account/index.html', context)
 
 

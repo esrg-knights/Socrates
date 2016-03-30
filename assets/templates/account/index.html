@@ -8,7 +8,18 @@
                 <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>
                     Eetlijst: {{ dining_stats.get_percentage }}%</h3>
             {% else %}
-                <h3>Je moet meer als 5 keer mee-eten om statistieken te krijgen. Je hebt nu {{ dining_stats.total_participated }} keer mee-gegeten.</h3>
+                <h3>Je moet meer als 5 keer mee-eten om statistieken te krijgen. Je hebt
+                    nu {{ dining_stats.total_participated }} keer mee-gegeten.</h3>
+            {% endif %}
+
+            <h3>Achievements</h3>
+            <p>Deze achievements heb jij gehaald!</p>
+            {% if achievements %}
+                {% for achievement in achievements %}
+                    <p><b>{{ achievement.achievement.name }}</b> met als score <b>{{ achievement.score }}</b></p>
+                {% endfor %}
+            {% else %}
+                <p>Je hebt nog geen achievements gehaald!</p>
             {% endif %}
         </div>
     </div>
