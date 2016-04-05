@@ -4,3 +4,4 @@ django-crispy-forms >= 1.4.0
 mysql-python >= 1.2.5
 slugify
 django-markdown-deux
+django-hijack

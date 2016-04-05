@@ -52,7 +52,9 @@ INSTALLED_APPS = (
     'achievements',
     'debug_toolbar',
     'news',
-    'markdown_deux'
+    'markdown_deux',
+    'hijack',
+    'compat',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -135,6 +137,10 @@ MESSAGE_TAGS = {
 }
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
+
+HIJACK_LOGIN_REDIRECT_URL = '/account/'  # Where admins are redirected to after hijacking a user
+HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'  # Where admins are redirected to after releasing a user
+
 
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())

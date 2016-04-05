@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+{% load hijack_tags %}
+
 {% load humanize %}
 
 <!doctype html>
@@ -24,6 +26,7 @@
 
 
     <link rel="icon" type="img/gif" href="{% static 'icon/dickbutt.gif' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
 
     {% block header_custom %}
 
@@ -31,7 +34,7 @@
 
 </head>
 <body>
-
+{% hijack_notification %}
 <nav class="navbar navbar-default navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
