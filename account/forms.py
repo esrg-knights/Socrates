@@ -1,7 +1,7 @@
 import re
 
 from crispy_forms.bootstrap import FormActions
-from crispy_forms.layout import Submit, Layout, Field
+from crispy_forms.layout import Submit, Layout, Field, HTML
 from django import forms
 from crispy_forms.helper import FormHelper
 from django.contrib.auth.models import User
@@ -169,6 +169,22 @@ class DetailsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DetailsForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
+
+        self.helper.layout = Layout(
+            HTML("<h3>Persoonsgegevens</h3>"),
+            "straat",
+            "woonplaats",
+            "postcode",
+            "telefoonnummer",
+            "geboortedatum",
+            HTML("<h3>Schoolgegevens</h3>"),
+            "instituut",
+            "kaartnummer",
+            HTML("<h3>Eetlijst</h3>"),
+            "allergies",
+            "rather_nots",
+            "nickname",
+        )
 
         self.helper.form_class = 'form-horizontal'
 
