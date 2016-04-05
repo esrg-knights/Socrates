@@ -21,6 +21,27 @@
             {% else %}
                 <p>Je hebt nog geen achievements gehaald!</p>
             {% endif %}
+            <h3>Groepen</h3>
+            {% if request.user.groups.all %}
+                <ul>
+                    {% for group in request.user.groups.all %}
+                        <li>{{ group }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Je zit niet in een groep</p>
+            {% endif %}
+            <h3>Privileges</h3>
+            {% if request.user.is_staff %}
+                <p class="alert alert-success">Je hebt toegang tot het admin paneel</p>
+            {% else %}
+                <p class="alert alert-info">Je bent geen staff</p>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <p class="alert alert-danger">Je bent een superuser!</p>
+            {% else %}
+                <p class="alert alert-info">Je bent geen superuser</p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
