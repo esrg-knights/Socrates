@@ -117,6 +117,8 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static_total")
+
 STATICFILES_DIRS = (
  os.path.join(BASE_DIR, 'assets/static/'),
 )
@@ -138,8 +140,9 @@ MESSAGE_TAGS = {
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 
-HIJACK_LOGIN_REDIRECT_URL = '/account/'  # Where admins are redirected to after hijacking a user
-HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'  # Where admins are redirected to after releasing a user
+HIJACK_LOGIN_REDIRECT_URL = '/accounts/'  # Where admins are redirected to after hijacking a user
+HIJACK_LOGOUT_REDIRECT_URL = '/admin/`auth/user/'  # Where admins are redirected to after releasing a user
+
 
 
 try:
