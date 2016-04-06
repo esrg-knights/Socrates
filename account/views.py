@@ -20,7 +20,7 @@ class IndexView(View):
     def get(self, request):
         context = {}
 
-        context['dining_stats'] = DiningStats.objects.get(user=request.user)
+        context['dining_stats'] = DiningStats.objects.get_or_create(user=request.user)[0]
         context['achievements'] = AchievementGet.objects.filter(user=request.user)
         return render(request, 'account/index.html', context)
 
