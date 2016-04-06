@@ -16,7 +16,8 @@
             <p>Deze achievements heb jij gehaald!</p>
             {% if achievements %}
                 {% for achievement in achievements %}
-                    <p><b>{{ achievement.achievement.name }}</b> met als score <b>{{ achievement.score }}</b></p>
+                    <p><b>{{ achievement.achievement.name }}</b> {% if achievement.score != -1 %}met als score
+                        <b>{{ achievement.score }}</b> {% endif %}</p>
                 {% endfor %}
             {% else %}
                 <p>Je hebt nog geen achievements gehaald!</p>
