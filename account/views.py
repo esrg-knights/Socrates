@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -5,11 +6,11 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.contrib import messages
 
 # Create your views here
-from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsModel, DetailsForm, \
+from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsForm, \
     PasswordChangeRequestForm, PasswordChangeForm
+from django.contrib.auth.models import Group
 from account.models import DetailsModel, PasswordChangeRequestModel
 from achievements.models import AchievementGet
 from dining.models import DiningStats
@@ -80,9 +81,9 @@ class RegisterView(View):
 
     def send_registation_email(self, user):
         subject = "Registratie afmaken"
-        url = "http://app.kotkt.nl/account/activate/{0}".format(user.detailsmodel.uid)
+        url = "http://app.kotkt.nl/accounts/activate/{0}".format(user.detailsmodel.uid)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
-                url)
+            url)
 
         user.email_user(subject, body, from_email="watson@kotkt.nl")
 
@@ -233,5 +234,17 @@ class PasswordChangeView(View):
                 return redirect("account:index")
             else:
                 self.context['form'] = form
+
+        return render(request, self.template_name, self.context)
+
+
+class GroupView(View):
+    template_name = "account/groups.html"
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        self.context['groups'] = Group.objects.all()
+
 
         return render(request, self.template_name, self.context)

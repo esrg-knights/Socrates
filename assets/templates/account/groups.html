@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header text-center">Groepen</h1>
+            <p>Een overzicht van alle groepen en hun leden.</p>
+            <div class="row">
+                {% for group in groups %}
+                    <div class="col-lg-6">
+                        <h3>{{ group }}</h3>
+                        {% if group.user_set.all %}
+                            <ul>
+                                {% for user in group.user_set.all %}
+                                    <p>{{ user }}</p>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Deze groep heeft geen gebruikers</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
