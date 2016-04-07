@@ -107,6 +107,8 @@ class ClaimView(View):
 
         if dining_list.owner is not None:
             messages.error(request, "Deze eetlijst is al geclaimd door {0}".format(dining_list.owner.get_full_name()))
+        elif request.user.detailsmodel.is_softbanned:
+            messages.error(request, "Je bent tijdelijk gebanned vanwege de volgende reden: {0}".format(request.user.detailsmodel.ban_reason))
         else:
             # check participation
             if DiningParticipation.objects.filter(user=request.user, dining_list=dining_list).count() > 0:

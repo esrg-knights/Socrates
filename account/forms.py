@@ -195,7 +195,7 @@ class DetailsForm(forms.ModelForm):
 
     class Meta:
         model = DetailsModel
-        exclude = ("related_user",)
+        exclude = ("related_user", "is_softbanned", "ban_reason")
 
 
 class PasswordChangeRequestForm(forms.Form):

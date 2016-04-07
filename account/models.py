@@ -33,6 +33,10 @@ class DetailsModel(models.Model):
     rather_nots = models.TextField(help_text="Dingen die je liever niet wil eten.", null=True, blank=True)
     nickname = models.CharField(help_text="this is stupid. max 50 characters.", max_length=50, null=True, blank=True)
 
+
+    is_softbanned = models.BooleanField(default=False)
+    ban_reason = models.CharField(max_length=50, default="")
+
     def nickname_is_image(self):
         return self.nickname.endswith(".jpg") or self.nickname.endswith(".png") or self.nickname.endswith(".gif")
 
