@@ -12,5 +12,6 @@ urlpatterns = patterns(
         url(r'^extra/$', AddThirdView.as_view(), name="extra"),
         url(r'^cancel/$', CancelView.as_view(), name="cancel"),
         url(r'^comment/$', CommentView.as_view(), name="comment"),
+        url(r'^recipes/$', RecipeView.as_view(), name="recipes"),
         url(r'^(?P<year>\d+)/(?P<month>\d+)/(?P<day>\d+)/$', IndexView.as_view(), name="index_specific"),
 )

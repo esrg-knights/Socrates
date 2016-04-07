@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header text-center">Recepten</h1>
+
+            <div class="row">
+                <div class="col-lg-10 col-md-8 col-sm-12">
+                    {% for recipe in recipes %}
+                        <div id="{{ recipe.id }}">
+                            <h3 style="padding-bottom: 20px">{{ recipe.name }}</h3>
+
+                            <div class="row">
+                                <div class="col-md-3"><p><b>Ingredienten</b></p></div>
+                                <div class="col-md-9">
+                                    <p>{{ recipe.ingredients|safe }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Recept</b></p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{ recipe.recipe|safe }}</p>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p><b>Allergien</b></p>
+                                </div>
+                                <div class="col-md-9">
+                                    <p>{{ recipe.allergies|safe }}</p>
+                                </div>
+                            </div>
+                        <hr />
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-2 col-md-4 hidden-sm hidden-xs">
+                    <div class="list-group" data-spy="affix">
+                        {% for recipe in recipes %}
+                            <a href="#{{ recipe.id }}" class="list-group-item">{{ recipe.name }}<a/>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

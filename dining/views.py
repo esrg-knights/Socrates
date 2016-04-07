@@ -9,8 +9,8 @@ from django.utils.datetime_safe import datetime
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 
-from dining.forms import DiningThirdForm, DiningThirdNewForm, CommentForm
-from dining.models import DiningList, DiningParticipation, DiningStats
+from dining.forms import DiningThirdNewForm, CommentForm
+from dining.models import DiningList, DiningParticipation, DiningStats, RecipeModel
 
 
 class IndexView(View):
@@ -108,7 +108,8 @@ class ClaimView(View):
         if dining_list.owner is not None:
             messages.error(request, "Deze eetlijst is al geclaimd door {0}".format(dining_list.owner.get_full_name()))
         elif request.user.detailsmodel.is_softbanned:
-            messages.error(request, "Je bent tijdelijk gebanned vanwege de volgende reden: {0}".format(request.user.detailsmodel.ban_reason))
+            messages.error(request, "Je bent tijdelijk gebanned vanwege de volgende reden: {0}".format(
+                request.user.detailsmodel.ban_reason))
         else:
             # check participation
             if DiningParticipation.objects.filter(user=request.user, dining_list=dining_list).count() > 0:
@@ -193,10 +194,12 @@ class CancelView(View):
 
         return redirect("dining:index")
 
+
 class CommentView(View):
     context = {}
 
     template_name = "dining/comment.html"
+
     @method_decorator(login_required)
     def get(self, request):
         self.context['form'] = CommentForm()
@@ -219,5 +222,16 @@ class CommentView(View):
             return redirect("dining:index")
 
         self.context['form'] = form
+
+        return render(request, self.template_name, self.context)
+
+
+class RecipeView(View):
+    template_name = "dining/recipes.html"
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        self.context['recipes'] = RecipeModel.objects.filter(visible=True)
 
         return render(request, self.template_name, self.context)

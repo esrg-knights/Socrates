@@ -1,11 +1,12 @@
 # Create your models here.
+import random
+
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import pre_save, post_save, post_delete
 from django.dispatch import receiver
 from django.utils.datetime_safe import datetime
-import random
 
 
 class DiningList(models.Model):
@@ -200,3 +201,21 @@ class DiningComment(models.Model):
     body = models.TextField()
     date_posted = models.DateTimeField(auto_now=True)
     dining_list = models.ForeignKey(DiningList)
+
+
+class RecipeModel(models.Model):
+    date_created = models.DateTimeField(auto_now=True)
+    date_last_edited = models.DateTimeField(null=True, blank=True)
+
+    name = models.CharField(max_length=64)
+    recipe = models.TextField()
+    ingredients = models.TextField()
+    amount_of_people = models.IntegerField(default=4)
+
+    visible = models.BooleanField(default=False)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.date_last_edited = datetime.now()
+
+        super(RecipeModel, self).save(force_insert, force_update, using, update_fields)
