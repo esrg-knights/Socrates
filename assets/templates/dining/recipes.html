@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="col-md-3"><p><b>Ingredienten</b></p></div>
                                 <div class="col-md-9">
-                                    <p>{{ recipe.ingredients|safe }}</p>
+                                    <p>{{ recipe.ingredients|safe|linebreaks }}</p>
                                 </div>
                             </div>
 
@@ -23,7 +23,7 @@
                                     <p><b>Recept</b></p>
                                 </div>
                                 <div class="col-md-9">
-                                    <p>{{ recipe.recipe|safe }}</p>
+                                    <p>{{ recipe.recipe|safe|linebreaksbr }}</p>
                                 </div>
                             </div>
 
@@ -32,7 +32,7 @@
                                     <p><b>Allergien</b></p>
                                 </div>
                                 <div class="col-md-9">
-                                    <p>{{ recipe.allergies|safe }}</p>
+                                    <p>{{ recipe.allergies|safe|linebreaksbr }}</p>
                                 </div>
                             </div>
                         <hr />

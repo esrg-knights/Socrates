@@ -210,6 +210,7 @@ class RecipeModel(models.Model):
     name = models.CharField(max_length=64)
     recipe = models.TextField()
     ingredients = models.TextField()
+    allergies = models.TextField(default="")
     amount_of_people = models.IntegerField(default=4)
 
     visible = models.BooleanField(default=False)
@@ -219,3 +220,6 @@ class RecipeModel(models.Model):
         self.date_last_edited = datetime.now()
 
         super(RecipeModel, self).save(force_insert, force_update, using, update_fields)
+
+    class Meta:
+        ordering = ("name", "date_last_edited")
