@@ -14,10 +14,14 @@
     <!-- Bootstrap-->
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 
-    <!-- Bootstrap Material Design -->
-    <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/material.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/ripples.min.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/roboto.min.css' %}">
+    {% if easter_egg_factor %}
+        <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
+    {% else %}
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/material.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/ripples.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/roboto.min.css' %}">
+    {% endif %}
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
