@@ -160,7 +160,7 @@ class AddThirdView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
-        if datetime.now().time() > dinnerlist.closing_time and request.user is not dinnerlist.owner:
+        if datetime.now().time() > dinnerlist.closing_time and request.user != dinnerlist.owner:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
             return redirect("dining:index")
 
@@ -216,6 +216,13 @@ class CommentView(View):
             obj.dining_list = DiningList.get_latest()
 
             obj.save()
+
+            if obj.broadcast and (request.user.is_superuser or request.user == obj.dining_list.owner):
+                print("Broadcasting")
+                for part in obj.dining_list.get_participants():
+                    part.mail("Broadcast van de eetlijst", obj.body)
+            elif obj.broadcast:
+                messages.error(request, "Je hebt geen rechten om dit te doen!")
 
             messages.success(request, "Comment posted")
 

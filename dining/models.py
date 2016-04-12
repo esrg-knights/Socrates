@@ -82,6 +82,9 @@ class DiningList(models.Model):
 
         self.save()
 
+    def get_users(self):
+        return [x.user for x in self.get_participants()]
+
     def get_allergies(self):
         return [x.get_allergy() for x in self.get_participants() if x.get_allergy() is not u""]
 
@@ -119,11 +122,14 @@ class DiningParticipation(models.Model):
             return u""
 
     def cancel(self):
-        send_mail("De eetlijst van {} is afgezegd".format(self.dining_list.relevant_date),
-                  "Er is niemand gevonden die wil koken. Wil je dit toch doen? Stuur dan een berichtje naar het bestuur",
-                  "watson@kotkt.nl", (self.user.email,))
+        self.mail(
+            "De eetlijst van {} is afgezegd".format(self.dining_list.relevant_date),
+            "Er is niemand gevonden die wil koken. Wil je dit toch doen? Stuur dan een berichtje naar het bestuur",
+        )
         self.delete()
 
+    def mail(self, header, body):
+        send_mail(header, body, "watson@kotkt.nl", [self.user.email,])
     class Meta:
         ordering = ("user__first_name",)
 
