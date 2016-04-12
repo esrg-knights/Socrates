@@ -151,8 +151,9 @@ class StatView(View):
         if request.user.groups.filter(name="Bestuur").count == 0:
             messages.error(request, "Je hebt hier geeen rechten voor!")
             return redirect("account:index")
-        self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
-        return render(request, self.template, self.context)
+        else:
+            self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
+            return render(request, self.template, self.context)
 
 
 class AddThirdView(View):
