@@ -148,7 +148,7 @@ class StatView(View):
 
     @method_decorator(login_required())
     def get(self, request):
-        if request.user.groups.filter(name="Bestuur").count == 0:
+        if request.user.groups.filter(name="Bestuur").count() == 0:
             messages.error(request, "Je hebt hier geeen rechten voor!")
             return redirect("account:index")
         else:
