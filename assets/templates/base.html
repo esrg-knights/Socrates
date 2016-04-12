@@ -74,10 +74,13 @@
                                 <li><a href="{% url 'admin:index' %}">Admin</a></li>
                                 <li class="divider"></li>
                             {% endif %}
-                            {% if user.is_superuser %}
-                                <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a></li>
-                                <li class="divider"></li>
-                            {% endif %}
+                            {% for group in request.user.groups.all %}
+                                {% if group.name == "Bestuur" %}
+                                    <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a></li>
+                                    <li><a href="{% url 'account:members' %}">Ledenbestand</a></li>
+                                    <li class="divider"></li>
+                                {% endif %}
+                            {% endfor %}
                             <li><a href="{% url 'account:groups' %}">Groepen</a></li>
                             <li class="divider"></li>
                             <li><a href="{% url 'account:index' %}">Mijn profiel</a></li>

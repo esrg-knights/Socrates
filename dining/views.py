@@ -146,8 +146,11 @@ class StatView(View):
     template = "dining/stats.html"
     context = {}
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser, "/dining/"))
+    @method_decorator(login_required())
     def get(self, request):
+        if request.user.groups.filter(name="Bestuur").count == 0:
+            messages.error(request, "Je hebt hier geeen rechten voor!")
+            return redirect("account:index")
         self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
         return render(request, self.template, self.context)
 
@@ -221,6 +224,8 @@ class CommentView(View):
                 print("Broadcasting")
                 for part in obj.dining_list.get_participants():
                     part.mail("Broadcast van de eetlijst", obj.body)
+
+                messages.success(request, "Bericht was gebroadcast naar iedereen!")
             elif obj.broadcast:
                 messages.error(request, "Je hebt geen rechten om dit te doen!")
 

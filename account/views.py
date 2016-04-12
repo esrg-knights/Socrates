@@ -246,5 +246,19 @@ class GroupView(View):
     def get(self, request):
         self.context['groups'] = Group.objects.all()
 
-
         return render(request, self.template_name, self.context)
+
+
+class MemberView(View):
+    template = "account/members.html"
+    context = {}
+
+    @method_decorator(login_required)
+    def get(self, request):
+        if request.user.groups.filter(name="Bestuur"):
+            self.context['users'] = User.objects.all()
+
+            return render(request, self.template, self.context)
+        else:
+            messages.error(request, "Je hebt hier geen rechten voor!")
+            return redirect("account:index")
