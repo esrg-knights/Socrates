@@ -202,6 +202,9 @@ class DiningComment(models.Model):
     date_posted = models.DateTimeField(auto_now=True)
     dining_list = models.ForeignKey(DiningList)
 
+    broadcast = models.BooleanField(default=False,
+                                    help_text="Bij broadcast wordt je bericht naar ieder lid van de huidige eetlijst gemaild. Enkel owners en admins kunnen dit.")
+
 
 class RecipeModel(models.Model):
     date_created = models.DateTimeField(auto_now=True)

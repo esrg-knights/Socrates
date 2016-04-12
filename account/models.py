@@ -28,11 +28,16 @@ class DetailsModel(models.Model):
     kaartnummer = models.CharField(max_length=20, blank=True, null=True)
 
     allergies = models.TextField(
-            help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True,
-            blank=True)
+        help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True,
+        blank=True)
     rather_nots = models.TextField(help_text="Dingen die je liever niet wil eten.", null=True, blank=True)
     nickname = models.CharField(help_text="this is stupid. max 50 characters.", max_length=50, null=True, blank=True)
 
+    theme = models.SmallIntegerField(choices=(
+        (1, "Material"),
+        (2, "FRIEND COMPUTER MODE"),
+        (3, "None (Why would you want this?!)")
+    ), default=1, help_text="Thema van de UI. Alleen Material wordt officieel ondersteund")
 
     is_softbanned = models.BooleanField(default=False)
     ban_reason = models.CharField(max_length=50, default="")

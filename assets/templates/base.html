@@ -11,12 +11,16 @@
     <title>{{ pre_page_name }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap-->
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 
-    {% if easter_egg_factor %}
+
+    {% if request.user.detailsmodel.theme == 2 %}
+        <!-- Bootstrap-->
         <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
+    {% elif request.user.detailsmodel.theme == 3 %}
     {% else %}
+        <!-- Bootstrap-->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
         <!-- Bootstrap Material Design -->
         <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/material.min.css' %}">
         <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/ripples.min.css' %}">
