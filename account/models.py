@@ -31,7 +31,10 @@ class DetailsModel(models.Model):
         help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True,
         blank=True)
     rather_nots = models.TextField(help_text="Dingen die je liever niet wil eten.", null=True, blank=True)
+
     nickname = models.CharField(help_text="this is stupid. max 50 characters.", max_length=50, null=True, blank=True)
+
+    show_nicknames = models.BooleanField(help_text="Zie de nicknames van jezelf en andere gebruikers waar mogelijk", default=True)
 
     theme = models.SmallIntegerField(choices=(
         (1, "Material"),

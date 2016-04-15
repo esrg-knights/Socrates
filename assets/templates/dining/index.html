@@ -20,27 +20,19 @@
                                 <th>Koken</th>
                                 <th>Afwas</th>
                                 <th>Betaald</th>
+                                {% if request.user == dinnerlist.owner %}
+                                    <th>Verwijder</th>
+                                {% endif %}
                             </tr>
                             </thead>
                             {% if participants %}
                                 <tbody>
                                 {% for participant in participants %}
                                     <tr {% if participant.user == dinnerlist.owner %} class="success" {% endif %}>
-                                        <td>{{ participant.user.first_name }}
-                                            {% if participant.user.detailsmodel.nickname %}
-                                                {% if participant.user.detailsmodel.nickname_is_image %}
-                                                {% else %}
-                                                    "{{ participant.user.detailsmodel.nickname }}"
-                                                {% endif %}
-                                            {% endif %}
-                                            {{ participant.user.last_name }}
-
-                                            {% if participant.user.detailsmodel.nickname %}
-                                                {% if participant.user.detailsmodel.nickname_is_image %}
-                                                    <img src="{{ participant.user.detailsmodel.nickname }}"
-                                                         height="100px" width="auto">
-                                                {% endif %}
-                                            {% endif %}
+                                        <td>
+                                            {% with participant.user as user %}
+                                                {% include 'snippets/user_name_with_nickname.html' %}
+                                            {% endwith %}
                                         </td>
                                         <td>
                                             <div class="checkbox checkbox-primary">
@@ -74,6 +66,14 @@
                                                 </label>
                                             </div>
                                         </td>
+                                        {% if request.user == dinnerlist.owner %}
+                                            <td>
+                                                <p>
+                                                    <a class="btn btn-danger"
+                                                       href="{% url 'dining:remove_user' participant.id %}">Verwijder</a>
+                                                </p>
+                                            </td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -126,7 +126,8 @@
                             <p><a href="{% url 'dining:cancel' %}" class="btn btn-block btn-danger">Zeg deze eetlijst
                                 af</a></p>
                         {% endif %}
-                        <p><a href="{% url 'dining:comment' %}" class="btn btn-default btn-block">Comment achterlaten</a> </p>
+                        <p><a href="{% url 'dining:comment' %}" class="btn btn-default btn-block">Comment
+                            achterlaten</a></p>
 
                         <h3>Allergien:</h3>
                         <p><i>Hier moet je rekening mee houden</i></p>

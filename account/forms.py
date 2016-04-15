@@ -183,9 +183,10 @@ class DetailsForm(forms.ModelForm):
             HTML("<h3>Eetlijst</h3>"),
             "allergies",
             "rather_nots",
-            "nickname",
             HTML("<h3>Website</h3>"),
             "theme",
+            "nickname",
+            "show_nicknames",
         )
 
         self.helper.form_class = 'form-horizontal'
