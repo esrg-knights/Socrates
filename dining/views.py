@@ -126,18 +126,25 @@ class RemoveView(View):
     context = {}
 
     @method_decorator(login_required())
-    def get(self, request):
+    def get(self, request, id=None):
         dining_list = DiningList.get_latest()
 
-        if dining_list.owner is not None and datetime.now().time() > dining_list.closing_time:
-            messages.error(request, "De eetlijst is al geclaimed. Vraag aan de kok/bestuur of je er nog af mag.")
-            return redirect("dining:index")
+        if id == None:
+            if dining_list.owner is not None and datetime.now().time() > dining_list.closing_time:
+                messages.error(request, "De eetlijst is al geclaimed. Vraag aan de kok/bestuur of je er nog af mag.")
+                return redirect("dining:index")
 
-        if dining_list.user_in_list(request.user):
-            dining_list.remove_user(request.user)
-            messages.success(request, "Je bent uitgeschreven van deze eetlijst")
+            if dining_list.user_in_list(request.user):
+                dining_list.remove_user(request.user)
+                messages.success(request, "Je bent uitgeschreven van deze eetlijst")
+            else:
+                messages.error(request, "Je staat nog niet op deze eetlijst")
         else:
-            messages.error(request, "Je staat nog niet op deze eetlijst")
+            if request.user == dining_list.owner:
+                DiningParticipation.objects.get(id=id).delete()
+                messages.success(request, "Lid is van de eetlijst afgegooid.")
+            else:
+                messages.error(request, "Je hebt hier geen rechten voor!")
 
         return redirect("dining:index")
 
