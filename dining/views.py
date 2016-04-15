@@ -141,8 +141,12 @@ class RemoveView(View):
                 messages.error(request, "Je staat nog niet op deze eetlijst")
         else:
             if request.user == dining_list.owner:
-                DiningParticipation.objects.get(id=id).delete()
-                messages.success(request, "Lid is van de eetlijst afgegooid.")
+                part = DiningParticipation.objects.get(id=id)
+                part.send_mail("Je bent verwijderd van de eetlijst",
+                               "De kok gaat koken met een van de items op jouw \"Haal me van de eet-lijst\" items. Hierdoor ben je van de eetlijst afgehaald.")
+
+                messages.success(request, "{0} is van de eetlijst afgegooid.".format(part.user.get_full_name()))
+                part.delete()
             else:
                 messages.error(request, "Je hebt hier geen rechten voor!")
 
