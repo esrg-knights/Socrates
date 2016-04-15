@@ -6,7 +6,7 @@ from account.models import DetailsModel, PasswordChangeRequestModel
 
 class DetailsModelAdmin(admin.ModelAdmin):
     list_display = ("id", "related_user")
-
+    list_filter = ("theme",)
 
 admin.site.register(DetailsModel, DetailsModelAdmin)
 admin.site.register(PasswordChangeRequestModel)
