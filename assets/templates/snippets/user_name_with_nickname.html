@@ -1,4 +1,4 @@
-<p>
+
     {{ user.first_name }}
     {% if request.user.detailsmodel.show_nicknames %}
         {% if user.detailsmodel.nickname %}
@@ -18,4 +18,3 @@
             {% endif %}
         {% endif %}
     {% endif %}
-</p>

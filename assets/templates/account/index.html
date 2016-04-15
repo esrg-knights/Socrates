@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Hallo {{ user.first_name }}</h1>
+            <h1 class="page-header">Hallo {% include 'snippets/user_name_with_nickname.html' %}</h1>
             {% if dining_stats.total_participated > 5 %}
                 <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>
                     Eetlijst: {{ dining_stats.get_percentage }}%</h3>

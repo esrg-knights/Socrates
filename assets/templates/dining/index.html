@@ -31,7 +31,7 @@
                                     <tr {% if participant.user == dinnerlist.owner %} class="success" {% endif %}>
                                         <td>
                                             {% with participant.user as user %}
-                                                {% include 'snippets/user_name_with_nickname.html' %}
+                                                <p>{% include 'snippets/user_name_with_nickname.html' %}</p>
                                             {% endwith %}
                                         </td>
                                         <td>

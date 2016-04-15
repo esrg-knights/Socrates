@@ -17,7 +17,10 @@
                     <ol>
 
                         {% for get in achievement.get %}
-                            <li>{{ get.user.get_full_name }} {% if get.score != -1 %} - {{ get.score }}{% endif %}</li>
+                            <li>{% with get.user as user %}
+                                {% include 'snippets/user_name_with_nickname.html' %}
+                            {% endwith %}
+                                {% if get.score != -1 %} - {{ get.score }}{% endif %}</li>
                         {% endfor %}
                     </ol>
                 {% else %}
