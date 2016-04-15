@@ -31,7 +31,7 @@ class DetailsModel(models.Model):
         help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True,
         blank=True)
     rather_nots = models.TextField(
-         verbose_name="Haal me van de eet-lijst",
+        verbose_name="Haal me van de eet-lijst",
         help_text="Als een van deze items gebruikt wordt bij het koken, wil je van de eetlijst afgehaald worden."
                   "Door het invullen van dit veld verga je het recht op eten. De kok kan jou er dus zomaar af halen.",
         null=True, blank=True)
@@ -44,7 +44,8 @@ class DetailsModel(models.Model):
     theme = models.SmallIntegerField(choices=(
         (1, "Material"),
         (2, "FRIEND COMPUTER MODE"),
-        (3, "None (Why would you want this?!)")
+        (3, "None (Why would you want this?!)"),
+        (4, 'Knigts (WIP)'),
     ), default=1, help_text="Thema van de UI. Alleen Material wordt officieel ondersteund")
 
     is_softbanned = models.BooleanField(default=False)
