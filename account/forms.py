@@ -77,7 +77,7 @@ class RegisterForm(forms.Form):
         widget=forms.TextInput(attrs={
             'id': 'username'}
         ),
-        help_text="/[0-z-+.]+/",
+        help_text="Je gewenste gebruikersnaam. Gebruik enkel letters, cijfers en strepen",
         error_messages={
             'characters': "You used characters that were not allowed. The following are allowed: 0-9 A-z . + -.",
             'taken': "Your username has already been taken. Please try another one!"
@@ -85,6 +85,7 @@ class RegisterForm(forms.Form):
     )
     password = forms.CharField(
         label="Wachtwoord",
+        help_text="Gewenst wachtwoord",
         widget=forms.PasswordInput(attrs=
         {
             'id': 'password'
@@ -99,10 +100,12 @@ class RegisterForm(forms.Form):
     )
     password_repeat = forms.CharField(
         label="Wachtwoord (Herhaald)",
+        help_text="Herhaal je gewenste wachtwoord",
         widget=forms.PasswordInput()
     )
     email = forms.CharField(
         label="Email",
+        help_text="Een email die wij kunnen bereiken",
         widget=forms.EmailInput(),
         error_messages=
         {
@@ -110,13 +113,16 @@ class RegisterForm(forms.Form):
         }
     )
     email_repeat = forms.CharField(
+        help_text="Herhaal je email",
         label="Email (Herhaald)",
         widget=forms.EmailInput()
     )
     first_name = forms.CharField(
+        help_text="Je voornaam. Dit zou simpel moeten zijn",
         label="Voornaam"
     )
     last_name = forms.CharField(
+        help_text="Je achternaam. Dit zou ook simpel moeten zijn",
         label="Achternaam"
     )
 
