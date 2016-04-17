@@ -4,3 +4,4 @@ django-crispy-forms >= 1.4.0
 slugify
 django-markdown-deux
 django-hijack
+djangorestframework
