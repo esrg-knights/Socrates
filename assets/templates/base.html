@@ -55,7 +55,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'account:index' %}">{{ pre_page_name }}</a>
+            <a class="navbar-brand" href="{% url 'account:index' %}">Knights of the Kitchen Table</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
@@ -73,25 +73,27 @@
                            aria-expanded="false">{{ user }} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             {% if user.is_staff %}
-                                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+                                <li><a href="{% url 'admin:index' %}"><i class="fa fa-lock"></i> Admin</a></li>
                                 <li class="divider"></li>
                             {% endif %}
                             {% for group in request.user.groups.all %}
                                 {% if group.name == "Bestuur" %}
-                                    <li><a href="{% url 'dining:stats' %}">Eetlijst statistieken</a></li>
-                                    <li><a href="{% url 'account:members' %}">Ledenbestand</a></li>
+                                    <li><a href="{% url 'dining:stats' %}"><i class="fa fa-table"></i> Eetlijst
+                                        statistieken</a></li>
+                                    <li><a href="{% url 'account:members' %}"><i class="fa fa-table"></i>
+                                        Ledenbestand</a></li>
                                     <li class="divider"></li>
                                 {% endif %}
                             {% endfor %}
-                            <li><a href="{% url 'account:groups' %}">Groepen</a></li>
+                            <li><a href="{% url 'account:groups' %}"><i class="fa fa-users"></i> Groepen</a></li>
                             <li class="divider"></li>
-                            <li><a href="{% url 'account:index' %}">Mijn profiel</a></li>
-                            <li><a href="{% url 'account:settings' %}">Instellingen</a></li>
-                            <li><a href="{% url 'account:logout' %}">Logout</a></li>
+                            <li><a href="{% url 'account:index' %}"><i class="fa fa-user"></i> Mijn profiel</a></li>
+                            <li><a href="{% url 'account:settings' %}"><i class="fa fa-cog"></i> Instellingen</a></li>
+                            <li><a href="{% url 'account:logout' %}"><i class="fa fa-sign-out"></i> Logout</a></li>
                         </ul>
                     </li>
                 {% else %}
-                    <li><a href="{% url 'account:login' %}">Login</a></li>
+                    <li><a href="{% url 'account:login' %}"><i class="fa fa-sign-in"></i> Login</a></li>
                 {% endif %}
             </ul>
         </div>
