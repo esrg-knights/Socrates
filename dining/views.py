@@ -142,7 +142,7 @@ class RemoveView(View):
         else:
             if request.user == dining_list.owner:
                 part = DiningParticipation.objects.get(id=id)
-                part.send_mail("Je bent verwijderd van de eetlijst",
+                part.mail("Je bent verwijderd van de eetlijst",
                                "De kok gaat koken met een van de items op jouw \"Haal me van de eet-lijst\" items. Hierdoor ben je van de eetlijst afgehaald.")
 
                 messages.success(request, "{0} is van de eetlijst afgegooid.".format(part.user.get_full_name()))
