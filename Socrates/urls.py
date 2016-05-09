@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^dining/', include('dining.urls', namespace="dining")),
     url(r'^news/', include('news.urls', namespace="news")),
     url(r'^hijack/', include('hijack.urls')),
+    url(r'^api/', include('api.urls'), name="api"),
     url(r'^$', include('account.urls')), ]

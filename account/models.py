@@ -11,11 +11,12 @@ class DetailsModel(models.Model):
     related_user = models.OneToOneField(User)
     uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
-    straat = models.CharField(max_length=255, null=True)
-    woonplaats = models.CharField(max_length=255, null=True)
-    postcode = models.CharField(max_length=10, null=True)
+    straat = models.CharField(max_length=255, null=True, help_text="Straat van je adres")
+    woonplaats = models.CharField(max_length=255, null=True, help_text="Waar je woont")
+    postcode = models.CharField(max_length=10, null=True, help_text="Je postcode")
 
-    telefoonnummer = models.CharField(max_length=20, null=True)
+    telefoonnummer = models.CharField(max_length=20, null=True,
+                                      help_text="Mobiel telefoonnummer waarop we je kunnen bereiken")
     geboortedatum = models.DateField(null=True, help_text="Formaat is DD-MM-YYYY")
 
     instituut = models.CharField(max_length=5, choices=(
@@ -23,16 +24,31 @@ class DetailsModel(models.Model):
         ('FON', "Fontys Eindhoven"),
         ("BE", "Universiteit of Hogeschool buiten Eindhoven"),
         ("NIET", "Niet")
-    ), default='TUE')
+    ), default='TUE', help_text="Bij welk instituut studeer je?")
 
-    kaartnummer = models.CharField(max_length=20, blank=True, null=True)
+    kaartnummer = models.CharField(max_length=20, blank=True, null=True,
+                                   help_text="Het kaartnummer van je TU-pas. Vul dit enkel in als je op de TUE zit")
 
     allergies = models.TextField(
-            help_text="Dingen waarvoor je allergies bent. Zet hier AUB alleen maar serieuze dingen bij.", null=True,
-            blank=True)
-    rather_nots = models.TextField(help_text="Dingen die je liever niet wil eten.", null=True, blank=True)
+        help_text="Allergieen van de eetlijst.", null=True,
+        blank=True)
+    rather_nots = models.TextField(
+        verbose_name="Haal me van de eet-lijst",
+        help_text="Als een van deze items gebruikt wordt bij het koken, wil je van de eetlijst afgehaald worden."
+                  "Door het invullen van dit veld verga je het recht op eten. De kok kan jou er dus zomaar af halen.",
+        null=True, blank=True)
+
     nickname = models.CharField(help_text="this is stupid. max 50 characters.", max_length=50, null=True, blank=True)
 
+    show_nicknames = models.BooleanField(help_text="Zie de nicknames van jezelf en andere gebruikers waar mogelijk",
+                                         default=True)
+
+    theme = models.SmallIntegerField(choices=(
+        (1, "Material"),
+        (2, "FRIEND COMPUTER MODE"),
+        (3, "None (Why would you want this?!)"),
+        (4, 'Knigts (WIP)'),
+    ), default=1, help_text="Thema van de UI. Alleen Material wordt officieel ondersteund")
 
     is_softbanned = models.BooleanField(default=False)
     ban_reason = models.CharField(max_length=50, default="")

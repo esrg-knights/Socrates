@@ -55,6 +55,8 @@ INSTALLED_APPS = (
     'markdown_deux',
     'hijack',
     'compat',
+    'api',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

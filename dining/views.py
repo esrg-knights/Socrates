@@ -126,18 +126,29 @@ class RemoveView(View):
     context = {}
 
     @method_decorator(login_required())
-    def get(self, request):
+    def get(self, request, id=None):
         dining_list = DiningList.get_latest()
 
-        if dining_list.owner is not None and datetime.now().time() > dining_list.closing_time:
-            messages.error(request, "De eetlijst is al geclaimed. Vraag aan de kok/bestuur of je er nog af mag.")
-            return redirect("dining:index")
+        if id == None:
+            if dining_list.owner is not None and datetime.now().time() > dining_list.closing_time:
+                messages.error(request, "De eetlijst is al geclaimed. Vraag aan de kok/bestuur of je er nog af mag.")
+                return redirect("dining:index")
 
-        if dining_list.user_in_list(request.user):
-            dining_list.remove_user(request.user)
-            messages.success(request, "Je bent uitgeschreven van deze eetlijst")
+            if dining_list.user_in_list(request.user):
+                dining_list.remove_user(request.user)
+                messages.success(request, "Je bent uitgeschreven van deze eetlijst")
+            else:
+                messages.error(request, "Je staat nog niet op deze eetlijst")
         else:
-            messages.error(request, "Je staat nog niet op deze eetlijst")
+            if request.user == dining_list.owner:
+                part = DiningParticipation.objects.get(id=id)
+                part.mail("Je bent verwijderd van de eetlijst",
+                               "De kok gaat koken met een van de items op jouw \"Haal me van de eet-lijst\" items. Hierdoor ben je van de eetlijst afgehaald.")
+
+                messages.success(request, "{0} is van de eetlijst afgegooid.".format(part.user.get_full_name()))
+                part.delete()
+            else:
+                messages.error(request, "Je hebt hier geen rechten voor!")
 
         return redirect("dining:index")
 
@@ -146,10 +157,14 @@ class StatView(View):
     template = "dining/stats.html"
     context = {}
 
-    @method_decorator(user_passes_test(lambda u: u.is_superuser, "/dining/"))
+    @method_decorator(login_required())
     def get(self, request):
-        self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
-        return render(request, self.template, self.context)
+        if request.user.groups.filter(name="Bestuur").count() == 0:
+            messages.error(request, "Je hebt hier geeen rechten voor!")
+            return redirect("account:index")
+        else:
+            self.context['stats'] = DiningStats.objects.all().order_by('total_participated')
+            return render(request, self.template, self.context)
 
 
 class AddThirdView(View):
@@ -160,7 +175,7 @@ class AddThirdView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
-        if datetime.now().time() > dinnerlist.closing_time and request.user is not dinnerlist.owner:
+        if datetime.now().time() > dinnerlist.closing_time and request.user != dinnerlist.owner:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
             return redirect("dining:index")
 
@@ -216,6 +231,15 @@ class CommentView(View):
             obj.dining_list = DiningList.get_latest()
 
             obj.save()
+
+            if obj.broadcast and (request.user.is_superuser or request.user == obj.dining_list.owner):
+                print("Broadcasting")
+                for part in obj.dining_list.get_participants():
+                    part.mail("Broadcast van de eetlijst", obj.body)
+
+                messages.success(request, "Bericht was gebroadcast naar iedereen!")
+            elif obj.broadcast:
+                messages.error(request, "Je hebt geen rechten om dit te doen!")
 
             messages.success(request, "Comment posted")
 

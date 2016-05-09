@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^password/', PasswordChangeView.as_view(), name="change_password"),
     url(r'activate/(?P<user_hash>[0-z-]+)/', ActivationView.as_view(), name="activate"),
     url(r'^groups/', GroupView.as_view(), name="groups"),
+    url(r'^members/', MemberView.as_view(), name="members"),
     url(r'^', IndexView.as_view(), name="index"),
 ]

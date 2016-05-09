@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block header_custom %}
+    {% include 'snippets/plugin_datatables.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Ledenbestand</h1>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Voornaam</th>
+                    <th>Achternaam</th>
+                    <th>Email</th>
+                    <th>Straat</th>
+                    <th>Woonplaats</th>
+                    <th>Postcode</th>
+                    <th>Telefoonnummer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.detailsmodel.straat }}</td>
+                        <td>{{ user.detailsmodel.woonplaats }}</td>
+                        <td>{{ user.detailsmodel.postcode }}</td>
+                        <td>{{ user.detailsmodel.telefoonnummer }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script type="application/javascript" src="{% static 'datatables/js/jquery.dataTables.js' %}"></script>
+    <script type="application/javascript" src="{% static 'datatables/js/dataTables.bootstrap.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('table').DataTable({
+                "paging": false,
+            });
+        });
+    </script>
+{% endblock %}

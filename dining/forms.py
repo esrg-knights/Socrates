@@ -84,4 +84,4 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = DiningComment
-        fields = ('body',)
+        fields = ('body', 'broadcast')

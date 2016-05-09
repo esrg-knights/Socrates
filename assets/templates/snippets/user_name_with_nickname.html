@@ -1,0 +1,20 @@
+
+    {{ user.first_name }}
+    {% if request.user.detailsmodel.show_nicknames %}
+        {% if user.detailsmodel.nickname %}
+            {% if user.detailsmodel.nickname_is_image %}
+            {% else %}
+                "{{ user.detailsmodel.nickname }}"
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    {{ user.last_name }}
+
+    {% if request.user.detailsmodel.show_nicknames %}
+        {% if user.detailsmodel.nickname %}
+            {% if user.detailsmodel.nickname_is_image %}
+                <img src="{{ user.detailsmodel.nickname }}"
+                     height="100px" width="auto">
+            {% endif %}
+        {% endif %}
+    {% endif %}
