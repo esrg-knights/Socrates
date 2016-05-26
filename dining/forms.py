@@ -40,7 +40,7 @@ class DiningThirdNewForm(forms.Form):
         self.helper.field_class = 'col-lg-8'
         self.helper.add_input(Submit('submit', 'Registreren', css_class="btn-block"))
 
-    user = UserChoiceField(queryset=User.objects.all().order_by("-last_name", "-first_name"), required=False,
+    user = UserChoiceField(queryset=User.objects.all().order_by("-last_name","-first_name"), required=False,
                            help_text="Gebruiker die bij de eetlijst wil")
 
     third = forms.CharField(required=False, help_text="Niet lid die bij de eetlijst wil.")
