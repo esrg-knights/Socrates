@@ -235,7 +235,7 @@ class CommentView(View):
             if obj.broadcast and (request.user.is_superuser or request.user == obj.dining_list.owner):
                 print("Broadcasting")
                 for part in obj.dining_list.get_participants():
-                    part.mail("Broadcast van de eetlijst", obj.body)
+                    part.mail("{0} heeft een bericht gestuurd over de eetlijst!".format(request.user.get_full_name()), obj.body)
 
                 messages.success(request, "Bericht was gebroadcast naar iedereen!")
             elif obj.broadcast:
