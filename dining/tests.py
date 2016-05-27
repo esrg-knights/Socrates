@@ -81,7 +81,7 @@ class DiningStatsTest(TransactionTestCase):
 
         dstats = DiningStats.objects.get(user=self.testUser)
 
-        self.assertEqual(dstats.total_helped, 1)
+        self.assertEqual(dstats.total_helped, 2)
         self.assertEqual(dstats.total_participated, 1)
 
 
@@ -220,7 +220,7 @@ class StatsViewTest(TestCase):
 
         r = self.client.get(self.view_url)
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, 302)
 
     def test_cannot_use_post_method(self):
         self.client.post(self.view_url)

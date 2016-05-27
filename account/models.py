@@ -1,4 +1,5 @@
 import uuid
+from signal import signal
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -7,17 +8,21 @@ from django.db import models
 
 
 # Create your models here.
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
 class DetailsModel(models.Model):
     related_user = models.OneToOneField(User)
     uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
-    straat = models.CharField(max_length=255, null=True, help_text="Straat van je adres")
-    woonplaats = models.CharField(max_length=255, null=True, help_text="Waar je woont")
-    postcode = models.CharField(max_length=10, null=True, help_text="Je postcode")
+    straat = models.CharField(max_length=255, null=True, blank=True, help_text="Straat van je adres")
+    woonplaats = models.CharField(max_length=255, null=True, blank=True, help_text="Waar je woont")
+    postcode = models.CharField(max_length=10, null=True, blank=True, help_text="Je postcode")
 
-    telefoonnummer = models.CharField(max_length=20, null=True,
+    telefoonnummer = models.CharField(max_length=20, null=True, blank=True,
                                       help_text="Mobiel telefoonnummer waarop we je kunnen bereiken")
-    geboortedatum = models.DateField(null=True, help_text="Formaat is DD-MM-YYYY")
+    geboortedatum = models.DateField(null=True, blank=True, help_text="Formaat is DD-MM-YYYY")
 
     instituut = models.CharField(max_length=5, choices=(
         ('TUE', "Technische Universiteit Eindhoven"),
@@ -56,6 +61,10 @@ class DetailsModel(models.Model):
     def nickname_is_image(self):
         return self.nickname.endswith(".jpg") or self.nickname.endswith(".png") or self.nickname.endswith(".gif")
 
+    @receiver(post_save, sender=User)
+    def create_new(sender, instance=None, created=False, **kwargs):
+        if created:
+            DetailsModel.objects.get_or_create(related_user=instance)
 
 class PasswordChangeRequestModel(models.Model):
     user = models.ForeignKey(User)
