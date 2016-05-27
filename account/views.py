@@ -24,7 +24,7 @@ class IndexView(View):
         context['dining_stats'] = DiningStats.objects.get_or_create(user=request.user)[0]
         context['achievements'] = AchievementGet.objects.filter(user=request.user)
 
-        if (request.user in DiningList.get_latest().get_participants()):
+        if len([x for x in DiningList.get_latest().get_participants() if x.user == request.user]) > 0:
             context['on_dining_list'] = True
 
         return render(request, 'account/index.html', context)

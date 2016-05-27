@@ -25,7 +25,8 @@ class InfoView(APIView):
         dining_list = DiningList.get_latest()
 
         data = {
-            "count": len(dining_list.get_participants())
+            "count": len(dining_list.get_participants()),
+            "participants": dining_list.get_participants()
         }
 
         return Response(InfoSerializer(data).data)
