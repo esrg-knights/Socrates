@@ -129,7 +129,7 @@ class DiningParticipation(models.Model):
         self.delete()
 
     def mail(self, header, body):
-        if self.user.detailsModel.receive_broadcasts:
+        if self.user.detailsmodel.receive_broadcasts:
             send_mail(header, body, "watson@kotkt.nl", [self.user.email, ])
 
     class Meta:
