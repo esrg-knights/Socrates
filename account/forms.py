@@ -193,6 +193,7 @@ class DetailsForm(forms.ModelForm):
             "theme",
             "nickname",
             "show_nicknames",
+            "receive_broadcasts",
         )
 
         self.helper.form_class = 'form-horizontal'
