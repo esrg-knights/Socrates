@@ -128,7 +128,7 @@ class DiningListTest(TransactionTestCase):
         self.assertEqual(dlist.relevant_date, datetime.now().date())
 
 
-class ClaimViewTest(TransactionTestCase):
+class laimViewTest(TransactionTestCase):
     view_url = reverse("dining:claim")
 
     def setUp(self):

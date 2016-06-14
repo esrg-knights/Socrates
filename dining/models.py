@@ -129,7 +129,9 @@ class DiningParticipation(models.Model):
         self.delete()
 
     def mail(self, header, body):
-        send_mail(header, body, "watson@kotkt.nl", [self.user.email,])
+        if self.user.detailsModel.receive_broadcasts:
+            send_mail(header, body, "watson@kotkt.nl", [self.user.email, ])
+
     class Meta:
         ordering = ("user__first_name",)
 
@@ -139,7 +141,6 @@ class DiningParticipationThird(models.Model):
     added_by = models.ForeignKey(User)
     name = models.CharField(max_length=30)
     paid = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.name

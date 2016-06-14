@@ -6,7 +6,6 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import models
 
-
 # Create your models here.
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -55,6 +54,9 @@ class DetailsModel(models.Model):
         (4, 'Knigts (WIP)'),
     ), default=1, help_text="Thema van de UI. Alleen Material wordt officieel ondersteund")
 
+    receive_broadcasts = models.BooleanField(default=True,
+                                             help_text="Of je wel of geen broadcasts wilt ontvangen van de eetlijst.")
+
     is_softbanned = models.BooleanField(default=False)
     ban_reason = models.CharField(max_length=50, default="")
 
@@ -65,6 +67,7 @@ class DetailsModel(models.Model):
     def create_new(sender, instance=None, created=False, **kwargs):
         if created:
             DetailsModel.objects.get_or_create(related_user=instance)
+
 
 class PasswordChangeRequestModel(models.Model):
     user = models.ForeignKey(User)
