@@ -6,6 +6,8 @@
 
 Makes it possible to access files on a remote ownCloud instance,
 share them or access application attributes.
+
+Copied from https://github.com/owncloud/pyocclient so that it works
 """
 
 import datetime
