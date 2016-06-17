@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+
 import account.management.lowncloud as owncloud
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User, Group
@@ -19,7 +21,16 @@ class Command(BaseCommand):
 
         for user in users:
             try:
-                oc.create_user(user.username, "changethis")
+                pw = generate_temp_password(10)
+                oc.create_user(user.username, pw)
+                print("User {0} has password {1}".format(user.username, pw))
+
+                send_mail(
+                    "Je hebt een account gekregen op owncloud!",
+                    "Je gebruikersnaam is {0} en je wachtwoord is {1} . Verander dit AUB zo snel mogelijk, aangezien het wachtwoord is verstuurd in plaintext! Owncloud is te vinden op https://kotkt.nl/cloud/owncloud/".format(user.username, pw),
+                    "app@kotkt.nl",
+                    [user.email,]
+                )
             except owncloud.OCSResponseError:
                 print("User {} already exists".format(user))
 
@@ -37,3 +48,12 @@ class Command(BaseCommand):
 
         print("There are {} users".format(users.count()))
         print("There are {} groups".format(groups.count()))
+
+
+def generate_temp_password(length):
+    if not isinstance(length, int) or length < 8:
+        raise ValueError("temp password must have positive length")
+
+    chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghijklmnopqrstuvwxyz"
+    from os import urandom
+    return "".join([chars[ord(c) % len(chars)] for c in urandom(length)])
