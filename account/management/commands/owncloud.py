@@ -1,0 +1,39 @@
+import account.management.lowncloud as owncloud
+from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User, Group
+
+from django.conf import settings
+
+
+class Command(BaseCommand):
+    help = 'Does some magical work'
+
+    def handle(self, *args, **options):
+        """ Do your work here """
+        users = User.objects.all()
+        groups = Group.objects.all()
+
+        oc = owncloud.Client("https://kotkt.nl/cloud/owncloud")
+
+        oc.login(settings.OWNCLOUD_USER, settings.OWNCLOUD_PW)
+
+        for user in users:
+            try:
+                oc.create_user(user.username, "changethis")
+            except owncloud.OCSResponseError:
+                print("User {} already exists".format(user))
+
+        for group in groups:
+            try:
+                oc.create_group(group.name)
+            except owncloud.OCSResponseError:
+                print("Group {} already exists".format(group))
+
+            for user in group.user_set.all():
+                try:
+                    oc.add_user_to_group(user.username, group.name)
+                except:
+                    print("User {} is already in group".format(user))
+
+        print("There are {} users".format(users.count()))
+        print("There are {} groups".format(groups.count()))
