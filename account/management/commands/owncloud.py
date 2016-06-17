@@ -13,7 +13,7 @@ Usage: python manage.py owncloud
 
 
 class Command(BaseCommand):
-    help = 'Does some magical work'
+    help = 'Syncs django users to owncloud'
 
     def handle(self, *args, **options):
         """ Do your work here """
