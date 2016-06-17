@@ -50,7 +50,7 @@ class Command(BaseCommand):
             except owncloud.OCSResponseError:
                 print("Group {} already exists".format(group))
 
-            #  Add users to groups
+            # Add users to groups
             for user in group.user_set.all():
                 try:
                     oc.add_user_to_group(user.username, group.name)
