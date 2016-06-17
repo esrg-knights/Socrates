@@ -6,6 +6,11 @@ from django.contrib.auth.models import User, Group
 
 from django.conf import settings
 
+"""
+Syncs django users and groups to owncloud. Generates passwords for new users
+Usage: python manage.py owncloud
+"""
+
 
 class Command(BaseCommand):
     help = 'Does some magical work'
@@ -19,27 +24,33 @@ class Command(BaseCommand):
 
         oc.login(settings.OWNCLOUD_USER, settings.OWNCLOUD_PW)
 
+        # Create users
+
         for user in users:
             try:
                 pw = generate_temp_password(10)
                 oc.create_user(user.username, pw)
                 print("User {0} has password {1}".format(user.username, pw))
 
+                # Send mail with password
                 send_mail(
                     "Je hebt een account gekregen op owncloud!",
-                    "Je gebruikersnaam is {0} en je wachtwoord is {1} . Verander dit AUB zo snel mogelijk, aangezien het wachtwoord is verstuurd in plaintext! Owncloud is te vinden op https://kotkt.nl/cloud/owncloud/".format(user.username, pw),
+                    "Je gebruikersnaam is {0} en je wachtwoord is {1} . Verander dit AUB zo snel mogelijk, aangezien het wachtwoord is verstuurd in plaintext! Owncloud is te vinden op https://kotkt.nl/cloud/owncloud/".format(
+                        user.username, pw),
                     "app@kotkt.nl",
-                    [user.email,]
+                    [user.email, ]
                 )
             except owncloud.OCSResponseError:
                 print("User {} already exists".format(user))
 
+        # Create groups
         for group in groups:
             try:
                 oc.create_group(group.name)
             except owncloud.OCSResponseError:
                 print("Group {} already exists".format(group))
 
+            #  Add users to groups
             for user in group.user_set.all():
                 try:
                     oc.add_user_to_group(user.username, group.name)
