@@ -174,7 +174,9 @@ class DetailsView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        print(request.user)
+        if request.user.detailsmodel.is_softbanned:
+            messages.error(request, request.user.detailsmodel.ban_reason)
+            return redirect("account:index")
         self.context['form'] = DetailsForm(instance=request.user.detailsmodel)
 
         return render(request, "account/details.html", self.context)
