@@ -7,6 +7,7 @@ from slugify import slugify
 # Create your models here.
 class Game(models.Model):
     name = models.CharField(max_length=100)
+    image = models.FileField(blank=True, null=True, upload_to="%y/%M/%d")
 
     def __str__(self):
         return self.name.__str__()
