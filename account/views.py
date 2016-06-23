@@ -13,7 +13,7 @@ from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, Det
 from django.contrib.auth.models import Group
 from account.models import DetailsModel, PasswordChangeRequestModel
 from achievements.models import AchievementGet
-from dining.models import DiningStats
+from dining.models import DiningStats, DiningList
 
 
 class IndexView(View):
@@ -23,6 +23,10 @@ class IndexView(View):
 
         context['dining_stats'] = DiningStats.objects.get_or_create(user=request.user)[0]
         context['achievements'] = AchievementGet.objects.filter(user=request.user)
+
+        if len([x for x in DiningList.get_latest().get_participants() if x.user == request.user]) > 0:
+            context['on_dining_list'] = True
+
         return render(request, 'account/index.html', context)
 
 
