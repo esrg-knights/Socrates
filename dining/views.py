@@ -145,7 +145,7 @@ class RemoveView(View):
                 part.mail("Je bent verwijderd van de eetlijst",
                           "De kok gaat koken met een van de items op jouw \"Haal me van de eet-lijst\" items. Hierdoor ben je van de eetlijst afgehaald.")
 
-                messages.success(request, "{0} is van de eetlijst afgegooid.".format(part.user.get_full_name()))
+                messages.success(request, u"{0} is van de eetlijst afgegooid.".format(part.user.get_full_name()))
                 part.delete()
             else:
                 messages.error(request, "Je hebt hier geen rechten voor!")
