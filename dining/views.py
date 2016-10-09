@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from dining.forms import DiningThirdNewForm, CommentForm
-from dining.models import DiningList, DiningParticipation, DiningStats, RecipeModel
+from dining.models import DiningList, DiningParticipation, DiningStats, RecipeModel, SpecialDateModel
 
 
 class IndexView(View):
@@ -81,8 +81,12 @@ class RegisterView(View):
     def get(self, request):
         dinnerlist = DiningList.get_latest()
 
+        #check if today is a special day
+        special_dates = SpecialDateModel.objects.filter(date_implied=datetime.now()).filter(date_is_registerable=False)
+        if len(special_dates) > 0:
+            messages.error(request, "Vandaag is er een speciale activiteit, hierdoor geldt de eetlijst vandaag niet")
+            return redirect("dining:index")
         # 14:00 vanwege tijdzones
-
         if datetime.now().time() > dinnerlist.closing_time:
             messages.error(request, "De eetlijst is officieel gesloten. Vraag aan de koks of je er nog op mag")
         else:
