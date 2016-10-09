@@ -68,7 +68,7 @@ class CommentAdmin(admin.ModelAdmin):
 class SpecialDateModelAdmin(admin.ModelAdmin):
     list_display = ("date_implied", "date_is_registerable", "message", "date_created")
     list_filter = ("date_implied", "date_is_registerable", "date_created")
-    list_filter = ("date_implied", "date_is_registerable", "date_created")
+    commlist_filter = ("date_implied", "date_is_registerable", "date_created")
 
 admin.site.register(DiningList, DiningListAdmin)
 admin.site.register(DiningParticipation, DiningParticipationAdmin)
