@@ -65,10 +65,15 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "body")
 
 
+class SpecialDateModelAdmin(admin.ModelAdmin):
+    list_display = ("date_implied", "date_is_registerable", "message", "date_created")
+    list_filter = ("date_implied", "date_is_registerable", "date_created")
+    list_filter = ("date_implied", "date_is_registerable", "date_created")
+
 admin.site.register(DiningList, DiningListAdmin)
 admin.site.register(DiningParticipation, DiningParticipationAdmin)
 admin.site.register(DiningStats, DiningStatsAdmin)
 admin.site.register(DiningParticipationThird)
 admin.site.register(DiningComment, CommentAdmin)
 admin.site.register(RecipeModel)
-admin.site.register(SpecialDateModel)
+admin.site.register(SpecialDateModel, SpecialDateModelAdmin)
