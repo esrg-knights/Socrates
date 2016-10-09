@@ -1,11 +1,15 @@
 import random
 
+from django.utils.datetime_safe import datetime
+
+from dining.models import SpecialDateModel
 from news.models import Post
 
 
 def basic_stats(request):
     setups = {
         "pre_page_name": "KOTKT",
+        "alerts": SpecialDateModel.objects.filter(date_implied=datetime.today().date())
     }
 
     return setups

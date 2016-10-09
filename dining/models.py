@@ -240,3 +240,11 @@ class RecipeModel(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class SpecialDateModel(models.Model):
+    date_implied = models.DateField()
+
+    date_is_registerable = models.BooleanField(default=True, help_text="Gebruikers kunnen zich nog inschrijven voor andere dingen op de eetlijst.")
+    message = models.CharField(max_length=360)
+
+    date_created = models.DateTimeField(auto_now=True, blank=True)
