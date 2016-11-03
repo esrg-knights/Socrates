@@ -104,10 +104,6 @@ class RegisterView(View):
             if form.cleaned_data['password_repeat'] == form.cleaned_data['password']:
                 user = form.save()
 
-                details = DetailsModel()
-                details.related_user = user
-                details.save()
-
                 self.send_registation_email(user)
 
                 messages.success(request,
