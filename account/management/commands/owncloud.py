@@ -53,6 +53,15 @@ class Command(BaseCommand):
             if len(user_groups) == 0:
                 for group in oc_groups:
                     oc.remove_user_from_group(user.username, group)
+            # If superuser, add to all groups
+            if user.is_superuser:
+                print("User {0} is superuser. Adding to all groups".format(user.username))
+                for group in Group.objects.all():
+                    try:
+                        oc.add_user_to_group(user.username, str(group.name))
+                    except Exception as ex:
+                        print(ex)
+            # Else sync regularly
             else:
                 for group in user_groups:
                     if group not in oc_groups:
