@@ -139,6 +139,9 @@ class RemoveView(View):
                 return redirect("dining:index")
 
             if dining_list.user_in_list(request.user):
+                if dining_list.owner == request.user:
+                    dining_list.owner = None
+                    dining_list.save()
                 dining_list.remove_user(request.user)
                 messages.success(request, "Je bent uitgeschreven van deze eetlijst")
             else:
