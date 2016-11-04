@@ -1,0 +1,17 @@
+{
+  "presets": [
+    "es2015",
+    "react"
+  ],
+  "plugins": [
+    [
+      "istanbul",
+      {
+        "exclude": [
+          "!src/**",
+          "**/*.spec.js?"
+        ]
+      }
+    ]
+  ]
+}

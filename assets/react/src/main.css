@@ -1,0 +1,21 @@
+
+html,
+body,
+#react-wrapper {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: block;
+}
+
+[data-reactroot] {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
