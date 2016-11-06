@@ -4,7 +4,7 @@
   "description": "[![Build Status](https://travis-ci.org/esrg-knights/Socrates.svg)](https://travis-ci.org/esrg-knights/Socrates)",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline -progress --color --port 7000"
+    "start": "webpack-dev-server --hot --inline -progress --color --port 7000 --display-error-details"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,10 @@
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^1.0.0",
     "webpack": "^1.13.3",
-    "webpack-merge": "^0.15.0"
+    "webpack-merge": "^0.15.0",
+    "react-mixin": "latest",
+    "react-binding": "latest",
+    "redux": "latest"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
