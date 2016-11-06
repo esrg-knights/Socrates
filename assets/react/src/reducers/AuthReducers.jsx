@@ -1,4 +1,5 @@
 import {LOGIN_SUCCESFULL} from "../actions/AuthActions";
+import combineReducers from 'redux/src/combineReducers';
 
 function loginReducer(state = [], action) {
   switch (action.type) {
@@ -8,7 +9,7 @@ function loginReducer(state = [], action) {
         {
           logged_in: true,
           username: action.username,
-          jwt: action.token
+          jwt: action.jwt
         }
       ];
     default:
@@ -16,4 +17,12 @@ function loginReducer(state = [], action) {
   }
 }
 
-export default loginReducer;
+function noneReducer(state = [], action){
+  return state;
+}
+
+let authReducer = combineReducers({
+  loginReducer
+});
+
+export default authReducer;

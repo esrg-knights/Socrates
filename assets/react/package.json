@@ -20,14 +20,14 @@
     "material-ui": "^0.16.1",
     "path": "^0.12.7",
     "react": "^15.3.2",
+    "react-binding": "latest",
     "react-dom": "^15.3.2",
+    "react-mixin": "latest",
     "react-router": "^3.0.0",
     "react-tap-event-plugin": "^1.0.0",
+    "redux": "^3.6.0",
     "webpack": "^1.13.3",
-    "webpack-merge": "^0.15.0",
-    "react-mixin": "latest",
-    "react-binding": "latest",
-    "redux": "latest"
+    "webpack-merge": "^0.15.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

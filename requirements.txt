@@ -5,3 +5,4 @@ slugify
 django-markdown-deux
 django-hijack
 djangorestframework
+djangorestframework-jwt

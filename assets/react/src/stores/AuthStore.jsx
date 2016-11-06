@@ -1,40 +1,6 @@
-import BaseStore from "./BaseStore";
-import {LOGIN_SUCCESFULL} from "../actions/AuthActions";
+import authReducer from '../reducers/AuthReducers';
+import {createStore} from 'redux';
 
-class AuthStore extends BaseStore {
-  _user;
-  _jwt;
+let authStore = createStore(authReducer);
 
-
-  get user() {
-    return this._user;
-  }
-
-  get jwt() {
-    return this._jwt;
-  }
-
-  constructor() {
-    super();
-    this._user = null;
-    this._jwt = null;
-  }
-
-  registerToActions(action) {
-    switch (action.type) {
-      case LOGIN_SUCCESFULL:
-        this._user = action.username;
-        this._jwt = action.jwt;
-        break;
-      default:
-        break;
-    }
-    this.emitChange();
-  }
-
-  isLoggedIn() {
-    return !!this.user;
-  }
-}
-
-export default new AuthStore();
+export default authStore;
