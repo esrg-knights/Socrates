@@ -1,9 +1,12 @@
-import {Overview} from "./component/overview";
 import React from "react";
-import {IndexRoute, Route} from "react-router";
+import {Route, Router, IndexRoute} from "react-router";
+import Overview from "./component/overview";
+import ProfileComponent from "./component/profile";
 
 export default (
-  <Route path="/">
-    <IndexRoute component={Overview}/>
-  </Route>
+  <Router history={history}>
+    <Route path="/" component={Overview}>
+      <IndexRoute component={ProfileComponent} />
+    </Route>
+  </Router>
 );

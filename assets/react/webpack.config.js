@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const pkg = require('./package.json');
 
+const webpack = require('webpack');
 
 module.exports = {
   entry: path.resolve(__dirname, './src/main.jsx'),
@@ -17,7 +18,7 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, 'src')
   },
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   module: {
     loaders: [
       {
@@ -47,6 +48,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: pkg.name
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
     })
   ]
 };

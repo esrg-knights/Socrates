@@ -18,9 +18,9 @@ injectTapEventPlugin();
 
 
 const app = {
-  primaryColor: 'pink',
-  secondaryColor: 'yellow',
-  dark: true
+  primaryColor: 'green',
+  secondaryColor: 'blue',
+  dark: false
 };
 
 
