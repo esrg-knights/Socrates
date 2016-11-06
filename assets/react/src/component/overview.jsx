@@ -1,5 +1,6 @@
 import {Drawer, AppBar, MenuItem, FlatButton} from "material-ui";
 import React, {Component} from "react";
+import {Link} from "react-router";
 
 export default class Overview extends React.Component {
   constructor(props) {
@@ -10,6 +11,8 @@ export default class Overview extends React.Component {
     };
 
     this.handleTouchTap = this.handleTouchTap.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleRequestChange = this.handleRequestChange.bind(this);
   }
 
 
@@ -17,7 +20,18 @@ export default class Overview extends React.Component {
     this.setState({
       menuOpen: true
     });
-    console.log("Clicked");
+  }
+
+  handleClose() {
+    this.setState({
+      menuOpen: false
+    });
+  }
+
+  handleRequestChange(open) {
+    this.setState({
+      menuOpen: open
+    })
   }
 
   render() {
@@ -30,10 +44,11 @@ export default class Overview extends React.Component {
           iconElementRight={<FlatButton label="Save"/>}>
           <Drawer
             open={this.state.menuOpen}
-            docked={true}>
+            docked={false}
+            onRequestChange={this.handleRequestChange}>
             <h2>Eetlijst</h2>
-            <MenuItem >Eetlijst </MenuItem>
-            <MenuItem >Profiel</MenuItem>
+            <MenuItem containerElement={<Link to="/"/>} onTouchTap={this.handleClose}>Profile </MenuItem>
+            <MenuItem containerElement={<Link to="/dinner"/>} onTouchTap={this.handleClose}>Dinner</MenuItem>
           </Drawer>
         </AppBar>
         {this.props.children}

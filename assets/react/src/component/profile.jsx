@@ -8,7 +8,7 @@ export default class Profile extends React.Component{
   render(){
     return(
       <div>
-        <h1>Hello world</h1>
+        <h1>Ik ben profile</h1>
       </div>
     )
   }
