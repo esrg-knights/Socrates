@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Binder} from "react-binding";
 import {TextField} from "material-ui";
 import {AuthService} from "../service/AuthService";
 import authStore from "../stores/AuthStore";
@@ -23,6 +22,8 @@ export default class Login extends React.Component {
     });
 
     this.login = this.login.bind(this);
+    this.userChange = this.userChange.bind(this);
+    this.passwordChange = this.passwordChange.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +40,18 @@ export default class Login extends React.Component {
     new AuthService().login(this.state.user, this.state.password);
   }
 
+  userChange(val) {
+    this.setState({
+      user: val.target.value
+    })
+  }
+
+  passwordChange(val){
+    this.setState({
+      password: val.target.value
+    })
+  }
+
   render() {
     return (
       <div>
@@ -46,11 +59,15 @@ export default class Login extends React.Component {
           <div>
             <TextField
               hintText="Username"
+              value={this.state.user}
+              onChange={this.userChange}
             /><br />
             <TextField
               hintText="Password Field"
               floatingLabelText="Password"
               type="password"
+              value={this.state.password}
+              onChange={this.passwordChange}
             /><br />
           </div>
           <button type="submit" onClick={this.login}>Submit</button>

@@ -7,7 +7,7 @@ export default class Profile extends React.Component{
   }
 
   componentDidMount(){
-    new ApiService().get("latest/").then(response => console.log(response));
+    new ApiService().get("dinner").then(response => console.log(response));
   }
 
   render(){
