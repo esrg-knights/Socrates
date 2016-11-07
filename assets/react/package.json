@@ -4,7 +4,8 @@
   "description": "[![Build Status](https://travis-ci.org/esrg-knights/Socrates.svg)](https://travis-ci.org/esrg-knights/Socrates)",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --inline -progress --color --port 7000 --display-error-details"
+    "start": "webpack-dev-server --hot --inline -progress --color --port 7000 --display-error-details",
+    "build": "webpack -p --progress --profile --colors"
   },
   "repository": {
     "type": "git",
