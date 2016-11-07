@@ -6,6 +6,16 @@ const pkg = require('./package.json');
 
 const webpack = require('webpack');
 
+// this config can be in webpack.config.js or other file with constants
+var API_URL = {
+  production: JSON.stringify('https://app.kotkt.nl/api/'),
+  development: JSON.stringify('http://localhost:8000/api/')
+}
+
+// check environment mode
+var environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
+
 module.exports = {
   entry: path.resolve(__dirname, './src/main.jsx'),
   output: {
@@ -53,6 +63,9 @@ module.exports = {
       compress: {
         warnings: false
       }
+    }),
+    new webpack.DefinePlugin({
+      'API_URL': API_URL[environment]
     })
   ]
 };

@@ -1,8 +1,13 @@
 import React from 'react';
+import ApiService from '../service/ApiService';
 
 export default class Profile extends React.Component{
   constructor(props){
     super(props);
+  }
+
+  componentDidMount(){
+    new ApiService().get("latest/").then(response => console.log(response));
   }
 
   render(){

@@ -2,49 +2,52 @@ import * as React from "react";
 import {Binder} from "react-binding";
 import {AuthService} from "../service/AuthService";
 import authStore from "../stores/AuthStore";
-import { hashHistory } from 'react-router';
+import {hashHistory} from "react-router";
+import {successfullLogin} from "../actions/AuthActions";
 
 export default class Login extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            user: '',
-            password: ''
-        };
+    this.state = {
+      user: '',
+      password: ''
+    };
 
-        if(!authStore.getState().length != 0){
-            hashHistory.push('profile');
-        }
+    this.subscription = authStore.subscribe(() => {
+      console.log(authStore.getState());
+      if (localStorage.getItem("jwt") != "") {
+        hashHistory.push('profile');
+      }
+    });
 
-        this.subscription = authStore.subscribe(() => {
-            console.log(authStore.getState());
-            if (localStorage.getItem("jwt") != "") {
-                hashHistory.push('profile');
-            }
-        });
+    this.login = this.login.bind(this);
+  }
 
-        this.login = this.login.bind(this);
+  componentDidMount() {
+  if (localStorage.getItem("jwt") != "" && localStorage.getItem("username") != "") {
+      authStore.dispatch(successfullLogin(localStorage.getItem("username"), localStorage.getItem("jwt")));
     }
+  }
 
-    login(e) {
-        e.preventDefault();
+  login(e) {
+    e.preventDefault();
 
-        console.log(this.state);
+    console.log(this.state);
 
-        new AuthService().login(this.state.user, this.state.password);
-    }
+    new AuthService().login(this.state.user, this.state.password);
+  }
 
-    render() {
-        return (
-            <div>
-                <form role="form">
+  render() {
+    return (
+      <div>
+        <form role="form">
 
-                    <input type="text" valueLink={Binder.bindToState(this, 'user')} placeholder="Username"/>
-                    <input type="password" valueLink={Binder.bindToState(this, 'password')} placeholder="Password"/>
-                    <button type="submit" onClick={this.login}>Submit</button>
-                </form>
-            </div>
-        )
-    }
+          <input type="text" valueLink={Binder.bindToState(this, 'user')} placeholder="Username"/>
+          <input type="password" valueLink={Binder.bindToState(this, 'password')} placeholder="Password"/>
+          <button type="submit" onClick={this.login}>Submit</button>
+        </form>
+      </div>
+    )
+  }
 }

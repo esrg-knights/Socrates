@@ -1,5 +1,6 @@
 import {LOGIN_SUCCESFULL} from "../actions/AuthActions";
 import combineReducers from 'redux/src/combineReducers';
+import {LOGOUT} from "../actions/AuthActions";
 
 function loginReducer(state = [], action) {
   switch (action.type) {
@@ -12,8 +13,20 @@ function loginReducer(state = [], action) {
           jwt: action.jwt
         }
       ];
+    case LOGOUT:
+      return [
+        ...state,
+        {
+          logged_in: false
+        }
+      ];
     default:
-      return state;
+      return [
+        ...state,
+        {
+          logged_in: false
+        }
+      ];
   }
 }
 

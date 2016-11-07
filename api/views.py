@@ -11,7 +11,7 @@ from dining.models import DiningList
 
 class DinnerListView(APIView):
     def get(self, request, format=None):
-        return Response(DinnerListSerializer(DiningList.get_latest()).data)
+        return HttpResponse(serializers.serialize('json', [DiningList.get_latest()]))
 
 
 class ParticipationView(APIView):
