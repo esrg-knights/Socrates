@@ -1,32 +1,21 @@
-from django.http import HttpResponse
+from django.contrib.auth.models import User
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
-from django.core import serializers
-from rest_framework.response import Response
-from rest_framework.views import APIView
-
-from api.serializers import DinnerListSerializer, InfoSerializer
+from api.serializers import DinnerListSerializer, UserWithProfile
 from dining.models import DiningList
 
 
-class DinnerListView(APIView):
-    def get(self, request, format=None):
-        return HttpResponse(serializers.serialize('json', [DiningList.get_latest()]))
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 5
 
+class DinnerViewSet(ModelViewSet):
+    queryset = DiningList.objects.all().order_by("-pk")
+    serializer_class = DinnerListSerializer
+    pagination_class = StandardResultsSetPagination
 
-class ParticipationView(APIView):
-    def get(self, request, format=None):
-        parts = serializers.serialize('json', DiningList.get_latest().get_participants())
-        return HttpResponse(parts, content_type='json')
-
-
-class InfoView(APIView):
-    def get(self, request, format=None):
-        dining_list = DiningList.get_latest()
-
-        data = {
-            "count": len(dining_list.get_participants()),
-            "participants": dining_list.get_participants()
-        }
-
-        return Response(InfoSerializer(data).data)
+class UserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserWithProfile

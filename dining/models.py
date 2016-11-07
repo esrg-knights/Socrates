@@ -96,7 +96,7 @@ class DiningList(models.Model):
 
 
 class DiningParticipation(models.Model):
-    dining_list = models.ForeignKey(DiningList)
+    dining_list = models.ForeignKey(DiningList, related_name="participations")
     user = models.ForeignKey(User)
     added_by = models.ForeignKey(User, null=True, blank=True, related_name="addedby")
 
@@ -208,7 +208,7 @@ class DiningComment(models.Model):
     user = models.ForeignKey(User)
     body = models.TextField()
     date_posted = models.DateTimeField(auto_now=True)
-    dining_list = models.ForeignKey(DiningList)
+    dining_list = models.ForeignKey(DiningList, related_name="comments")
 
     broadcast = models.BooleanField(default=False,
                                     help_text="Bij broadcast wordt je bericht naar ieder lid van de huidige eetlijst gemaild. Enkel owners en admins kunnen dit.")

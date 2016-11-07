@@ -12,7 +12,7 @@ from django.dispatch import receiver
 
 
 class DetailsModel(models.Model):
-    related_user = models.OneToOneField(User)
+    related_user = models.OneToOneField(User, related_name="details")
     uid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     straat = models.CharField(max_length=255, null=True, blank=True, help_text="Straat van je adres")

@@ -1,11 +1,14 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
+from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
 
-from api.views import DinnerListView, ParticipationView, InfoView
+from api.views import DinnerViewSet, UserViewSet
+
+router = routers.DefaultRouter()
+router.register(r'dinner', DinnerViewSet)
+router.register(r'user', UserViewSet)
 
 urlpatterns = (
-    url(r'^auth/$', obtain_jwt_token),
-    url(r'^latest/participation/$', ParticipationView.as_view()),
-    url(r'^latest/info/$', InfoView.as_view()),
-    url(r'^latest/$', DinnerListView.as_view()),
+    url(r'^', include(router.urls)),
+    url(r'^auth$', obtain_jwt_token),
 )
