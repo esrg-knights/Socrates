@@ -8,8 +8,8 @@ const webpack = require('webpack');
 
 // this config can be in webpack.config.js or other file with constants
 var API_URL = {
-  production: JSON.stringify('https://app.kotkt.nl/api/'),
-  development: JSON.stringify('http://localhost:8000/api/')
+  0: JSON.stringify('https://app.kotkt.nl/api/'),
+  1: JSON.stringify('http://localhost:8000/api/')
 }
 
 // check environment mode
@@ -65,7 +65,7 @@ module.exports = {
       }
     }),
     new webpack.DefinePlugin({
-      'API_URL': API_URL[environment]
+      'API_URL': process.argv[1].indexOf('webpack-dev-server') >= 0 ? API_URL[1] : API_URL[0]
     })
   ]
 };
