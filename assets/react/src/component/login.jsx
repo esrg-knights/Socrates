@@ -1,36 +1,50 @@
 import * as React from "react";
 import {Binder} from "react-binding";
 import {AuthService} from "../service/AuthService";
+import authStore from "../stores/AuthStore";
+import { hashHistory } from 'react-router';
 
 export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      user: '',
-      password: ''
-    };
+        this.state = {
+            user: '',
+            password: ''
+        };
 
-    this.login = this.login.bind(this);
-  }
+        if(!authStore.getState().length != 0){
+            hashHistory.push('profile');
+        }
 
-  login(e) {
-    e.preventDefault();
+        this.subscription = authStore.subscribe(() => {
+            console.log(authStore.getState());
+            if (localStorage.getItem("jwt") != "") {
+                hashHistory.push('profile');
+            }
+        });
 
-    console.log(this.state);
+        this.login = this.login.bind(this);
+    }
 
-    new AuthService().login(this.state.user, this.state.password);
-  }
+    login(e) {
+        e.preventDefault();
 
-  render() {
-    return (
-      <div>
-        <form role="form">
-          <input type="text" valueLink={Binder.bindToState(this, 'user')} placeholder="Username"/>
-          <input type="password" valueLink={Binder.bindToState(this, 'password')} placeholder="Password"/>
-          <button type="submit" onClick={this.login}>Submit</button>
-        </form>
-      </div>
-    )
-  }
+        console.log(this.state);
+
+        new AuthService().login(this.state.user, this.state.password);
+    }
+
+    render() {
+        return (
+            <div>
+                <form role="form">
+
+                    <input type="text" valueLink={Binder.bindToState(this, 'user')} placeholder="Username"/>
+                    <input type="password" valueLink={Binder.bindToState(this, 'password')} placeholder="Password"/>
+                    <button type="submit" onClick={this.login}>Submit</button>
+                </form>
+            </div>
+        )
+    }
 }
