@@ -110,14 +110,14 @@ class DiningParticipation(models.Model):
         return self.work_cook is True or self.work_dishes is True
 
     def get_allergy(self):
-        if self.user.detailsmodel.allergies is not u"":
-            return u"{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.allergies)
+        if self.user.details.allergies is not u"":
+            return u"{}: {}".format(self.user.get_full_name(), self.user.details.allergies)
         else:
             return u""
 
     def get_rather_not(self):
-        if self.user.detailsmodel.rather_nots is not u"":
-            return u"{}: {}".format(self.user.get_full_name(), self.user.detailsmodel.rather_nots)
+        if self.user.details.rather_nots is not u"":
+            return u"{}: {}".format(self.user.get_full_name(), self.user.details.rather_nots)
         else:
             return u""
 
@@ -129,7 +129,7 @@ class DiningParticipation(models.Model):
         self.delete()
 
     def mail(self, header, body):
-        if self.user.detailsmodel.receive_broadcasts:
+        if self.user.details.receive_broadcasts:
             send_mail(header, body, "watson@kotkt.nl", [self.user.email, ])
 
     class Meta:
