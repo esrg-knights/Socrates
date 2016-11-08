@@ -85,7 +85,7 @@ class RegisterView(View):
 
     def send_registation_email(self, user):
         subject = "Registratie afmaken"
-        url = "http://app.kotkt.nl/accounts/activate/{0}".format(user.detailsmodel.uid)
+        url = "http://app.kotkt.nl/accounts/activate/{0}".format(user.details.uid)
         body = "Je hebt je geregistreerd bij de Knights. Maak deze registratie af door naar het volgende adres te navigeren: {0}".format(
             url)
 
@@ -130,14 +130,14 @@ class ActivationView(View):
             return redirect("dining:index")
 
         self.context['new_user'] = user
-        form = CompleteRegistrationForm(instance=user.detailsmodel)
+        form = CompleteRegistrationForm(instance=user.details)
 
         self.context['form'] = form
         return render(request, self.template, self.context)
 
     def get_user(self, user_id):
         try:
-            return User.objects.get(detailsmodel__uid=user_id)
+            return User.objects.get(details__uid=user_id)
         except:
             raise Http404
 
@@ -148,7 +148,7 @@ class ActivationView(View):
             messages.error(request, "Account is al geactiveerd")
             return redirect("dining:index")
 
-        form = CompleteRegistrationForm(request.POST, instance=user.detailsmodel)
+        form = CompleteRegistrationForm(request.POST, instance=user.details)
 
         if form.is_valid():
             details = form.save(commit=False)
@@ -174,16 +174,16 @@ class DetailsView(View):
 
     @method_decorator(login_required)
     def get(self, request):
-        if request.user.detailsmodel.is_softbanned:
-            messages.error(request, request.user.detailsmodel.ban_reason)
+        if request.user.details.is_softbanned:
+            messages.error(request, request.user.details.ban_reason)
             return redirect("account:index")
-        self.context['form'] = DetailsForm(instance=request.user.detailsmodel)
+        self.context['form'] = DetailsForm(instance=request.user.details)
 
         return render(request, "account/details.html", self.context)
 
     @method_decorator(login_required)
     def post(self, request):
-        form = DetailsForm(request.POST, instance=request.user.detailsmodel)
+        form = DetailsForm(request.POST, instance=request.user.details)
 
         if form.is_valid():
             form.save()
