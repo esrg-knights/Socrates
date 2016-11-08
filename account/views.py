@@ -11,7 +11,7 @@ from django.views.generic import View
 from account.forms import LoginForm, RegisterForm, CompleteRegistrationForm, DetailsForm, \
     PasswordChangeRequestForm, PasswordChangeForm
 from django.contrib.auth.models import Group
-from account.models import DetailsModel, PasswordChangeRequestModel
+from account.models import PasswordChangeRequestModel
 from achievements.models import AchievementGet
 from dining.models import DiningStats, DiningList
 
