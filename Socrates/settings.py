@@ -164,7 +164,7 @@ HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'  # Where admins are redirected 
 
 # CORS
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
 
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
