@@ -1,3 +1,4 @@
+from rest_framework_swagger.views import get_swagger_view
 from django.conf.urls import url, include
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
@@ -10,5 +11,8 @@ router.register(r'user', UserViewSet)
 
 urlpatterns = (
     url(r'^', include(router.urls)),
-    url(r'^auth$', obtain_jwt_token),
+    url(r'^auth/token', obtain_jwt_token),
+    url(r'^auth/user', include('rest_framework.urls',
+                               namespace='rest_framework')),
+    url(r'^account', include('djoser.urls')),
 )

@@ -1,4 +1,6 @@
-import React from 'react';
+import React from 'react';/(?P<pk>[^/.]+)/$ [name='user-detail']
+^api/ ^ ^user/(?P<pk>[^/.]+)\.(?P<format>[a-z0-9]+)/?$ [name='user-detail']
+^api/ ^auth$
 import ApiService from '../service/ApiService';
 
 export default class Profile extends React.Component{

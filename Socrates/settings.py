@@ -57,7 +57,8 @@ INSTALLED_APPS = (
     'compat',
     'api',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'djoser',
 )
 
 MIDDLEWARE_CLASSES = (

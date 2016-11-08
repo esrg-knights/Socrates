@@ -7,3 +7,4 @@ django-hijack
 djangorestframework
 djangorestframework-jwt
 django-cors-headers
+djoser
