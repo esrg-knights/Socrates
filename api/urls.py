@@ -10,8 +10,8 @@ router.register(r'user', UserViewSet)
 
 urlpatterns = (
     url(r'^', include(router.urls)),
-    url(r'^auth/token', obtain_jwt_token),
-    url(r'^auth/user', include('rest_framework.urls',
+    url(r'^auth/token/', obtain_jwt_token),
+    url(r'^auth/user/', include('rest_framework.urls',
                                namespace='rest_framework')),
-    url(r'^account', include('djoser.urls')),
+    url(r'^account/', include('djoser.urls')),
 )

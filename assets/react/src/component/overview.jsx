@@ -54,7 +54,8 @@ export default class Overview extends React.Component {
             docked={false}
             onRequestChange={this.handleRequestChange}>
             <h2>Eetlijst</h2>
-            <MenuItem containerElement={<Link to="/"/>} onTouchTap={this.handleClose}>Profile </MenuItem>
+            <MenuItem containerElement={<Link to="/"/>} onTouchTap={this.handleClose}>Login </MenuItem>
+            <MenuItem containerElement={<Link to="/profile"/>} onTouchTap={this.handleClose}>Profile </MenuItem>
             <MenuItem containerElement={<Link to="/dinner"/>} onTouchTap={this.handleClose}>Dinner</MenuItem>
           </Drawer>
         </AppBar>

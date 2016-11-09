@@ -33,6 +33,10 @@ export default class ApiService {
 
     payload.headers = myHeaders;
 
+    if(url[url.length] != '/'){
+      url += '/';
+    }
+
     return fetch(url, payload)
   }
 }

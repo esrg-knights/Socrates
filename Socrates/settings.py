@@ -62,6 +62,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -70,8 +72,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
 )
 
 ROOT_URLCONF = 'Socrates.urls'
@@ -164,7 +164,11 @@ HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'  # Where admins are redirected 
 
 # CORS
 
-CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ORIGIN_WHITELIST = (
+    'app.kotkt.nl',
+    'localhost:8000',
+    'localhost:7000'
+)
 
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
