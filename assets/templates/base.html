@@ -13,11 +13,11 @@
 
 
 
-    {% if request.user.detailsmodel.theme == 2 %}
+    {% if request.user.details.theme == 2 %}
         <!-- Bootstrap-->
         <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
-    {% elif request.user.detailsmodel.theme == 3 %}
-    {% elif request.user.detailsmodel.theme == 4 %}
+    {% elif request.user.details.theme == 3 %}
+    {% elif request.user.details.theme == 4 %}
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/bootstrap.css' %}">
     {% else %}
         <!-- Bootstrap-->
