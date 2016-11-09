@@ -175,6 +175,8 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:7000'
 )
 
+APPEND_SLASH = True
+
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
 except:
