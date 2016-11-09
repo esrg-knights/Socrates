@@ -5,7 +5,7 @@ import {logout} from "../actions/AuthActions";
 
 export class AuthService {
   login(username, password) {
-    new ApiService().post('auth/token', {username: username, password: password}).then(
+    new ApiService().post('auth/token/', {username: username, password: password}).then(
       response => authStore.dispatch(successfullLogin(username, response))
     );
   }

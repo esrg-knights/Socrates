@@ -29,7 +29,11 @@ SECRET_KEY = '#5#2&!q%q7^i!oja+mpdamd-+m87ft3ki9+w3a=@8w)$80v*-q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "app.kotkt.nl",
+    "localhost:8000",
+    "localhost:7000"
+]
 
 DATE_INPUT_FORMATS = [
     "%d-%m-%Y",
