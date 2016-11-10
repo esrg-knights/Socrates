@@ -8,3 +8,4 @@ djangorestframework
 djangorestframework-jwt
 django-cors-headers
 djoser
+pillow == 3.4.2

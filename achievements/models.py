@@ -33,6 +33,8 @@ class Achievement(models.Model):
     date_last_accessed = models.DateTimeField(help_text="Datum waarop de achievement voor het laatst verander was",
                                               blank=True, null=True)
 
+    image = models.ImageField(blank=True, null=True, upload_to="%y/%M%d")
+
     def save(self, *args, **kwargs):
         self.date_last_accessed = timezone.now()
         self.name_slug = slugify(self.name)

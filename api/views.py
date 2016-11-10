@@ -2,8 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.viewsets import ModelViewSet
 
-from achievements.models import Achievement
-from api.serializers import DinnerListSerializer, UserWithProfile, AchievementSerializer
+from achievements.models import Achievement, AchievementGet
+from api.serializers import DinnerListSerializer, UserWithProfile, AchievementSerializer, SimpleAchievementGetSerializer
 from dining.models import DiningList
 
 
@@ -27,3 +27,7 @@ class UserViewSet(ModelViewSet):
 class AchievementViewSet(ModelViewSet):
     queryset = Achievement.objects.all()
     serializer_class = AchievementSerializer
+
+class AchievementGetViewSet(ModelViewSet):
+    queryset = AchievementGet.objects.all().order_by('-score', '-date_achieved')
+    serializer_class = SimpleAchievementGetSerializer
