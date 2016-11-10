@@ -53,7 +53,7 @@ class Achievement(models.Model):
 
 class AchievementGet(models.Model):
     user = models.ForeignKey(User, related_name="user", help_text="Gebruiker die een Achievement heeft gehaald")
-    achievement = models.ForeignKey(Achievement, help_text="Achievement die is gehaald")
+    achievement = models.ForeignKey(Achievement, related_name="gets", help_text="Achievement die is gehaald")
     awarded_by = models.ForeignKey(User, related_name="awarded_by",
                                    help_text="Lid van de ZG die de achievement heeft uitgedeeld")
 

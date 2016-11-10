@@ -2,11 +2,12 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
 
-from api.views import DinnerViewSet, UserViewSet
+from api.views import DinnerViewSet, UserViewSet, AchievementViewSet
 
 router = routers.DefaultRouter()
 router.register(r'dinner', DinnerViewSet)
 router.register(r'user', UserViewSet)
+router.register(r'achievements', AchievementViewSet)
 
 urlpatterns = (
     url(r'^', include(router.urls)),

@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from account.models import DetailsModel
+from achievements.models import Achievement, Game, AchievementGet
 from dining.models import DiningList, DiningParticipation, DiningComment
 
 
@@ -48,3 +49,27 @@ class DinnerListSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiningList
         fields = ('id', 'relevant_date', 'owner', 'participations', 'comments')
+
+
+class AchievementGetSerializer(serializers.ModelSerializer):
+    user = UserWithProfile(many=False, read_only=True)
+    awarded_by = UserWithProfile(many=False, read_only=True)
+
+    class Meta:
+        model = AchievementGet
+        fields = ("id", "user", "awarded_by", "date_achieved", "score")
+
+
+class GameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Game
+        fields = ("id", "name", "image")
+
+
+class AchievementSerializer(serializers.ModelSerializer):
+    related_game = GameSerializer(many=False, read_only=True)
+    gets = AchievementGetSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Achievement
+        fields = ("id", "name", "description", "date_created", "related_game", "gets")
