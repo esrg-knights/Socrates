@@ -1,26 +1,35 @@
-import React from 'react';
-import ApiService from '../service/ApiService';
+import React from "react";
+import {DinnerService} from "../service/DinnerService";
+import DinnerRow from "./dinnerRow";
 
-export default class DinnerList extends React.Component{
-  constructor(props){
+export default class DinnerList extends React.Component {
+  constructor(props) {
     super(props);
 
     this.state = {
-      data: "Incoming"
+      data: {},
+      participants: []
     }
   }
 
-  componentDidMount(){
-    new ApiService().get("dinner").then(response => this.setState({
-      data: response["results"][0]["relevant_date"]
-    }));
+  componentDidMount() {
+    new DinnerService().get().then(result => {
+      result = result['results'][0];
+      console.log(result.participations);
+      this.setState({
+        data: result,
+        participants: result.participations
+      })
+    })
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <div>
-        <h1>Ik ben profile</h1>
-        <p>{this.state.data}</p>
+        <h1>{this.state.data.relevant_date}</h1>
+        {this.state.participants.map(function (object, i) {
+          return <DinnerRow key={i} obj={object} />;
+        })}
       </div>
     )
   }

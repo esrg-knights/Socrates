@@ -11,6 +11,7 @@ import routes from './routes';
 
 const wrapper = document.createElement('div');
 wrapper.id = 'react-wrapper';
+wrapper.className = 'container';
 document.body.appendChild(wrapper);
 
 
