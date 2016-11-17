@@ -177,6 +177,25 @@ CORS_ORIGIN_WHITELIST = (
 
 APPEND_SLASH = True
 
+# Disable allowed host emails
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+    },
+}
+
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
 except:
