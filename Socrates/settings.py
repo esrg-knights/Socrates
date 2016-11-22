@@ -63,10 +63,12 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'djoser',
+    'silk'
 )
 
 MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
+    'silk.middleware.SilkyMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -195,6 +197,11 @@ LOGGING = {
         },
     },
 }
+
+# Silky
+
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_AUTHORISATION = True  # User must have permissions
 
 try:
     exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())

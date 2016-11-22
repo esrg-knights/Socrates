@@ -25,7 +25,9 @@ urlpatterns = [
     url(r'^news/', include('news.urls', namespace="news")),
     url(r'^hijack/', include('hijack.urls')),
     url(r'^api/', include('api.urls'), name="api"),
-    url(r'^$', include('account.urls')), ]
+    url(r'^$', include('account.urls')),
+    url(r'^silk/', include('silk.urls', namespace='silk'))
+]
 
 if settings.DEBUG:
     urlpatterns += url(r'^media/(?P<path>.*)$', 'django.views.static.serve',
