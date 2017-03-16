@@ -1,0 +1,15 @@
+<!-- Geef de status van de eetlijst weer -->
+{% if on_dining_list != None %}
+<p class="alert alert-success">Je staat op de eetlijst van vandaag</p>
+{% else %}
+<p class="alert alert-warning">Je staat nog niet op de eetlijst van vandaag!</p>
+{% endif %}
+
+<!-- Geef het percentage weer -->
+{% if dining_stats.total_participated > 5 %}
+    <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>
+    Eetlijst: {{ dining_stats.get_percentage }}%</h3>
+{% else %}
+    <h3>Je moet meer dan 5 keer mee-eten om statistieken te krijgen. Je hebt
+    nu {{ dining_stats.total_participated }} keer mee-gegeten.</h3>
+{% endif %}

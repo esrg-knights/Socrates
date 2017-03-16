@@ -1,0 +1,78 @@
+body {
+    --color-Primary:                #0d4013;
+    --color-PrimaryText:            #FFF;
+    --color-PrimaryBorder:          #121212;
+    --color-Primary-focus:          #2f6235;
+    --color-PrimaryText-focus:      #BBB;
+    --color-PrimaryBorder-focus:    #121212;
+
+    --color-Secondary:              #12300a;
+    --color-SecondaryText:          #f2efee;
+    --color-SecondaryBorder:        #f4e8ee;
+    --color-Secondary-focus:        #42874a;
+    --color-SecondaryText-focus:    #f9f8f7;
+    --color-SecondaryBorder-focus:  #f9f8f7;
+
+    --color-Accent:             #ddd;
+    --color-Background:         #F2FCE8;
+
+    --color-PopUpCover:         #232323;
+    --color-PopUpContent:       #191919;
+    --color-PopUpContentText:   #fff;
+
+    --color-Normal:             #FFFFF6;
+    --color-NormalAccent:       #ABC8A4;
+    --color-NormalText:         #000;
+    --color-NormalBorder:       #DDDDD2;
+
+    --color-Link:               #9fe0a6;
+    --color-Link-focus:         #9fe0a6;
+
+    --color-Highlight:          #ff0;
+    --color-HighlightText:      black;
+
+    --color-inActive:           #222;
+    --color-Active:             #555;
+
+    --color-Success:            #404140;
+    --color-SuccessText:        #efffef;
+    --color-SuccessBorder:      #262;
+    --color-Success-btn:        #373;
+    --color-SuccessText-btn:    #fff;
+    --color-SuccessBorder-btn:  #fff;
+    --color-Success-focus:      #595;
+    --color-SuccessText-focus:  #aaa;
+    --color-SuccessBorder-focus:#fff;
+
+    --color-Info:               #444;
+    --color-InfoText:           #fff;
+    --color-InfoBorder:         #22C;
+    --color-Info-btn:           #337;
+    --color-InfoText-btn:       #fff;
+    --color-InfoBorder-btn:     #fff;
+    --color-Info-focus:         #559;
+    --color-InfoText-focus:     #aaa;
+    --color-InfoBorder-focus:     #aaa;
+
+    --color-Warning:            #444;
+    --color-WarningText:        #ffefef;
+    --color-WarningBorder:      #C22;
+    --color-Warning-btn:        var(--color-Secondary);
+    --color-WarningText-btn:    #fbb;
+    --color-WarningBorder-btn:  #C00;
+    --color-Warning-focus:      #382020;
+    --color-WarningText-focus:  #fff;
+    --color-WarningBorder-focus:#C00;
+
+    --color-Danger:             #414040;
+    --color-DangerText:         #ffeeee;
+    --color-DangerBorder:       #C00;
+    --color-Danger-btn:         var(--color-Secondary);
+    --color-DangerText-btn:     #fbb;
+    --color-DangerBorder-btn:   #F00;
+    --color-Danger-focus:       #382020;
+    --color-DangerText-focus:   #f00;
+    --color-DangerBorder-focus: #F00;
+
+
+}

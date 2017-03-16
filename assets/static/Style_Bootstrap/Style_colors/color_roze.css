@@ -1,0 +1,79 @@
+body {
+
+    --color-Primary:                #C91D66;
+    --color-PrimaryText:            #FFF;
+    --color-PrimaryBorder:          #C91D66;
+    --color-Primary-focus:          #C91D66;
+    --color-PrimaryText-focus:      #fff;
+    --color-PrimaryBorder-focus:    #121212;
+
+    --color-Secondary:              #CF8E46;
+    --color-SecondaryText:          #fff;
+    --color-SecondaryBorder:        #CF8E46;
+    --color-Secondary-focus:        var(--color-Primary);
+    --color-SecondaryText-focus:    var(--color-PrimaryText);
+    --color-SecondaryBorder-focus:  var(--color-PrimaryBorder);
+
+    --color-Accent:             #ddd;
+    --color-Background:         #70154E;
+
+    --color-PopUpCover:         #4C0242;
+    --color-PopUpContent:       #FDE;
+    --color-PopUpContentText:   #000;
+
+    --color-Normal:             #F18AB1;
+    --color-NormalAccent:       #F18AB1;
+    --color-NormalText:         #FFF;
+    --color-NormalBorder:       #C91D66;
+
+    --color-Link:               var(--color-Secondary);
+    --color-Link-focus:         var(--color-Primary);
+
+    --color-Highlight:          #ff0;
+    --color-HighlightText:      black;
+
+    --color-inActive:           #F18AB1;
+    --color-Active:             #C91D66;
+
+    --color-Success:            var(--color-Primary);
+    --color-SuccessText:        var(--color-PrimaryText);
+    --color-SuccessBorder:      var(--color-Primary);
+    --color-Success-btn:        #373;
+    --color-SuccessText-btn:    #fff;
+    --color-SuccessBorder-btn:  #fff;
+    --color-Success-focus:      #595;
+    --color-SuccessText-focus:  #aaa;
+    --color-SuccessBorder-focus:#fff;
+
+    --color-Info:               var(--color-Primary);
+    --color-InfoText:           var(--color-PrimaryText);
+    --color-InfoBorder:         var(--color-Primary);
+    --color-Info-btn:           var(--color-Secondary);
+    --color-InfoText-btn:       var(--color-SecondaryText);
+    --color-InfoBorder-btn:     var(--color-Secondary);
+    --color-Info-focus:         var(--color-Secondary-focus);
+    --color-InfoText-focus:     #aaa;
+    --color-InfoBorder-focus:   var(--color-SecondaryBorder-focus);
+
+    --color-Warning:            ;
+    --color-WarningText:        #FFF;
+    --color-WarningBorder:      var(--color-Background);
+    --color-Warning-btn:        var(--color-Secondary);
+    --color-WarningText-btn:    var(--color-SecondaryText);
+    --color-WarningBorder-btn:  #F00;
+    --color-Warning-focus:      #F24;
+    --color-WarningText-focus:  #fff;
+    --color-WarningBorder-focus:#C00;
+
+    --color-Danger:             #F13;
+    --color-DangerText:         #ffeeee;
+    --color-DangerBorder:       #C00;
+    --color-Danger-btn:         #F13;
+    --color-DangerText-btn:     #fff;
+    --color-DangerBorder-btn:   #000;
+    --color-Danger-focus:       var(--color-Background);
+    --color-DangerText-focus:   #f00;
+    --color-DangerBorder-focus: #F00;
+
+
+}

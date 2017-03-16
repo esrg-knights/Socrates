@@ -1,33 +1,92 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header text-center">Achievements!</h1>
-            <p>Heb je een achievement gehaald en wil je op de lijst komen? Vraag een lid van de ZG of stuur hun een <a
-                    href="mailto:zg@kotkt.nl">email</a>.</p>
+            <h1 class="page-header text-center">Achievements</h1>
         </div>
+        <div class="col-lg-12" id="achiever"></div>
+
+
+        <script type="text/babel">
+            /*////////////////////////////////////////////////////////////
+            /////////Display a selection of achievements//////////////////
+            ////////////////////////////////////////////////////////////*/
+
+        var achList_General = [];
+        var achList_BoardGames = [];
+        var achList_RolePlay = [];
+        var winners;
+        var achObj;
+        var winName;
+        var association;
+
+            ///  Loop over all availlable achievements
         {% for achievement in achievements %}
-            <div class="col-md-6 col-sm-12">
-                <h2><img src="{{ achievement.related_image.url }}" class="img-responsive img-circle"
-                         height="30px"/><b>{{ achievement.name }}</b> ({{ achievement.related_game }})</h2>
+            {% if achievement.isPublic %}
+                winners = [];
+                {% for get in achievement.get %}
+                    {% with get.user as user %}
+                        // Count the number of people who obtained it
+                        winName = "{{user.first_name}}"+"{{ user.last_name }}";
+                        winners.push(winName);
+                    {% endwith %}
+                {% endfor %}
 
-                <p>{{ achievement.description|safe }}</p>
-                {% if achievement.get %}
-                    <ol>
-
-                        {% for get in achievement.get %}
-                            <li>{% with get.user as user %}
-                                {% include 'snippets/user_name_with_nickname.html' %}
-                            {% endwith %}
-                                {% if get.score != -1 %} - {{ get.score }}{% endif %}</li>
-                        {% endfor %}
-                    </ol>
+                    //Mark down the association
+                {% if achievement.related_game %}
+                    association = "{{achievement.related_game}}";
                 {% else %}
-                    <p><b>Nog niemand heeft deze achievement gehaald!</b></p>
+                    association = "{{achievement.association}}";
                 {% endif %}
 
+                    // Make the achievement objects
+                achObj = {  name:"{{achievement.name }}",
+                            link: association,
+                            desc:"{{ achievement.description|safe }}",
+                            imageName:"{{achievement.image}}",
+                            count: winners.length,
+                            winners:winners
+                            };
+                {% if achievement.category == 0 %}
+                    achList_General.push(achObj);
+                {% elif achievement.category == 1 %}
+                    achList_BoardGames.push(achObj);
+                {% endif %}
+            {% endif %}
+        {% endfor %};
+
+            // Ready the object that contains all achievements
+        var tabTitles = ["Algemeen", "Bordspellen", "Rollenspellen"];
+        var tabContent = [];
+
+        tabContent.push(
+            <div>
+                <AchievementCollection showIntell="1" title="Boardgame Achievements" achievements={achList_General} height="120" width="50%" styleClass="col-md-6 col-xs-12"/>
+                <br/>
+                <p> Deze Achievements kunnen worden geclaimed bij het bestuur. </p>
             </div>
-        {% endfor %}
+            );
+        tabContent.push(
+            <div>
+                <AchievementCollection showIntell="1" title="Boardgame Achievements" achievements={achList_BoardGames} height="120" width="50%" styleClass="col-md-6 col-xs-12"/>
+                <br/>
+                <p>Heb je een achievement gehaald en wil je op de lijst komen? Vraag een lid van de ZG of stuur hun een <a href="mailto:zg@kotkt.nl">email</a>.</p>
+            </div>);
+        tabContent.push(
+            <div>
+                <br /><br/>
+                <p> Er zijn nog geen Achievements voor rollenspellen opgesteld. Zeur bij het bestuur hierover. Groeten, de DC.</p>
+            </div>);
+
+        var element = (<TabContainer tabTitles={tabTitles} tabContent={tabContent}/>);
+
+            // Place it in the class
+        ReactDOM.render(
+            element,
+            document.getElementById('achiever')
+        );
+        </script>
     </div>
 {% endblock %}

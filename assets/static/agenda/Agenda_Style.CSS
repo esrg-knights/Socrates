@@ -1,0 +1,27 @@
+.AgendaBlock
+{
+    margin-top: 25px;
+}
+.AgendaName
+ {
+     margin-top: -5px;
+     margin-bottom: 2px;
+     font-weight: 400;
+     font-size: 140%;
+
+}
+.AgendaInfo
+{
+    margin-left: 20px;
+}
+.AgendaDate
+{
+
+    font-style: Italic;
+    font-weight: 250;
+}
+
+.AgendaRemark
+{
+
+}

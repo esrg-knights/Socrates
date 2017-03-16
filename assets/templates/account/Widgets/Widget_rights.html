@@ -1,0 +1,5 @@
+{% if request.user.is_superuser %}
+    <p class="alert alert-danger">Je bent superuser. Je hebt 100% toegang tot alle informatie.</p>
+{% elif request.user.is_staff %}
+    <p class="alert alert-info">Je hebt toegang tot het admin paneel</p>
+{% endif %}

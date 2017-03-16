@@ -17,11 +17,16 @@
         <!-- Bootstrap-->
         <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
     {% elif request.user.details.theme == 3 %}
+        <link rel="stylesheet" href="{% static 'Style_Bootstrap/Style_colors/color_light.css' %}">
+        <link rel="stylesheet" href="{% static 'Style_Bootstrap/Style_base/bootstrap.css' %}">
+
+
+
     {% elif request.user.details.theme == 4 %}
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/bootstrap.css' %}">
     {% else %}
         <!-- Bootstrap-->
-        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
 
         <!-- Bootstrap Material Design -->
         <link rel="stylesheet" href="{% static 'bootstrap-material-design/css/material.min.css' %}">
@@ -34,6 +39,23 @@
 
     <link rel="stylesheet" href="{% static 'comicsans/comic.css' %}">
 
+    <!-- Wouters contributions -->
+    <!--External React initialisation Scripts -->
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <!-- Style sheets -->
+    <link   type="text/css" rel="Stylesheet" href="{% static 'achievements/Achievement_Style.css' %}"  />
+    <link   type="text/css" rel="Stylesheet" href="{% static 'pop_up/Pop-up_Style.css' %}"  />
+    <link   type="text/css" rel="Stylesheet" href="{% static 'agenda/Agenda_Style.css' %}"  />
+    <link   type="text/css" rel="Stylesheet" href="{% static 'tabs/Tabs_Style.css' %}"  />
+    <!-- Scripts -->
+    <script src="{% static 'achievements/Achievement_Script.js' %}" type="text/babel"></script>
+    <script src="{% static 'agenda/Agenda_Script.js' %}" type="text/babel"></script>
+
+    <script src="{% static 'tabs/Tabs_Script.js' %}" type="text/babel"></script>
+    <script src="{% static 'pop_up/Pop-up_Script.js' %}" type="text/babel"></script>
+
 
     <link rel="icon" type="img/gif" href="{% static 'icon/dickbutt.gif' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'hijack/hijack-styles.css' %}"/>
@@ -44,6 +66,9 @@
 
 </head>
 <body>
+
+<div id="PopUpContainer"></div>
+
 {% hijack_notification %}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -55,7 +80,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'account:index' %}">Knights of the Kitchen Table</a>
+            <a class="navbar-brand" href="{% url 'account:index' %}">Knights of the Kitchen Table !T!</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">

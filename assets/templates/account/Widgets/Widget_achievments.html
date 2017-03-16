@@ -1,0 +1,49 @@
+{% if achievements %}
+    <h3>Achievements</h3>
+    <div id="achiever"></div>
+    <script type="text/babel">
+            /*////////////////////////////////////////////////////////////
+            /////////Display a selection of obtained achievements/////////
+            ////////////////////////////////////////////////////////////*/
+
+        var achList = [];
+        var winners;
+        var achObj;
+        var winName;
+
+            ///  Loop over all availlable achievements
+        {% for awards in achievements %}
+            {% with awards.achievement as achievement %}
+                winners = [];
+                {% for get in achievement.get %}
+                    {% with get.user as user %}
+                        // Count the number of people who obtained it
+                        winName = "{{user.first_name}}"+"{{ user.last_name }}";
+                        winners.push(winName);
+                    {% endwith %}
+                {% endfor %}
+
+
+                    // Make the achievement objects
+                achObj = {  name:"{{achievement.name }}",
+                            link:"{{achievement.related_game}}",
+                            desc:"{{ achievement.description|safe }}",
+                            imageName:"{{achievement.image}}",
+                            count: winners.length,
+                            winners:winners
+                            };
+                achList.push(achObj);
+            {% endwith %}
+        {% endfor %};
+
+            // Ready the object that contains all achievements
+        const achCollection = (
+                <AchievementCollection showCounter="0" showIntell="0" title="Boardgame Achievements" achievements={achList} height="120" width="50%" styleClass="col-xs-12 noIntel"/>);
+
+            // Place it in the class
+        ReactDOM.render(
+            achCollection,
+            document.getElementById('achiever')
+        );
+        </script>
+{% endif %}
