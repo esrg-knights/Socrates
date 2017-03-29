@@ -35,7 +35,7 @@ class Achievement(models.Model):
         (2, "Rollenspellen"),
     ), default=1, help_text="Subset waar de Achievement tot behoort")
 
-    isPublic = models.BooleanField(help_text="Of het in het overzicht moet worden weergeven", default=1)
+    is_public = models.BooleanField(help_text="Of het in het overzicht moet worden weergeven", default=1)
 
 
     date_created = models.DateTimeField(auto_now=True, help_text="datum aangemaakt")

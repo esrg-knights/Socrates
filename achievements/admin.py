@@ -4,7 +4,7 @@ from .models import *
 
 class AchievementAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "category", "priority")
-    list_filter = ("date_last_accessed", "isPublic")
+    list_filter = ("date_last_accessed", "is_public")
 
 class AchievementGetAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "achievement", "awarded_by", "score")

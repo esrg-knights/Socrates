@@ -108,4 +108,4 @@ class AchievementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Achievement
-        fields = ("id", "name", "description", "image", "date_created", "related_game", "gets")
+        fields = ("id", "name", "name_slug", "category", "is_public", "description", "image", "date_created", "related_game", "gets")
