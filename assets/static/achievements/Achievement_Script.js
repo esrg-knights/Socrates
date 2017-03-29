@@ -38,9 +38,13 @@ class Achievement extends React.Component {
     // Return the style of the banner
     getBannerStyle(){
 
-        var BadgeImage = this.props.info.imageName;
-        if (BadgeImage == "" || BadgeImage == null){
-            BadgeImage = "Achievements/Ach_ERROR.png";
+        var BadgeImage = '/media/'+this.props.info.imageName;
+        if (this.props.info.imageName == ""){
+            BadgeImage = "/static/achievements/img/Ach_ERROR.png";
+        }
+        else
+        {
+            BadgeImage = '/media/'+this.props.info.imageName;
         }
         var bannerTopMargin, bannerHeight;
 
@@ -52,7 +56,7 @@ class Achievement extends React.Component {
         return {width: "100%",
                 top: bannerTopMargin + '%',
                 height: bannerHeight + '%',
-                backgroundImage: 'url(/media/'+BadgeImage+')',
+                backgroundImage: 'url('+BadgeImage+')',
                 backgroundSize: '100% 100%'
                 };
     }
@@ -117,9 +121,9 @@ class Achievement extends React.Component {
                 if (this.props.showIfObtained == 1)
                 {
                     if (this.props.info.obtained == 1)
-                        markerImage = "Achievements/Marker_empty_obtained.png";
+                        markerImage = "Marker_empty_obtained.png";
                     else
-                        markerImage = "Achievements/Marker_empty.png";
+                        markerImage = "Marker_empty.png";
                         //http://i.imgur.com/UNSlAS1.png
 
                 }
@@ -127,7 +131,7 @@ class Achievement extends React.Component {
                     markerImage = "Marker_empty_obtained.png";
 
                  styleMarker = {display: 'initial',
-                                backgroundImage: 'url(/media/'+markerImage+')',
+                                backgroundImage: 'url(/static/achievements/img/'+markerImage+')',
                                 backgroundSize: '100% 100%'};
              }
 
