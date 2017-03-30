@@ -24,7 +24,7 @@
 
             ///  Loop over all availlable achievements
         {% for achievement in achievements %}
-            {% if achievement.isPublic %}
+            {% if achievement.is_public %}
                 winners = [];
                 {% for get in achievement.get %}
                     {% with get.user as user %}
