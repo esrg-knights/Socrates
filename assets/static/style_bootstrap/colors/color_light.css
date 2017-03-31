@@ -1,17 +1,17 @@
 body {
-    --color-Primary:                #0d4013;
+    --color-Primary:                #0D5513;
     --color-PrimaryText:            #FFF;
     --color-PrimaryBorder:          #121212;
     --color-Primary-focus:          #2f6235;
     --color-PrimaryText-focus:      #BBB;
     --color-PrimaryBorder-focus:    #121212;
 
-    --color-Secondary:              #12300a;
-    --color-SecondaryText:          #f2efee;
-    --color-SecondaryBorder:        #f4e8ee;
-    --color-Secondary-focus:        #42874a;
-    --color-SecondaryText-focus:    #f9f8f7;
-    --color-SecondaryBorder-focus:  #f9f8f7;
+    --color-Secondary:              #FFFFF6;
+    --color-SecondaryText:          #000000;
+    --color-SecondaryBorder:        #BBBBB6;
+    --color-Secondary-focus:        #CCCCC6;
+    --color-SecondaryText-focus:    #000000;
+    --color-SecondaryBorder-focus:  #BBBBB6;
 
     --color-Accent:             #ddd;
     --color-Background:         #F2FCE8;
@@ -25,17 +25,20 @@ body {
     --color-NormalText:         #000;
     --color-NormalBorder:       #DDDDD2;
 
-    --color-Link:               #9fe0a6;
-    --color-Link-focus:         #9fe0a6;
+    --color-Link:               #0d4013;
+    --color-Link-focus:         #004000;
+
 
     --color-Highlight:          #ff0;
     --color-HighlightText:      black;
 
     --color-inActive:           #222;
-    --color-Active:             #555;
+    --color-Active:             var(--color-Primary);
+    --color-ActiveText:         var(--color-PrimaryText);
+    --color-ActiveBorder:       var(--color-Primary);
 
-    --color-Success:            #404140;
-    --color-SuccessText:        #efffef;
+    --color-Success:            #E2ECD8;
+    --color-SuccessText:        #002200;
     --color-SuccessBorder:      #262;
     --color-Success-btn:        #373;
     --color-SuccessText-btn:    #fff;
@@ -44,9 +47,9 @@ body {
     --color-SuccessText-focus:  #aaa;
     --color-SuccessBorder-focus:#fff;
 
-    --color-Info:               #444;
+    --color-Info:               #E2ECD8;
     --color-InfoText:           #fff;
-    --color-InfoBorder:         #22C;
+    --color-InfoBorder:         #CCC;
     --color-Info-btn:           #337;
     --color-InfoText-btn:       #fff;
     --color-InfoBorder-btn:     #fff;
@@ -54,24 +57,24 @@ body {
     --color-InfoText-focus:     #aaa;
     --color-InfoBorder-focus:     #aaa;
 
-    --color-Warning:            #444;
-    --color-WarningText:        #ffefef;
+    --color-Warning:            #ECECC8;
+    --color-WarningText:        #101000;
     --color-WarningBorder:      #C22;
     --color-Warning-btn:        var(--color-Secondary);
-    --color-WarningText-btn:    #fbb;
-    --color-WarningBorder-btn:  #C00;
-    --color-Warning-focus:      #382020;
-    --color-WarningText-focus:  #fff;
-    --color-WarningBorder-focus:#C00;
+    --color-WarningText-btn:    #F00;
+    --color-WarningBorder-btn:  #F00;
+    --color-Warning-focus:      #F99;
+    --color-WarningText-focus:  #FFF;
+    --color-WarningBorder-focus:#F00;
 
-    --color-Danger:             #414040;
-    --color-DangerText:         #ffeeee;
+    --color-Danger:             #e0a69f;
+    --color-DangerText:         #100000;
     --color-DangerBorder:       #C00;
-    --color-Danger-btn:         var(--color-Secondary);
-    --color-DangerText-btn:     #fbb;
+    --color-Danger-btn:         #D22;
+    --color-DangerText-btn:     #FFF;
     --color-DangerBorder-btn:   #F00;
-    --color-Danger-focus:       #382020;
-    --color-DangerText-focus:   #f00;
+    --color-Danger-focus:       #F55;
+    --color-DangerText-focus:   #CCC;
     --color-DangerBorder-focus: #F00;
 
 

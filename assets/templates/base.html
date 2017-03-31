@@ -14,17 +14,24 @@
 
 
     {% if request.user.details.theme == 2 %}
+         <!-- Color storage -->
+        <link rel="stylesheet" href="{% static 'bootstrap_old/css/color_bootstrap.css' %}">
+
         <!-- Bootstrap-->
         <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
+
     {% elif request.user.details.theme == 3 %}
-        <link rel="stylesheet" href="{% static 'Style_Bootstrap/Style_colors/color_light.css' %}">
-        <link rel="stylesheet" href="{% static 'Style_Bootstrap/Style_base/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'style_bootstrap/colors/color_light.css' %}">
+        <link rel="stylesheet" href="{% static 'style_bootstrap/base/bootstrap.css' %}">
 
 
 
     {% elif request.user.details.theme == 4 %}
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/bootstrap.css' %}">
     {% else %}
+        <!-- Color storage -->
+        <link rel="stylesheet" href="{% static 'bootstrap/css/color_bootstrap.css' %}">
+
         <!-- Bootstrap-->
         <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
 
@@ -80,7 +87,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'account:index' %}">Knights of the Kitchen Table !T!</a>
+            <a class="navbar-brand" href="{% url 'account:index' %}">Knights of the Kitchen Table</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
@@ -133,7 +140,7 @@
     {% endfor %}
 {% endif %}
 {% if latest_post %}
-    <div class="alert alert-default alert-dismissible" role="alert" style="margin-top: -20px">
+    <div class="alert alert-info alert-dismissible" role="alert" style="margin-top: -20px">
 
         <p><a href="{% url 'news:index' %}">{{ latest_post.title }} - {{ latest_post.date_posted|naturalday }}</a></p>
     </div>

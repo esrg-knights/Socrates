@@ -4,7 +4,7 @@ class TabContainer extends React.Component {
         super(props);
 
         // Set the state
-        this.state = {selected: 0};
+        this.state = {selected: props.index};
     }
 
     tabClicked(e){
@@ -20,7 +20,6 @@ class TabContainer extends React.Component {
             }
         }
 
-        //this.setState({selected: i});
     }
 
     renderNavigation() {

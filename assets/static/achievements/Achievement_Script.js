@@ -4,6 +4,7 @@ class Achievement extends React.Component {
             // set the width of the badge
             // Correct for the counter
         var badgeRatio;
+
         if (this.props.showCounter == 0)
             badgeRatio = 6.8 / 11.0;
         else

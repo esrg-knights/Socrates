@@ -170,3 +170,5 @@ migrations/
 Socrates/config.py
 .idea/
 *.iml
+.babelrc
+node_modules/

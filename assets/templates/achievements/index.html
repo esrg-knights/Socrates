@@ -22,6 +22,9 @@
         var winName;
         var association;
 
+        var MessageRolePlay;
+        var MessageGeneral;
+
             ///  Loop over all availlable achievements
         {% for achievement in achievements %}
             {% if achievement.is_public %}
@@ -61,11 +64,21 @@
         var tabTitles = ["Algemeen", "Bordspellen", "Rollenspellen"];
         var tabContent = [];
 
+        if (achList_General.length > 0)
+            MessageGeneral = "Deze Achievements kunnen worden geclaimed bij het bestuur.";
+        else
+            MessageGeneral = "Het bestuur zal later nog Achievements hiervoor toevoegen";
+
+        if (achList_RolePlay.length > 0)
+            MessageRolePlay = "Deze Achievements kunnen worden geclaimed bij het bestuur.";
+        else
+            MessageRolePlay = "Er zijn nog geen Achievements voor rollenspellen opgesteld. Zeur bij het bestuur hierover. Groeten, de DC.";
+
         tabContent.push(
             <div>
-                <AchievementCollection showIntell="1" title="Boardgame Achievements" achievements={achList_General} height="120" width="50%" styleClass="col-md-6 col-xs-12"/>
+                <AchievementCollection showIntell="1" title="Verenigingsbadges" achievements={achList_General} height="120" width="50%" styleClass="col-md-6 col-xs-12"/>
                 <br/>
-                <p> Deze Achievements kunnen worden geclaimed bij het bestuur. </p>
+                <p> {MessageGeneral} </p>
             </div>
             );
         tabContent.push(
@@ -76,11 +89,12 @@
             </div>);
         tabContent.push(
             <div>
-                <br /><br/>
-                <p> Er zijn nog geen Achievements voor rollenspellen opgesteld. Zeur bij het bestuur hierover. Groeten, de DC.</p>
+                <AchievementCollection showIntell="1" title="Roleplay Achievements" achievements={achList_RolePlay} height="120" width="50%" styleClass="col-md-6 col-xs-12"/>
+                <br />
+                <p> { MessageRolePlay}  </p>
             </div>);
 
-        var element = (<TabContainer tabTitles={tabTitles} tabContent={tabContent}/>);
+        var element = (<TabContainer index="1" tabTitles={tabTitles} tabContent={tabContent}/>);
 
             // Place it in the class
         ReactDOM.render(

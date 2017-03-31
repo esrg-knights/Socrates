@@ -42,7 +42,7 @@
 
 .ach_intellName
 {
-    font-family: "Roboto", Courier, Medium;
+    /*font-family: "Roboto", Courier, Medium;*/
     font-weight: Bold;
     font-size: 200%;
     margin-top: -1%;
@@ -50,7 +50,7 @@
 }
 .ach_intellKind
 {
-    font-family: "Roboto", Courier, Medium;
+    /*font-family: "Roboto", Courier, Medium;*/
     font-style: Italic;
     font-weight: 300;
     font-size: 120%;
@@ -59,7 +59,7 @@
 }
 .ach_intellDesc
 {
-    font-family: "Roboto", Courier, Medium;
+    /*font-family: "Roboto", Courier, Medium;*/
     font-weight: 500;
     font-size: 120%;
     margin-top: 1%;
@@ -149,7 +149,7 @@
     user-select: none;
 
   /* Set up the text  style */
-    color: var(--color-Secondary);
+    color: var(--color-Link);
     cursor: pointer;
     font-size: 150px;
     text-align: center;
@@ -163,7 +163,7 @@
     height: 200px;
     margin: 0px;
 
-    color: var(--color-Secondary-focus);
+    color: var(--color-Link-focus);
 }
 
 
