@@ -365,7 +365,7 @@ class PopUpContent_Achievement extends React.Component{
             <div className="PUC_Achievement">
                 <p className="PUC_Ach_Arrow" onClick={() => this.showLeftAchievement()} style={{visibility: this.state.canGoLeft}}>&#x2039;</p>
                 <div className="PUC_Ach_Block">
-                    <Achievement info={this.state.achievement} showIntell="1" showCounter="0" width="1500" styleClass="col-xs-12"/>
+                    <AchievementItem info={this.state.achievement} showIntell="1" showCounter="0" width="1500" styleClass="col-xs-12"/>
                     {this.CreateObtainedNamesList()}
                 </div>
                 <p className="PUC_Ach_Arrow" onClick={() => this.showRightAchievement()} style={{visibility: this.state.canGoRight}}>&#x203a;</p>
