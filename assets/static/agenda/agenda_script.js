@@ -14,6 +14,7 @@ class EventDate extends React.Component {
                 <h3 className="AgendaName">{this.props.name}</h3>
                 <div className="AgendaInfo">
                     <div className="AgendaDate">{this.props.date}</div>
+                    <div className="AgendaLocation">{this.props.location}</div>
                     <div className="AgendaRemark">{remark}</div>
                 </div>
              </div>

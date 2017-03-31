@@ -29,6 +29,8 @@ class Event(models.Model):
         result =                week[self.date.weekday()]
         result = result + " " + str(self.date.day)
         result = result + " " + maand[self.date.month - 1]
+        if self.display_time:
+            result = result + " - " + str(self.date.hour) + ":" + str(self.date.minute)
         return result
 
     def get_short_visual_date(self):

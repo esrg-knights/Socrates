@@ -10,11 +10,11 @@
         {% for event in events %}
             {% if event.is_nearby %}
                 {% if event.is_public %}
-                    dateList.push(<EventDate date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}"/>);
+                    dateList.push(<EventDate date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}"  location="{{event.location}}"/>);
                 {% else %}
                     {% for group in request.user.groups.all %}
                         {% if group == event.group %}
-                            dateList.push(<EventDate date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}"/>);
+                            dateList.push(<EventDate date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}" location="{{event.location}}"/>);
                         {% endif %}
                     {% endfor %}
                 {% endif %}
