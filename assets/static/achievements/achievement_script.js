@@ -1,4 +1,4 @@
-class Achievement extends React.Component {
+class AchievementItem extends React.Component {
 
     calcBadgeWidth() {
             // set the width of the badge
@@ -182,7 +182,7 @@ class Achievement extends React.Component {
     }
 }
 
-Achievement.defaultProps = {
+AchievementItem.defaultProps = {
   info:"",
   index: -1,
   width: "550",
@@ -209,12 +209,13 @@ class AchievementCollection extends React.Component {
     render(){
         var achievementObjectList = []; // The list in which all AchievementDOMs will be contained
 
+
             // Loop over and render all achievements
         var achElement;
         var achInfo;
         for (var i = 0; i < this.props.achievements.length; i++) {
                 // Create the Achievement object
-            achElement = (<Achievement
+            achElement = (<AchievementItem
                             key={i}
                             index={i}
                             info={this.props.achievements[i]}

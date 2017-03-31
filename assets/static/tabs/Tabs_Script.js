@@ -17,6 +17,7 @@ class TabContainer extends React.Component {
                     this.setState({selected: i});
                 }
                 return;
+;
             }
         }
 

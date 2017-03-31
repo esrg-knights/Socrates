@@ -8,8 +8,8 @@
 
         // Create all Date objects
         {% for event in events %}
-            {% if event.isNearby %}
-                {% if event.isPublic %}
+            {% if event.is_nearby %}
+                {% if event.is_public %}
                     dateList.push(<EventDate date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}"/>);
                 {% else %}
                     {% for group in request.user.groups.all %}
@@ -20,7 +20,7 @@
                 {% endif %}
             {% else %}
                 {% if event.category == 5 %}
-                    {% if event.isPublic %}
+                    {% if event.is_public %}
                         latedateList.push(<p>{{ event.get_short_visual_date }}: {{ event.name }}</p>);
                     {% endif %}
                 {% endif %}

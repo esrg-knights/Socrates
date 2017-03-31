@@ -12,8 +12,8 @@ class Event(models.Model):
     name = models.CharField(max_length=50)
     remark = models.TextField(max_length=200, blank=True)
     date = models.DateTimeField(help_text="The planned date")
-    displayTime = models.BooleanField(help_text="Whether the inserted time should be used")
-    isPublic = models.BooleanField(help_text="Whether it is shown to all")
+    display_time = models.BooleanField(help_text="Whether the inserted time should be used")
+    is_public = models.BooleanField(help_text="Whether it is shown to all")
     location = models.CharField(max_length=50, blank=True)
     category = models.SmallIntegerField(choices=(
         (1, ""),
@@ -37,7 +37,7 @@ class Event(models.Model):
         result = result + " " + maand[self.date.month - 1]
         return result
 
-    def isNearby(self):
+    def is_nearby(self):
         if self.date <= timezone.now():
             return 0
 
@@ -50,7 +50,7 @@ class Event(models.Model):
         if self.category == 4:
             maxTime = datetime.timedelta(weeks=2)
         if self.category == 5:
-            maxTime = datetime.timedelta(weeks=8)
+            maxTime = datetime.timedelta(weeks=2)
 
         return self.date - maxTime <= timezone.now()
 

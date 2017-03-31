@@ -171,4 +171,5 @@ Socrates/config.py
 .idea/
 *.iml
 .babelrc
+package.json
 node_modules/
