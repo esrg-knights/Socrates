@@ -27,6 +27,7 @@
 
 
     {% elif request.user.details.theme == 4 %}
+        <link rel="stylesheet" href="{% static 'bootstrap-knights/css/color_knights.css' %}">
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/bootstrap.css' %}">
     {% else %}
         <!-- Color storage -->
