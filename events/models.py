@@ -30,7 +30,10 @@ class Event(models.Model):
         result = result + " " + str(self.date.day)
         result = result + " " + maand[self.date.month - 1]
         if self.display_time:
-            result = result + " - " + str(self.date.hour) + ":" + str(self.date.minute)
+            if self.date.minute <10:
+                result = result + " - " + str(self.date.hour) + ":0" + str(self.date.minute)
+            else:
+                result = result + " - " + str(self.date.hour) + ":" + str(self.date.minute)
         return result
 
     def get_short_visual_date(self):
@@ -40,7 +43,10 @@ class Event(models.Model):
         return result
 
     def is_nearby(self):
-        if self.date <= timezone.now():
+        cur_time = timezone.now()
+
+            # If the date is before today (correction inserted for events set earlier that day)
+        if self.date <= cur_time - datetime.timedelta(hours=cur_time.hour):
             return 0
 
         # todo: implement if user wants to see certain events
@@ -54,7 +60,7 @@ class Event(models.Model):
         if self.category == 5:
             maxTime = datetime.timedelta(weeks=2)
 
-        return self.date - maxTime <= timezone.now()
+        return self.date - maxTime <= cur_time
 
     def __str__(self):
         return self.name
