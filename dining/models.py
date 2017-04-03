@@ -96,7 +96,7 @@ class DiningList(models.Model):
 
 
 class DiningParticipation(models.Model):
-    dining_list = models.ForeignKey(DiningList, related_name="participations")
+    dining_list = models.ForeignKey(DiningList, related_name="participations", default=DiningList.get_latest())
     user = models.ForeignKey(User)
     added_by = models.ForeignKey(User, null=True, blank=True, related_name="addedby")
 

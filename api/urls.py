@@ -2,10 +2,11 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
-from api.views import DinnerViewSet, UserViewSet, AchievementViewSet, AchievementGetViewSet
+from api.views import DinnerViewSet, UserViewSet, AchievementViewSet, AchievementGetViewSet, DiningParticipationViewset
 
 router = routers.DefaultRouter()
 router.register(r'dinner', DinnerViewSet)
+router.register(r'participation', DiningParticipationViewset)
 router.register(r'user', UserViewSet)
 router.register(r'achievements/list', AchievementViewSet)
 router.register(r'achievements/get', AchievementGetViewSet)

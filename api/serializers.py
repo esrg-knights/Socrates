@@ -10,6 +10,7 @@ class UserDetailsSerializer(serializers.ModelSerializer):
     """
     Serializes a users details
     """
+
     class Meta:
         model = DetailsModel
         fields = ('id', 'allergies', 'rather_nots')
@@ -19,6 +20,7 @@ class SimpleUserSerializer(serializers.ModelSerializer):
     """
     Serializes a user without details
     """
+
     class Meta:
         model = User
         fields = ('id', 'username')
@@ -45,23 +47,19 @@ class DiningCommentSerializer(serializers.ModelSerializer):
         model = DiningComment
         fields = ('user', 'body', 'date_posted')
 
-
-class DiningParticipationSerializer(serializers.ModelSerializer):
-    """
-    Serialize a participation on a dinnerlist
-    """
-    user = UserWithProfile(many=False, read_only=True)
-
+class DinnerParticipationSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiningParticipation
-        fields = ('work_dishes', 'work_cook', 'work_groceries', 'user')
+        fields = '__all__'
+        read_only_fields = ('id', 'dining_list')
+
 
 
 class DinnerListSerializer(serializers.ModelSerializer):
     """
     Serializes a dinner list
     """
-    participations = DiningParticipationSerializer(many=True, read_only=True)
+    participations = DinnerParticipationSerializer(many=True, read_only=True)
     comments = DiningCommentSerializer(many=True, read_only=True)
 
     class Meta:
@@ -73,6 +71,7 @@ class SimpleAchievementGetSerializer(serializers.ModelSerializer):
     """
     Simple serializer only using FK relations
     """
+
     class Meta:
         model = AchievementGet
         fields = ("user", "awarded_by", "score", "date_achieved", "achievement")
@@ -94,6 +93,7 @@ class GameSerializer(serializers.ModelSerializer):
     """
     Serializes a game
     """
+
     class Meta:
         model = Game
         fields = ("id", "name", "image")
@@ -108,4 +108,6 @@ class AchievementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Achievement
-        fields = ("id", "name", "name_slug", "category", "is_public", "description", "image", "date_created", "related_game", "gets")
+        fields = (
+            "id", "name", "name_slug", "category", "is_public", "description", "image", "date_created", "related_game",
+            "gets")
