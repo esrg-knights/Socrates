@@ -16,9 +16,9 @@ from os.path import expanduser
 from shutil import copyfile
 
 from django.contrib import messages
+import datetime
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -38,7 +38,6 @@ ALLOWED_HOSTS = [
 DATE_INPUT_FORMATS = [
     "%d-%m-%Y",
 ]
-
 
 # Application definition
 
@@ -106,7 +105,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Socrates.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -121,7 +119,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -135,7 +132,6 @@ USE_L10N = False
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -144,7 +140,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static_total")
 
 STATICFILES_DIRS = (
- os.path.join(BASE_DIR, 'assets/static/'),
+    os.path.join(BASE_DIR, 'assets/static/'),
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -205,8 +201,16 @@ LOGGING = {
 SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True  # User must have permissions
 
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+
+}
+
 try:
-    exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
+    exec (open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
 except:
-    copyfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.sample.py")), expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
-    exec(open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
+    copyfile(expanduser(os.path.join(BASE_DIR + "/Socrates/config.sample.py")),
+             expanduser(os.path.join(BASE_DIR + "/Socrates/config.py")))
+    exec (open(expanduser(os.path.join(BASE_DIR + "/Socrates/config.py"))).read())
