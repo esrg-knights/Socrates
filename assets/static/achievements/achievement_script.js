@@ -6,9 +6,9 @@ class AchievementItem extends React.Component {
         var badgeRatio;
 
         if (this.props.showCounter == 0)
-            badgeRatio = 6.8 / 11.0;
+            badgeRatio = (5.0 / 8.0) * 0.9;
         else
-            badgeRatio = 5.0 / 9.0;
+            badgeRatio = (5.0 / 8.0);
 
                 //// TODO: Possible future implementation, calculation based on badge image size??
 
@@ -117,7 +117,7 @@ class AchievementItem extends React.Component {
              }
              else
              {
-                var markerImage; // = "../Images/Marker_empty_obtained.png";
+                var markerImage;
                     /// Set the marker to the right image
                 if (this.props.showIfObtained == 1)
                 {
@@ -125,8 +125,6 @@ class AchievementItem extends React.Component {
                         markerImage = "Marker_empty_obtained.png";
                     else
                         markerImage = "Marker_empty.png";
-                        //http://i.imgur.com/UNSlAS1.png
-
                 }
                 else
                     markerImage = "Marker_empty_obtained.png";

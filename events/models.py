@@ -23,6 +23,12 @@ class Event(models.Model):
         (5, "Belangrijk"),
     ), default=1, help_text="Selector voor type event")
 
+        # Get all event objects with a date later than or including today
+    @staticmethod
+    def get_upcoming():
+        startdate = timezone.now().date()
+        return Event.objects.filter(date__gte=startdate).order_by('date')
+
     def get_visual_date(self):
         week = "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag", "Zondag"
         maand = "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December"
