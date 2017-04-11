@@ -157,7 +157,7 @@ class DiningStats(models.Model):
         Gets the helping out percentage
         :return: percentage  (79, 81)
         """
-        if self.total_participated <= 5:
+        if self.total_participated <= 10:
             return 100
 
         return round(float(self.total_helped) / self.total_participated * 100, 0)
@@ -200,10 +200,14 @@ class DiningStats(models.Model):
     def remove_old_participation(sender, instance=None, **kwargs):
         stats = DiningStats.objects.get_or_create(user=instance.user)[0]
 
-        if instance.has_contributed():
+        if instance.work_groceries:
             stats.total_helped -= 1
+        if instance.work_cook:
+            stats.total_helped -= 2
+        if instance.work_dishes:
+            stats.total_helped -= 2
 
-        stats.total_participated -= 1
+        stats.total_participated -= 2
 
         stats.save()
 

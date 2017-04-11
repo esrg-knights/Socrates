@@ -6,7 +6,7 @@
 {% endif %}
 
 <!-- Geef het percentage weer -->
-{% if dining_stats.total_participated > 5 %}
+{% if dining_stats.total_participated > 10 %}
     <h3 {% if dining_stats.get_percentage < 32 %} class="text-warning" {% endif %}>
     Eetlijst: {{ dining_stats.get_percentage }}%</h3>
 {% else %}
