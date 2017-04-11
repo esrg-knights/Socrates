@@ -62,15 +62,15 @@ class DiningStatsAdmin(admin.ModelAdmin):
 
     actions = ['recalculate_stats', ]
 
-    def recalculate_stats(modeladmin, request, queryset):
+    @staticmethod
+    def recalculate_stats(request, queryset):
         for stats in queryset:
             user = stats.user
 
             stats.participated = DiningParticipation.objects.filter(user=user).count() * 2
-            stats.total_helped = DiningParticipation.objects.filter(user=user,
-                                                                    work_groceries=True).count() + DiningParticipation.objects.filter(
-                user=user, work_dishes=True).count() * 2 + DiningParticipation.objects.filter(user=user,
-                                                                                              work_cook=True).count() * 2
+            stats.total_helped = DiningParticipation.objects.filter(user=user, work_groceries=True).count()
+            stats.total_helped += DiningParticipation.objects.filter(user=user, work_dishes=True).count() * 2
+            stats.total_helped += DiningParticipation.objects.filter(user=user, work_cook=True).count() * 2
 
             stats.save()
 
