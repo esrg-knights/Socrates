@@ -62,8 +62,7 @@ class DiningStatsAdmin(admin.ModelAdmin):
 
     actions = ['recalculate_stats', ]
 
-    @staticmethod
-    def recalculate_stats(request, queryset):
+    def recalculate_stats(modeladmin, request, queryset):
         for stats in queryset:
             user = stats.user
 
