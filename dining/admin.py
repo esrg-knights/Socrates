@@ -66,10 +66,12 @@ class DiningStatsAdmin(admin.ModelAdmin):
         for stats in queryset:
             user = stats.user
 
-            stats.participated = DiningParticipation.objects.filter(user=user).count() * 2
+            stats.total_participated = DiningParticipation.objects.filter(user=user).count() * 2
             stats.total_helped = DiningParticipation.objects.filter(user=user, work_groceries=True).count()
             stats.total_helped += DiningParticipation.objects.filter(user=user, work_dishes=True).count() * 2
             stats.total_helped += DiningParticipation.objects.filter(user=user, work_cook=True).count() * 2
+
+            print(DiningParticipation.objects.filter(user=user).count() * 2)
 
             stats.save()
 
