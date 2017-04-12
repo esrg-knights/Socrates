@@ -1,6 +1,7 @@
 import random
 
-from django.utils.datetime_safe import datetime
+import datetime
+from django.utils import timezone
 
 from dining.models import SpecialDateModel
 from news.models import Post
@@ -9,7 +10,7 @@ from news.models import Post
 def basic_stats(request):
     setups = {
         "pre_page_name": "KOTKT",
-        "alerts": SpecialDateModel.objects.filter(date_implied=datetime.today().date())
+        "alerts": SpecialDateModel.objects.filter(date_implied=timezone.now().date())
     }
 
     return setups
@@ -23,4 +24,12 @@ def random_factor(request):
 
 
 def get_latest_news(request):
-    return {'latest_post': Post.objects.all().first()}
+    cur_time = timezone.now()
+    delta_time = datetime.timedelta(weeks=2)
+
+    latest_post = Post.objects.all().first()
+    if latest_post.date_posted + delta_time < cur_time:
+        latest_post = None
+
+
+    return {'latest_post': latest_post}

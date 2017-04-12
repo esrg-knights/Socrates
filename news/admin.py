@@ -6,7 +6,7 @@ from news.models import Post
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "date_posted")
-    fields = ('title', 'body')
+    fields = ('title', 'body', "date_posted")
     actions = ['make_published',]
 
     def make_published(modeladmin, request, queryset):
