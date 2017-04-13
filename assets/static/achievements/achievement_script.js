@@ -6,9 +6,9 @@ class AchievementItem extends React.Component {
         var badgeRatio;
 
         if (this.props.showCounter == 0)
-            badgeRatio = (5.0 / 8.0) * 0.9;
-        else
             badgeRatio = (5.0 / 8.0);
+        else
+            badgeRatio = (5.0 / 8.0) * 0.9;
 
                 //// TODO: Possible future implementation, calculation based on badge image size??
 
