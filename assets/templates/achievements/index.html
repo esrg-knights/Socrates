@@ -32,7 +32,7 @@
                 {% for get in achievement.get %}
                     {% with get.user as user %}
                         // Count the number of people who obtained it
-                        winName = "{{user.first_name}}"+"{{ user.last_name }}";
+                        winName = "{{user.first_name}} {{ user.last_name }}";
                         winners.push(winName);
                     {% endwith %}
                 {% endfor %}
