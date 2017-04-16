@@ -1,21 +1,5 @@
 class AchievementItem extends React.Component {
 
-    calcBadgeWidth() {
-            // set the width of the badge
-            // Correct for the counter
-        var badgeRatio;
-
-        if (this.props.showCounter == 0)
-            badgeRatio = (5.0 / 8.0);
-        else
-            badgeRatio = (5.0 / 8.0) * 0.9;
-
-                //// TODO: Possible future implementation, calculation based on badge image size??
-
-        // return the Width of the element
-        var a = Math.round(this.props.height * badgeRatio);
-        return a;
-    }
     calcMarkerTextSize(){
         var targetSize = 1;
         var targetHeight = 200.0;
@@ -23,7 +7,7 @@ class AchievementItem extends React.Component {
         return targetSize * (this.props.height / targetHeight) + 'em';
     }
     calcCounterTextSize(){
-        var targetSize = 1.2;
+        var targetSize = 1.0;
         var targetHeight = 100.0;
 
         return targetSize * (this.props.height / targetHeight) + 'em';
@@ -54,12 +38,20 @@ class AchievementItem extends React.Component {
         bannerTopMargin = this.calcTopMargin();
         bannerHeight = 100 - bannerTopMargin;
 
-        return {width: "100%",
-                top: bannerTopMargin + '%',
-                height: bannerHeight + '%',
-                backgroundImage: 'url('+BadgeImage+')',
-                backgroundSize: '100% 100%'
+        return {top: bannerTopMargin + '%',
+                height: bannerHeight + '%'
                 };
+    }
+    getBannerImage(){
+        if (this.props.info.imageName == ""){
+            return "/static/achievements/img/Ach_ERROR.png";
+        }
+        else
+        {
+            return '/media/'+this.props.info.imageName;
+        }
+
+
     }
 
 
@@ -81,18 +73,12 @@ class AchievementItem extends React.Component {
     }
 
     render() {
-            // the Width of the intell is the width of the element - the widthe of the badge - the left padding
-        var intellLeftPadding = 10;
-        var achStyle = {height: this.props.height + 'px'};
-        if (this.props.showIntell == 0)
-            achStyle = {height: (this.props.height + 'px'), maxWidth: (this.calcBadgeWidth() + 'px')};
-
         var className = "Achievement "+ this.props.styleClass;
         if (this.props.styleClass == "")
             className = "Achievement";
 
         return (
-         <div className={className} style={achStyle}>
+         <div className={className}>
             {this.SetUpAchievementBadge()}
             {this.SetUpAchievementIntell()}
          </div>
@@ -107,14 +93,11 @@ class AchievementItem extends React.Component {
                 mouseAppearance = "pointer";
 
                  /// Calculate the width of the Badge Element and set the correct style
-             var styleBadge = {width: (this.calcBadgeWidth() + 'px'), cursor: mouseAppearance};
-             var styleMarker, styleBanner;
+             var styleBadge = {cursor: mouseAppearance};
 
+             var styleMarker;
              if (this.props.showCounter == 0)
-             {
-                 styleMarker = { display: 'none'};
-                 styleBanner = { top: '0%'};
-             }
+                styleMarker = { display: 'none'};
              else
              {
                 var markerImage;
@@ -129,17 +112,17 @@ class AchievementItem extends React.Component {
                 else
                     markerImage = "Marker_empty_obtained.png";
 
+                markerImage = 'url(/static/achievements/img/'+markerImage+')';
+
                  styleMarker = {display: 'initial',
-                                backgroundImage: 'url(/static/achievements/img/'+markerImage+')',
-                                backgroundSize: '100% 100%'};
+                                backgroundImage: markerImage};
              }
 
              return (<div className="ach_Badge" style={styleBadge} onClick={() => this.clickOccured()}>
-                         <div className="ach_banner" style={this.getBannerStyle()}></div>
-                         <div className="ach_Marker" style={styleMarker}>
-                             <div className="ach_markerIMG"></div>
-                             <div className="ach_markerTitle" style={{fontSize: this.calcMarkerTextSize()}}>{ this.markerTitle}</div>
-                             <div className="ach_markerCounter" style={{fontSize: this.calcCounterTextSize()}}>{this.props.info.count}</div>
+                         <img className="ach_banner" src={this.getBannerImage()} style={this.getBannerStyle()}></img>
+                         <div className="ach_Marker" src={markerImage} style={styleMarker}>
+                             <div className="ach_markerTitle"  >{ this.markerTitle}</div>
+                             <div className="ach_markerCounter">{ this.props.info.count}</div>
                          </div>
                      </div>);
          }
@@ -151,16 +134,11 @@ class AchievementItem extends React.Component {
             // If Intell should be shown
         if (this.props.showIntell == 1)
         {
-            var intellPaddingLeft = this.calcBadgeWidth();
             var intellPaddingTop = this.calcTopMargin();
 
                 /// Set the intell to visible, set the top padding and correct the max height accordingly
             styleIntell = {display: 'initial',
-                           paddingTop: intellPaddingTop + '%',
-                           maxHeight: (100-intellPaddingTop) + '%'};
-                /// Move all elements in the intell to make room for the badge to be visible
-                /// It is done this way so the width does never exceed the Achievement width while also allowing text to be centered in the popUp window
-            styleIntellContent  = {marginLeft: intellPaddingLeft + 'px'}
+                           paddingTop: intellPaddingTop + '%'};
         }
         else    /// element should not be displayed
             styleIntell = {display: 'none'};
@@ -172,9 +150,9 @@ class AchievementItem extends React.Component {
             /// Return the collection of Intell elements
         return (
             <div className="ach_Intell" style={styleIntell}>
-               <div className="ach_intellName" style={styleIntellContent}>{this.props.info.name}</div>
-               <div className="ach_intellKind" style={styleIntellContent}>{link}</div>
-               <div className="ach_intellDesc" style={styleIntellContent}>{this.props.info.desc}</div>
+               <div className="ach_intellName">{this.props.info.name}</div>
+               <div className="ach_intellKind">{link}</div>
+               <div className="ach_intellDesc">{this.props.info.desc}</div>
             </div>
         )
     }
@@ -183,8 +161,6 @@ class AchievementItem extends React.Component {
 AchievementItem.defaultProps = {
   info:"",
   index: -1,
-  width: "550",
-  height: "200",
   showCounter: 1,
   showIfObtained: 1,
   showIntell: 1};
@@ -219,7 +195,6 @@ class AchievementCollection extends React.Component {
                             info={this.props.achievements[i]}
                             showIntell={this.props.showIntell}
                             showCounter={this.props.showCounter}
-                            width={this.props.width}
                             styleClass={this.props.styleClass}
                             height={this.props.height}
                             clickHandler={(index) => this.createPopUp(index)}
@@ -239,7 +214,6 @@ class AchievementCollection extends React.Component {
 
 AchievementCollection.defaultProps = {
   achievements: "",
-  width: "550",
   height: "200",
   showCounter: 1,
   showIntell: 1};
@@ -301,7 +275,7 @@ class PopUpContent_Achievement extends React.Component{
                     nameObjects.push(name);
         }
 
-        title = "People who obtained this Achievement";
+        title = "Claimed by";
         // check whether nobody obtained it
         if (nameObjects.length == 0)
             title = "This achievement stands unclaimed"
@@ -309,7 +283,8 @@ class PopUpContent_Achievement extends React.Component{
 
         return (
             <div className="PUC_Ach_userBlock">
-                <p className="PUC_Ach_userBlockTitle">{title}</p>
+
+                <div className="PUC_Ach_userBlockTitle">{title}</div>
                 <div className="PUC_Ach_userBlockList">
                     {nameObjects}
                 </div>
@@ -361,12 +336,12 @@ class PopUpContent_Achievement extends React.Component{
 
         return (
             <div className="PUC_Achievement">
-                <p className="PUC_Ach_Arrow" onClick={() => this.showLeftAchievement()} style={{visibility: this.state.canGoLeft}}>&#x2039;</p>
+                <p className="PUC_Ach_Arrow PUC_Ach_ArrowLeft" onClick={() => this.showLeftAchievement()} style={{visibility: this.state.canGoLeft}}>&#x2039;</p>
                 <div className="PUC_Ach_Block">
-                    <AchievementItem info={this.state.achievement} showIntell="1" showCounter="0" width="1500" styleClass="col-xs-12"/>
+                    <AchievementItem info={this.state.achievement} showIntell="1" showCounter="0" styleClass="col-xs-12"/>
                     {this.CreateObtainedNamesList()}
                 </div>
-                <p className="PUC_Ach_Arrow" onClick={() => this.showRightAchievement()} style={{visibility: this.state.canGoRight}}>&#x203a;</p>
+                <p className="PUC_Ach_Arrow PUC_Ach_ArrowRight" onClick={() => this.showRightAchievement()} style={{visibility: this.state.canGoRight}}>&#x203a;</p>
             </div>
         );
     }

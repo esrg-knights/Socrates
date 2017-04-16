@@ -3,6 +3,9 @@
     display: flex;
     flex-flow:row wrap;
 }
+.AchievementCollection .Achievement{
+    height: 120px;
+}
 
 .AchievementCollection .Achievement
 {
@@ -11,7 +14,7 @@
 
 .AchievementCollection .noIntel
 {
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 /*///////////////////////////////////////////////*/
@@ -20,29 +23,28 @@
 
 .Achievement
 {
+
     /*border: 1px solid red;*/
     position: relative;
     display: flex;
     flex-wrap: nowrap;
     padding: 0px;
-    max-height: 380px;
 
-    font-size:12px;
 }
 
 /*  --------- INFORMATION BIT ------------ */
 .ach_Intell
 {
-    position: absolute;
+    position: relative;
     width: 100%;
-    max-height: 100%;
-    top: 0%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
     overflow: auto;
 }
 
 .ach_intellName
 {
-    /*font-family: "Roboto", Courier, Medium;*/
     font-weight: Bold;
     font-size: 200%;
     margin-top: -1%;
@@ -50,7 +52,6 @@
 }
 .ach_intellKind
 {
-    /*font-family: "Roboto", Courier, Medium;*/
     font-style: Italic;
     font-weight: 300;
     font-size: 120%;
@@ -59,7 +60,6 @@
 }
 .ach_intellDesc
 {
-    /*font-family: "Roboto", Courier, Medium;*/
     font-weight: 500;
     font-size: 120%;
     margin-top: 1%;
@@ -70,43 +70,37 @@
 /*  --------- IMAGE BIT ------------ */
 .ach_Badge
 {
-    position: absolute;
+    position: relative;
     height: 100%;
     top: 0%;
-    left: 0%;
     z-index: 1;
+    max-height: 300px;
 }
 
 .ach_banner
 {
-    display: block;
+    /*width: 150px;*/
     position: relative;
-    background-size: 100% 100%;
 }
 
 /* ----- Marker ---- */
-.ach_Marker
-{
+.ach_Marker {
     width: 80%;
     height: 32%;
     top: 0px;
     left: 10%;
-    position:absolute;
+    position: absolute;
     color: black;
 
-  /* Prevent selection of the text */
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+
+    /* Prevent selection of the text */
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-.ach_markerIMG
-{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background-size: 100% 100%;
 }
 
 .ach_markerTitle
@@ -115,13 +109,15 @@
     position: relative;
     top: 1%;
     text-align:center;
+    font-size: 60%;
 }
 
 .ach_markerCounter
 {
     position: relative;
     text-align:center;
-    top: -2%;
+    top: -4%;
+    font-size: medium;
 }
 
 
@@ -130,17 +126,19 @@
 
 .PUC_Achievement
 {
-    display: flex;
+    display:table;
     align-items: center;
     padding: 0px;
-
+    min-height: 250px;
+    width: 100%;
 }
 
 .PUC_Ach_Arrow
 {
-    width: 10%;
+    width: 50px;
     height: 200px;
     margin: 0px;
+    display: table-cell;
 
   /* Prevent selection of the text */
     -webkit-user-select: none;
@@ -151,7 +149,7 @@
   /* Set up the text  style */
     color: var(--color-Link);
     cursor: pointer;
-    font-size: 150px;
+    font-size: 100px;
     text-align: center;
     /*font-family: "Varela Round", sans-serif;*/
 
@@ -159,28 +157,25 @@
 }
 .PUC_Ach_Arrow:hover
 {
-    width: 10%;
-    height: 200px;
     margin: 0px;
 
     color: var(--color-Link-focus);
+    background-color: royalblue;
 }
 
 
 
 .PUC_Ach_Block
 {
-    width: 80%;
-    display: flex;
-    flex-flow:row wrap;
+    width: auto;
+    display:table-cell;
+    flex: auto;
 }
 
 .PUC_Ach_Block .ach_Intell
 {
     font-size: 140%;
-
 }
-
 
 .PUC_Ach_userBlock
 {
@@ -190,6 +185,7 @@
 
 .PUC_Ach_userBlockTitle
 {
+    padding-top:20px;
     font-weight: bold;
     text-decoration: underline;
 }
@@ -207,4 +203,35 @@
 {
     display: block;
     width: 150px;
+}
+
+@media (min-width: 600px) {
+    .PUC_Achievement .Achievement {
+        height: 150px;
+    }
+
+    .PUC_Achievement .PUC_Ach_userBlock {
+        margin-top: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .PUC_Achievement .Achievement {
+        display: initial;
+        flex-wrap: nowrap;
+        margin-bottom: 10px;
+    }
+    .PUC_Achievement .ach_Badge{
+        height: 120px;
+
+
+    }
+
+    .PUC_Ach_Block .ach_Intell
+    {
+        font-size: 90%;
+    }
+
+
+
 }

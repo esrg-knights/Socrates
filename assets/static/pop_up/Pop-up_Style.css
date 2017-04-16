@@ -1,13 +1,3 @@
-button {
-  border: 0;
-  padding: 7px 15px;
-  font-size: 16px;
-  cursor: pointer;
-}
-button:hover {
-  background: #666666;
-}
-
 .popup-background
 {
     background-color: var(--color-PopUpCover);
@@ -60,7 +50,7 @@ button:hover {
 {
     display: block;
     position: absolute;
-    top: 5px;
+    line-height: 40px;
     margin: 0;
     left: 10px;
 
@@ -104,4 +94,11 @@ button:hover {
 .popup-Container button:hover
 {
     background-color:  rgba(50, 50, 50, 0.8);
+}
+
+@media (max-width: 480px) {
+    .popup-title {
+        font-size: 22px;
+    }
+
 }
