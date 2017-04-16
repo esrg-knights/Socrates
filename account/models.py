@@ -52,6 +52,9 @@ class DetailsModel(models.Model):
         (2, "FRIEND COMPUTER MODE"),
         (3, "None (Why would you want this?!)"),
         (4, 'Knigts (WIP)'),
+        (5, 'Simple Light'),
+        (7, 'Simple Dark'),
+        (8, 'Simple Roze'),
     ), default=1, help_text="Thema van de UI. Alleen Material wordt officieel ondersteund")
 
     receive_broadcasts = models.BooleanField(default=True,
