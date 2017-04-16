@@ -10,6 +10,7 @@
         var winners;
         var achObj;
         var winName;
+        var imageLocation;
 
             ///  Loop over all availlable achievements
         {% for awards in achievements %}
@@ -23,12 +24,18 @@
                     {% endwith %}
                 {% endfor %}
 
+                {% if awards.personal_image %}
+                    imageLocation = "{{awards.personal_image}}";
+                {% else %}
+                    imageLocation = "{{achievement.image}}";
+                {% endif %}
+
 
                     // Make the achievement objects
                 achObj = {  name:"{{achievement.name }}",
                             link:"{{achievement.related_game}}",
                             desc:"{{ achievement.description|safe }}",
-                            imageName:"{{achievement.image}}",
+                            imageName:imageLocation,
                             count: winners.length,
                             winners:winners
                             };

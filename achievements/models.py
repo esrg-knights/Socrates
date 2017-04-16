@@ -70,6 +70,8 @@ class AchievementGet(models.Model):
 
     date_achieved = models.DateTimeField(auto_now=True, help_text="datum aangemaakt")
 
+    personal_image = models.FileField(blank=True, null=True, upload_to="%y/%M%d")
+
     score = models.IntegerField(help_text="Score die is gehaald voor de achievement", default=-1, null=True, blank=True)
 
     class Meta:
