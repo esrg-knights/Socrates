@@ -21,14 +21,22 @@
         <link rel="stylesheet" href="{% static 'bootstrap_old/css/bootstrap.min.css' %}">
 
     {% elif request.user.details.theme == 3 %}
-        <link rel="stylesheet" href="{% static 'style_bootstrap/colors/color_light.css' %}">
-        <link rel="stylesheet" href="{% static 'style_bootstrap/base/bootstrap.css' %}">
+
 
 
 
     {% elif request.user.details.theme == 4 %}
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/color_knights.css' %}">
         <link rel="stylesheet" href="{% static 'bootstrap-knights/css/bootstrap.css' %}">
+    {% elif request.user.details.theme == 4 %}
+        <link rel="stylesheet" href="{% static 'style_bootstrap/colors/color_light.css' %}">
+        <link rel="stylesheet" href="{% static 'style_bootstrap/base/bootstrap.css' %}">
+    {% elif request.user.details.theme == 4 %}
+        <link rel="stylesheet" href="{% static 'style_bootstrap/colors/color_dark.css' %}">
+        <link rel="stylesheet" href="{% static 'style_bootstrap/base/bootstrap.css' %}">
+    {% elif request.user.details.theme == 4 %}
+        <link rel="stylesheet" href="{% static 'style_bootstrap/colors/color_roze.css' %}">
+        <link rel="stylesheet" href="{% static 'style_bootstrap/base/bootstrap.css' %}">
     {% else %}
         <!-- Color storage -->
         <link rel="stylesheet" href="{% static 'bootstrap/css/color_bootstrap.css' %}">
