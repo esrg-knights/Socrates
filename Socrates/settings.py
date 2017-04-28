@@ -64,7 +64,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'corsheaders',
     'djoser',
-    'silk'
+    'silk',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -204,8 +204,13 @@ SILKY_AUTHORISATION = True  # User must have permissions
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    )
 }
 
 try:
