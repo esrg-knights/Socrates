@@ -1,6 +1,6 @@
 import django_filters
-from requests import Response
-from rest_framework import filters, status
+from rest_framework import filters, status, permissions
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
 from api.serializers import *
@@ -22,7 +22,7 @@ class AchievementViewset(ModelViewSet):
 
 class DiningListViewset(ModelViewSet):
     serializer_class = DiningListSerializer
-    queryset = DiningList.objects.order_by('-relevant_date')[:10]
+    queryset = DiningList.objects.order_by('-relevant_date')
     filter_fields = ('id', 'owner', 'relevant_date')
 
 
@@ -35,6 +35,7 @@ class DiningStatsViewset(ModelViewSet):
 class DiningParticipationViewset(ModelViewSet):
     serializer_class = DiningParticipationSerializer
     queryset = DiningParticipation.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     filter_fields = ('id', 'dining_list', 'work_cook', 'work_groceries', 'work_dishes', 'paid')
 
     def partial_update(self, request, *args, **kwargs):

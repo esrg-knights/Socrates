@@ -192,6 +192,7 @@ SILKY_AUTHORISATION = True  # User must have permissions
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'Socrates.jwt.jwt_response_payload_handler'
 }
 
 REST_FRAMEWORK = {
