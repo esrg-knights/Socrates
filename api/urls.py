@@ -7,7 +7,10 @@ from api.views import *
 router = routers.DefaultRouter()
 router.register(r'user', UserViewset)
 router.register(r'achievement', AchievementViewset)
-router.register(r'achievementget', AchievementGetViewset)
+router.register(r'achievement_get', AchievementGetViewset)
+router.register(r'dining', DiningListViewset)
+router.register(r'dining_participation', DiningParticipationViewset)
+router.register(r'dining_stats', DiningStatsViewset)
 
 urlpatterns = (
     url(r'^models/', include(router.urls)),

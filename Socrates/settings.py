@@ -95,9 +95,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'Socrates.preprocessors.basic_stats',
-                'Socrates.preprocessors.random_factor',
-                'Socrates.preprocessors.get_latest_news',
             ],
         },
     },
@@ -209,7 +206,7 @@ JWT_AUTH = {
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.DjangoModelPermissions',
     )
 }
 

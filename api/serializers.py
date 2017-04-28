@@ -2,6 +2,25 @@ from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 
 from achievements.models import Achievement, AchievementGet, Game
+from dining.models import DiningList, DiningParticipation, DiningStats
+
+
+class DiningListSerializer(ModelSerializer):
+    class Meta:
+        model = DiningList
+        fields = '__all__'
+
+
+class DiningParticipationSerializer(ModelSerializer):
+    class Meta:
+        model = DiningParticipation
+        fields = '__all__'
+
+
+class DiningStatsSerializer(ModelSerializer):
+    class Meta:
+        model = DiningStats
+        fields = '__all__'
 
 
 class GameSerializer(ModelSerializer):
