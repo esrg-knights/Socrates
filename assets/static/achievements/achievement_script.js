@@ -138,7 +138,8 @@ class AchievementItem extends React.Component {
 
                 /// Set the intell to visible, set the top padding and correct the max height accordingly
             styleIntell = {display: 'initial',
-                           paddingTop: intellPaddingTop + '%'};
+                           top: intellPaddingTop + '%',
+                           height: (100 - intellPaddingTop) + '%'};
         }
         else    /// element should not be displayed
             styleIntell = {display: 'none'};
