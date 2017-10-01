@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">TESTPAGE: {{ group.shorthand }}</h1>
+    </div>
+    <div class="col-xs-12 col-lg-7">
+
+    </div>
+    <div class="col-xs-12 col-lg-5">
+        <div id="agenda"></div>
+        <script type="text/babel">
+            var eventContainer = [];
+            var i=0;
+
+            {% for event in events %}
+                i++;
+                eventContainer.push(<EventDate key={i} canEdit="1" date="{{ event.get_visual_date }}" name="{{ event.name }}" remark="{{event.remark}}"/>);
+            {% endfor %}
+
+            var element = (
+            <div>
+                {eventContainer}
+            </div>
+            );
+
+        // Render all Date objects
+        ReactDOM.render(
+            element,
+            document.getElementById('agenda')
+        );
+        </script>
+    </div>
+
+
+
+
+
+
+
+</div>
+{% endblock %}

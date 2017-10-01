@@ -99,7 +99,7 @@
                         {% endfor %}
                     </div>
                     <div class="col-md-4 col-sm-12">
-
+                        <p><a href="#" class="btn btn-warning btn-block" disabled="true">Eetlijst is niet mogelijk</a></p>
 
                         {% if my_participation %}
                             {% if dinnerlist.owner %}
@@ -116,12 +116,12 @@
                             <p><a href="{% url 'dining:remove' %}" class="btn btn-block btn-warning">Schrijf je uit</a>
                             </p>
                         {% else %}
-                            <p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in
+                            <!--<p><a href="{% url 'dining:register' %}" class="btn btn-block btn-primary">Schrijf je in
                                 voor
-                                deze eetlijst</a></p>
+                                deze eetlijst</a></p>-->
                         {% endif %}
-                        <p><a href="{% url 'dining:extra' %}" class="btn btn-block btn-default">Anderen
-                            inschrijven</a></p>
+                        <!--<p><a href="{% url 'dining:extra' %}" class="btn btn-block btn-default">Anderen
+                            inschrijven</a></p>-->
                         {% if user.is_superuser %}
                             <p><a href="{% url 'dining:cancel' %}" class="btn btn-block btn-danger">Zeg deze eetlijst
                                 af</a></p>
