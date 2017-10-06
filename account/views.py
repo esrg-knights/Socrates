@@ -159,8 +159,6 @@ class ActivationView(View):
             details = form.save(commit=False)
 
             details.related_user = user
-            details.related_user.is_active = False
-            details.related_user.save()
             details.save()
 
             user.is_active = True
