@@ -162,6 +162,9 @@ class DiningStats(models.Model):
 
         return round(float(self.total_helped) / self.total_participated * 100, 0)
 
+    def get_participated(self):
+        return self.total_participated / 2
+
     @receiver(pre_save, sender=DiningParticipation)
     def remove_old_scores(sender, instance=None, created=False, **kwargs):
         if instance.id:
