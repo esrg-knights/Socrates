@@ -211,6 +211,9 @@ class DiningStats(models.Model):
 
         stats.save()
 
+    def get_participated(self):
+        return self.total_participated/2
+
 
 class DiningComment(models.Model):
     user = models.ForeignKey(User)
